@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13529"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView identifier="SearchTableCellView" wantsLayer="YES" id="IdS-gb-l7q" customClass="SearchTableCellView" customModule="Milkshake" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LSH-c0-bsc">
+                    <rect key="frame" x="65" y="5" width="148" height="20"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Type" id="WX1-2Q-5Dy">
+                        <font key="font" size="12" name="LucidaGrande"/>
+                        <color key="textColor" red="0.41176470590000003" green="0.41176470590000003" blue="0.41176470590000003" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Lm-84-hXx">
+                    <rect key="frame" x="7" y="0.0" width="50" height="50"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="album-500" id="sLI-bt-hPK"/>
+                </imageView>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XwA-rr-BLR">
+                    <rect key="frame" x="7" y="0.0" width="50" height="50"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </customView>
+                <box fixedFrame="YES" boxType="custom" borderType="bezel" cornerRadius="3" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Wmg-Hq-Y4h">
+                    <rect key="frame" x="272" y="16" width="20" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES"/>
+                    <view key="contentView" ambiguous="YES" id="kxB-3j-teF">
+                        <rect key="frame" x="1" y="1" width="18" height="16"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h5X-sj-WEN">
+                                <rect key="frame" x="-3" y="0.0" width="24" height="17"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="E" id="7ES-f2-M5s">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                    <color key="borderColor" red="0.99999600649999998" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                </box>
+                <box fixedFrame="YES" boxType="custom" borderType="bezel" cornerRadius="3" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="3uV-cJ-jfO" userLabel="RBox">
+                    <rect key="frame" x="11" y="16" width="45" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES"/>
+                    <view key="contentView" ambiguous="YES" id="6B2-qK-xgG">
+                        <rect key="frame" x="1" y="1" width="43" height="16"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jaQ-Nw-CnO">
+                                <rect key="frame" x="-16" y="0.0" width="75" height="17"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="RADIO" id="NUi-eA-HCe">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                    <color key="borderColor" red="0.99999600649999998" green="1" blue="1" alpha="0.90196917808219179" colorSpace="custom" customColorSpace="sRGB"/>
+                </box>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" preferredMaxLayoutWidth="57" translatesAutoresizingMaskIntoConstraints="NO" id="IQ1-NU-tbG">
+                    <rect key="frame" x="292" y="6" width="61" height="38"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="New Release" id="Xrf-dV-MLq">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Db6-wU-SyC">
+                    <rect key="frame" x="65" y="22" width="202" height="21"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                    <textFieldCell key="cell" lineBreakMode="charWrapping" sendsActionOnEndEditing="YES" alignment="left" title="Song title" id="93S-sN-EmJ">
+                        <font key="font" size="14" name="LucidaGrande"/>
+                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q0o-6w-UCF">
+                    <rect key="frame" x="6" y="0.0" width="50" height="50"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="hFg-sd-p67">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="playAction:" target="IdS-gb-l7q" id="ney-lk-iEF"/>
+                    </connections>
+                </button>
+                <button hidden="YES" fixedFrame="YES" alphaValue="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="FSF-Zp-FeO" customClass="MyButtonCursor" customModule="Milkshake" customModuleProvider="target">
+                    <rect key="frame" x="21" y="15" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="playcell" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="pe2-EF-aui">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="playAction:" target="IdS-gb-l7q" id="tNS-X5-86Z"/>
+                    </connections>
+                </button>
+                <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vvF-8n-pVf" customClass="FlatButton" customModule="Milkshake" customModuleProvider="target">
+                    <rect key="frame" x="100" y="8" width="90" height="20"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="bevel" bezelStyle="rounded" alignment="left" imageScaling="proportionallyDown" inset="2" id="bOl-D8-n1J">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" size="12" name="LucidaGrande"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="loadArtist:" target="IdS-gb-l7q" id="mHq-y9-CQ5"/>
+                    </connections>
+                </button>
+                <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7M0-hM-uaj" userLabel="Album Link" customClass="FlatButton" customModule="Milkshake" customModuleProvider="target">
+                    <rect key="frame" x="198" y="8" width="81" height="20"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="bevel" bezelStyle="rounded" alignment="left" imageScaling="proportionallyDown" inset="2" id="Cqz-Jh-y4A">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="cellTitle"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="loadAlbum:" target="IdS-gb-l7q" id="sgN-zO-1KJ"/>
+                    </connections>
+                </button>
+            </subviews>
+            <accessibility identifier="SearchTableCellView"/>
+            <connections>
+                <outlet property="albumLink" destination="7M0-hM-uaj" id="sWC-5c-S8P"/>
+                <outlet property="artistLink" destination="vvF-8n-pVf" id="oEl-jx-171"/>
+                <outlet property="artistTextField" destination="Db6-wU-SyC" id="quA-Fr-Jgd"/>
+                <outlet property="cellImageView" destination="4Lm-84-hXx" id="Ote-ue-SRl"/>
+                <outlet property="darkView" destination="XwA-rr-BLR" id="chn-rP-3jG"/>
+                <outlet property="eBox" destination="Wmg-Hq-Y4h" id="VpP-ki-3tN"/>
+                <outlet property="latestReleaseField" destination="IQ1-NU-tbG" id="Rqe-ii-Tj2"/>
+                <outlet property="playButton" destination="FSF-Zp-FeO" id="9bY-1S-cha"/>
+                <outlet property="rBox" destination="3uV-cJ-jfO" id="MAL-IG-vVp"/>
+                <outlet property="typeTextField" destination="LSH-c0-bsc" id="d6C-LD-uf0"/>
+            </connections>
+            <point key="canvasLocation" x="64" y="112"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="album-500" width="500" height="500"/>
+        <image name="playcell" width="51.200000762939453" height="51.200000762939453"/>
+    </resources>
+</document>

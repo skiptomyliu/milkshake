@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13529"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="NowPlayingViewController" customModule="Milkshake" customModuleProvider="target">
+            <connections>
+                <outlet property="albumLink" destination="1rP-8Q-ynB" id="JEG-LY-j8z"/>
+                <outlet property="animImageView" destination="f7H-gf-UiU" id="C9x-Fe-UdV"/>
+                <outlet property="artistLink" destination="6HE-XZ-BzS" id="R1m-aB-gvY"/>
+                <outlet property="darkView" destination="BIv-2v-Tav" id="K3e-A4-odZ"/>
+                <outlet property="imageView" destination="uXM-AJ-3qe" id="mh2-IY-BWT"/>
+                <outlet property="noMusicTextField" destination="gij-Xx-Yk8" id="AZN-K0-fle"/>
+                <outlet property="playButton" destination="394-mt-3k6" id="R1X-tk-E9Y"/>
+                <outlet property="repeatButton" destination="tbJ-Bt-KO4" id="qjc-E2-PEJ"/>
+                <outlet property="skipButton" destination="1lx-iZ-79Q" id="GGk-jR-fuR"/>
+                <outlet property="spectrumView" destination="ySk-at-efu" id="6Sf-IJ-rCm"/>
+                <outlet property="subtitleTextField" destination="5Us-3c-pQO" id="VGc-4t-S36"/>
+                <outlet property="thumbsDownButton" destination="3SA-OS-91c" id="tht-s2-RF0"/>
+                <outlet property="thumbsUpButton" destination="XCv-Pm-Vip" id="9ad-MO-OQU"/>
+                <outlet property="titleTextField" destination="8BT-eN-H79" id="Lb4-ib-R2c"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView wantsLayer="YES" id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="365"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ySk-at-efu" customClass="SpectrumAnalyzerView" customModule="Milkshake" customModuleProvider="target">
+                    <rect key="frame" x="-5" y="-12" width="310" height="76"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                </customView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uXM-AJ-3qe">
+                    <rect key="frame" x="-2" y="60" width="302" height="305"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="top" imageScaling="proportionallyDown" id="iPw-Zh-URZ"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f7H-gf-UiU">
+                    <rect key="frame" x="0.0" y="60" width="302" height="305"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyUpOrDown" id="txV-4i-R6s"/>
+                </imageView>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BIv-2v-Tav">
+                    <rect key="frame" x="-2" y="62" width="302" height="303"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                </customView>
+                <button fixedFrame="YES" alphaValue="0.90000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="3SA-OS-91c" userLabel="Thumbs Down" customClass="PlayerButton" customModule="Milkshake" customModuleProvider="target">
+                    <rect key="frame" x="25" y="203" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="thumbs-down" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="gs8-2q-bp5">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="thumbsDown:" target="-2" id="LYw-jF-mKg"/>
+                    </connections>
+                </button>
+                <button fixedFrame="YES" alphaValue="0.90000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="tbJ-Bt-KO4" userLabel="Repeat" customClass="PlayerButton" customModule="Milkshake" customModuleProvider="target">
+                    <rect key="frame" x="81" y="203" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="repeat" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="ZqE-G5-FMC">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="repeatSong:" target="-2" id="8CD-od-syI"/>
+                    </connections>
+                </button>
+                <button fixedFrame="YES" alphaValue="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="394-mt-3k6" userLabel="Play" customClass="PlayerButton" customModule="Milkshake" customModuleProvider="target">
+                    <rect key="frame" x="140" y="200" width="25" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="play" imagePosition="only" alignment="center" alternateImage="pause" imageScaling="proportionallyUpOrDown" inset="2" id="Lco-k6-Mdq">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="playPause:" target="-2" id="uMB-GH-6CP"/>
+                    </connections>
+                </button>
+                <button fixedFrame="YES" alphaValue="0.90000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="1lx-iZ-79Q" userLabel="Fast Fwd" customClass="PlayerButton" customModule="Milkshake" customModuleProvider="target">
+                    <rect key="frame" x="202" y="203" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="fastforward" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="HMs-EV-U6Y">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="skipSong:" target="-2" id="t0B-GJ-l2x"/>
+                    </connections>
+                </button>
+                <button fixedFrame="YES" alphaValue="0.90000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="XCv-Pm-Vip" userLabel="Thumbs Up" customClass="PlayerButton" customModule="Milkshake" customModuleProvider="target">
+                    <rect key="frame" x="260" y="203" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="thumbs-up" imagePosition="only" alignment="center" alternateImage="thumbs-up-on" imageScaling="proportionallyUpOrDown" inset="2" id="evn-PT-nDP">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="thumbsUp:" target="-2" id="qvY-Zp-AFF"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1rP-8Q-ynB" customClass="FlatButton" customModule="Milkshake" customModuleProvider="target">
+                    <rect key="frame" x="2" y="172" width="298" height="22"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <buttonCell key="cell" type="bevel" title="Button" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="6cS-M6-iYA">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="loadAlbumAction:" target="-2" id="KeG-fC-4ud"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8BT-eN-H79">
+                    <rect key="frame" x="-2" y="33" width="304" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="dsK-qR-2SN">
+                        <font key="font" size="15" name="LucidaGrande-Bold"/>
+                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="0.90378852739726023" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Us-3c-pQO">
+                    <rect key="frame" x="-2" y="13" width="304" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="uip-Km-XLb">
+                        <font key="font" size="13" name="LucidaGrande"/>
+                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="0.90277183219178081" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gij-Xx-Yk8">
+                    <rect key="frame" x="0.0" y="200" width="304" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="No music playing" id="HjZ-wU-qir">
+                        <font key="font" size="25" name="LucidaGrande"/>
+                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6HE-XZ-BzS" customClass="FlatButton" customModule="Milkshake" customModuleProvider="target">
+                    <rect key="frame" x="2" y="13" width="298" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="KEE-aW-Hp9">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" size="13" name="LucidaGrande"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="loadArtistAction:" target="-2" id="c4e-SB-EMy"/>
+                    </connections>
+                </button>
+            </subviews>
+            <point key="canvasLocation" x="-7" y="98.5"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="fastforward" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="pause" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="play" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="repeat" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="thumbs-down" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="thumbs-up" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="thumbs-up-on" width="51.200000762939453" height="51.200000762939453"/>
+    </resources>
+</document>

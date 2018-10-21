@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13529"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="GvB-hw-xDn" customClass="MenuTableCellView" customModule="Milkshake" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="139" height="25"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m5R-hb-4v8">
+                    <rect key="frame" x="25" y="6" width="112" height="13"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="UEq-Pg-rg5">
+                        <font key="font" size="10.5" name="LucidaGrande"/>
+                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="0.90485873287671237" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wuD-YS-2Ut">
+                    <rect key="frame" x="6" y="5" width="15" height="15"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="radio" id="XRt-Rs-3aQ"/>
+                </imageView>
+            </subviews>
+            <connections>
+                <outlet property="iconImageView" destination="wuD-YS-2Ut" id="CPL-I3-OfH"/>
+                <outlet property="titleTextField" destination="m5R-hb-4v8" id="K6Z-Ru-ibC"/>
+            </connections>
+            <point key="canvasLocation" x="-31.5" y="209.5"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="radio" width="51.200000762939453" height="51.200000762939453"/>
+    </resources>
+</document>
