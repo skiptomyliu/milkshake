@@ -14,9 +14,10 @@ import Cocoa
 class Callback: NSObject {
     
     static func callbackArtist(results: [String: AnyObject]) -> [MusicItem] {
+        
         var items: [MusicItem] = []
-        let artistTopTracks = Util.artistTopTracks(catalog: results)
         let artistLatestRelease = Util.artistLatestRelease(catalog: results)
+        let artistTopTracks = Util.artistTopTracks(catalog: results)
         let artistAlbumsRelease = Util.artistAlbumsRelease(catalog: results)
         let artistSimilarArtists = Util.artistSimilarArtists(catalog: results)
         

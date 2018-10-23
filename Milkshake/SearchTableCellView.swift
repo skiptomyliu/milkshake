@@ -19,6 +19,7 @@ class SearchTableCellView: NSTableCellView {
     @IBOutlet weak var darkView: NSView!
     @IBOutlet weak var eBox: NSBox! // explicit
     @IBOutlet weak var rBox: NSBox! // radio
+    @IBOutlet weak var pBox: NSBox! // premium
     @IBOutlet weak var latestReleaseField: NSTextField!
     @IBOutlet weak var playButton: MyButtonCursor!
     @IBOutlet weak var artistLink: FlatButton!
@@ -42,8 +43,10 @@ class SearchTableCellView: NSTableCellView {
     override func mouseEntered(with event: NSEvent) {
         let row:NSTableRowView = self.superview as! NSTableRowView
         row.isSelected = true
-        if (self.item.hasInteractive == true && (self.item.type == MusicType.TRACK || self.item.type == MusicType.STATION)) ||
-            (self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM) {
+        if (self.item.hasInteractive == true &&
+            (self.appDelegate.isPremium == false && self.item.cellType != CellType.ARTIST &&
+                (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM))
+            ) {
             self.playButton.isHidden = false
             self.darkView.isHidden = false
         }
@@ -52,8 +55,10 @@ class SearchTableCellView: NSTableCellView {
     override func mouseExited(with event: NSEvent) {
         let row:NSTableRowView = self.superview as! NSTableRowView
         row.isSelected = false
-        if self.item.hasInteractive == true && (self.item.type == MusicType.TRACK || self.item.type == MusicType.STATION) ||
-            (self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM) {
+        if (self.item.hasInteractive == true &&
+            (self.appDelegate.isPremium == false && self.item.cellType != CellType.ARTIST &&
+                (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM))
+            ) {
             self.playButton.isHidden = true
             self.darkView.isHidden = self.playingImageView.animates ? false : true // hide if not playing
         }
@@ -82,7 +87,6 @@ class SearchTableCellView: NSTableCellView {
         self.darkView.wantsLayer = true
         self.darkView.layer?.backgroundColor = CGColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
-        
         let title = result.name!
         self.artistTextField.stringValue = title;
         let albumArt = result.albumArt ?? ""
@@ -101,6 +105,14 @@ class SearchTableCellView: NSTableCellView {
         }
         self.artistLink.isHidden = true
         self.albumLink.isHidden = true
+        if (self.item.hasInteractive == true &&
+            (self.appDelegate.isPremium == false && self.item.cellType == CellType.ARTIST &&
+                (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM))
+            ) {
+            self.pBox.isHidden = false
+        } else {
+            self.pBox.isHidden = true
+        }
         
         let type = result.type
         if type == MusicType.TRACK {
@@ -116,12 +128,10 @@ class SearchTableCellView: NSTableCellView {
             }
             self.setArtistLinkAndAlbumLink()
             
-            
             let curPlaying = self.appDelegate.music?.curPlayingItem
             if result.pandoraId == curPlaying?.pandoraId {
                 self.setPlaying(isPlaying: true)
             }
-        
         } else if type == MusicType.ALBUM {
             item.token = API.getTokenFromItem(result)
             if let releaseDate = result.releaseDate {
@@ -197,7 +207,6 @@ class SearchTableCellView: NSTableCellView {
 
         }
         
-        
         if self.artistLink.textWidth > self.artistLink.frame.size.width {
             let length = Util.charLengthInSize(self.artistLink.customTitle, size: self.artistLink.frame.size, fontAttributes: self.artistLink.fontAttributes)
             self.artistLink.customTitle = String(format: "%@...", String(self.artistLink.customTitle.prefix(length)))
@@ -226,7 +235,6 @@ class SearchTableCellView: NSTableCellView {
         self.playingImageView.isHidden = !isFocus
         self.playingImageView.animates = isPlaying
         self.darkView.isHidden = !isFocus
-        
 
         if item.hasInteractive == false {
             rBox.isHidden = false

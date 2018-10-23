@@ -40,10 +40,11 @@ class Util: NSObject {
         return musicType
     }
     
+    
     // Parse API search results
     class func parseSearchIntoItems(results: [String: AnyObject]) -> [MusicItem] {
         var items: [MusicItem] = []
-
+//        print(results)
         if let resultsOrder = results["results"] as? [String] {
             for key in resultsOrder {
                 var row = results["annotations"]![key]! as! [String: AnyObject]
@@ -67,7 +68,7 @@ class Util: NSObject {
                 musicItem.artistId = row["artistId"] as? String
                 musicItem.albumId = row["albumId"] as? String
                 musicItem.shareableUrlPath = row["shareableUrlPath"] as? String
-                
+                musicItem.cellType = CellType.SEARCH
                 if let rightsDict = row["rightsInfo"] as? [String: AnyObject] {
                     musicItem.hasInteractive = rightsDict["hasInteractive"] as? Bool ?? false
                 }
@@ -202,12 +203,12 @@ class Util: NSObject {
             musicItem.artistId = track["artistId"] as? String
             musicItem.artistName = track["artistName"] as? String
             musicItem.explicitness = track["explicitness"] as? String
-            
             musicItem.shareableUrlPath = track["shareableUrlPath"] as? String
             musicItem.type = MusicType.ALBUM
             musicItem.releaseDate = track["releaseDate"] as? String
             musicItem.latestRelease = true
             musicItem.albumArt = albumArt
+            musicItem.cellType = CellType.ARTIST
             
             if let dominantColor = track["icon"]!["dominantColor"] as? String {
                 musicItem.dominantColor = dominantColor
@@ -245,6 +246,7 @@ class Util: NSObject {
             musicItem.artistId = track["artistId"] as? String
             musicItem.shareableUrlPath = track["shareableUrlPath"] as? String
             musicItem.type = MusicType.ALBUM
+            musicItem.cellType = CellType.ARTIST
             musicItem.releaseDate = track["releaseDate"] as? String
             if let rightsDict = track["rightsInfo"] {
                 musicItem.hasInteractive = rightsDict["hasInteractive"] as? Bool ?? false
@@ -282,6 +284,7 @@ class Util: NSObject {
             musicItem.explicitness = track["explicitness"] as? String
             musicItem.shareableUrlPath = track["shareableUrlPath"] as? String
             musicItem.isArtist = true
+            musicItem.cellType = CellType.ARTIST
             
             if let rightsDict = track["rightsInfo"] {
                 musicItem.hasInteractive = rightsDict["hasInteractive"] as? Bool ?? false
@@ -524,10 +527,7 @@ class Util: NSObject {
         
         return items
     }
-    
-    
-    
-    
+
     // Called by menuvc artists
     class func parseArtistIntoItems(artistResults:[String: AnyObject]) -> [MusicItem] {
         var items: [MusicItem] = []
@@ -547,6 +547,7 @@ class Util: NSObject {
                 // musicItem.albumCount = row["albumCount"] as? Int
                 musicItem.artistId = row["pandoraId"] as? String
                 musicItem.shareableUrlPath = row["shareableUrlPath"] as? String
+                musicItem.cellType = CellType.ARTIST
                 
                 if let icon = row["icon"]!["thorId"] as? String {
                     let albumArt = "https://content-images.p-cdn.com/"+(icon)
@@ -555,9 +556,7 @@ class Util: NSObject {
                 items.append(musicItem)
             }
         }
-        
         return items
-        
     }
     
     class func iconArtIdURL(path: String) -> String{
