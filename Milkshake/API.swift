@@ -112,9 +112,10 @@ class API: NSObject {
     }
     
     func search(txt:String, callbackHandler: @escaping(_ Dictionary:[String:AnyObject]) -> ()) {
+        let types =  ["AL","AR","CO","TR","SF","PL"]
         let params: [String: Any] = [
             "query": txt,
-            "types": ["AL","AR","CO","TR","SF","PL"],
+            "types": types,
             "listener":"",
             "start":0,
             "count":20,
@@ -270,7 +271,6 @@ class API: NSObject {
             params["lastPlayedTrackToken"] = lastPlayedTrackToken
         }
         self.request("https://www.pandora.com/api/v1/playlist/getFragment", params: params, callbackHandler: callbackHandler)
-
     }
     
     func addFeedback(trackToken:String, isPositive:Bool, callbackHandler: @escaping(_ Dictionary:[String: AnyObject]) -> ()) {
@@ -296,7 +296,6 @@ class API: NSObject {
             "creationSource": ""
         ]
         self.request("https://www.pandora.com/api/v1/station/createStation", params: params, callbackHandler: callbackHandler);
-
     }
     
     /*

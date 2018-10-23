@@ -20,11 +20,20 @@ enum MusicType {
     case UNDEFINED
 }
 
+enum CellType {
+    case SEARCH
+    case ARTIST
+    case ALBUM
+    case PLAYLIST
+    case UNDEFINED
+}
+
 class MusicItem: NSObject {
     // Related to cell display in ResultsViewController:
     var isHeader: Bool = false
     var isArtist: Bool = false
-    var isAlbum: Bool = false 
+    var isAlbum: Bool = false
+    var cellType: CellType = CellType.SEARCH
     
     var name: String?
     var artistName: String?
@@ -64,7 +73,6 @@ class MusicItem: NSObject {
     var rights: [String]?
     var rating: Int = 0
     
-    
     // playlist
     var totalTracks = 0
     var albumArt: String?
@@ -100,5 +108,4 @@ class MusicItem: NSObject {
         }
         didSet { }
     }
-    
 }

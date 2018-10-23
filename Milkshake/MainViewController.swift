@@ -146,6 +146,7 @@ class MainViewController: NSViewController {
     func callbackArtist(results: [String: AnyObject]) {
         let items = Callback.callbackArtist(results: results)
         _ = self.pushResults(items)
+        
     }
     
     func callbackStationsList(results: [String: AnyObject]) {
@@ -175,7 +176,6 @@ class MainViewController: NSViewController {
         artistResults.insert(artistHeader, at: 0)
         self.artistResultsViewController.setResults(results: artistResults)
     }
-    
     
     func pushResults(_ items: [MusicItem]) -> ResultsViewController{
         let resultsController = ResultsViewController(nibName: NSNib.Name(rawValue: "ResultsViewController"), bundle:nil)
@@ -445,7 +445,6 @@ extension MainViewController: CellSelectedProtocol {
     }
     
     func cellSelectedProtocol(cell: SearchTableCellView) {
-
         let item = cell.item
         let type = item.type!
         
@@ -462,10 +461,15 @@ extension MainViewController: CellSelectedProtocol {
                         self.appDelegate.dj.setWithAlbum(items: tracks)
                     }
                 }
-                
-                cell.setPlaying(isPlaying: true, isFocus: true)
-                appDelegate.radio.playerPause()
-                appDelegate.dj.playTrack(musicItem: item)
+                if self.appDelegate.isPremium == false {
+                    cell.setPlaying(isPlaying: true, isFocus: true)
+                    appDelegate.radio.playerPause()
+                    appDelegate.api.createStation(pandoraId:item.pandoraId!, callbackHandler: createStationCallback)
+                } else {
+                    cell.setPlaying(isPlaying: true, isFocus: true)
+                    appDelegate.radio.playerPause()
+                    appDelegate.dj.playTrack(musicItem: item)
+                }
             }
             sweepNowPlaying()
         }
