@@ -44,8 +44,8 @@ class SearchTableCellView: NSTableCellView {
         let row:NSTableRowView = self.superview as! NSTableRowView
         row.isSelected = true
         if (self.item.hasInteractive == true &&
-            (self.appDelegate.isPremium == false && self.item.cellType != CellType.ARTIST &&
-                (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM))
+            (self.appDelegate.isPremium == true || (self.appDelegate.isPremium == false && self.item.cellType != CellType.ARTIST) &&
+                (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION))
             ) {
             self.playButton.isHidden = false
             self.darkView.isHidden = false
@@ -56,8 +56,8 @@ class SearchTableCellView: NSTableCellView {
         let row:NSTableRowView = self.superview as! NSTableRowView
         row.isSelected = false
         if (self.item.hasInteractive == true &&
-            (self.appDelegate.isPremium == false && self.item.cellType != CellType.ARTIST &&
-                (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM))
+            (self.appDelegate.isPremium == true || (self.appDelegate.isPremium == false && self.item.cellType != CellType.ARTIST) &&
+                (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION))
             ) {
             self.playButton.isHidden = true
             self.darkView.isHidden = self.playingImageView.animates ? false : true // hide if not playing
@@ -248,7 +248,13 @@ class SearchTableCellView: NSTableCellView {
         if self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM {
             self.mainVCDelegate?.cellPlayPlaylistSelectedProtocol(item: self.item)
         } else {
-            self.mainVCDelegate?.cellSelectedProtocol(cell: self)
+            if (self.item.hasInteractive == true &&
+                (self.appDelegate.isPremium == true || (self.appDelegate.isPremium == false && self.item.cellType != CellType.ARTIST) &&
+                    (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION))
+                ) {
+                self.mainVCDelegate?.cellSelectedProtocol(cell: self)
+            }
+
         }
     }
     
