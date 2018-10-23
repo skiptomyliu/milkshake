@@ -99,35 +99,33 @@ class Util: NSObject {
                 }
                 let musicItem = MusicItem()
                 musicItem.pandoraId = albumTrack["pandoraId"] as? String
-                let annotate = trackMap[musicItem.pandoraId!] as! [String: AnyObject]
                 
-                if let icon = annotate["icon"] {
-                    musicItem.dominantColor = icon["dominantColor"] as? String
+                let annotate = trackMap[musicItem.pandoraId!] as? [String: AnyObject]
+                if annotate != nil {
+                    let annotate = annotate!
+                    if let icon = annotate["icon"] {
+                        musicItem.dominantColor = icon["dominantColor"] as? String
+                    }
+                    
+                    musicItem.name = albumTrack["songTitle"] as? String
+                    musicItem.albumId = album["pandoraId"] as? String
+                    musicItem.artistName = albumTrack["artistName"] as? String ?? ""
+                    musicItem.artistId = annotate["artistId"] as? String ?? ""
+                    musicItem.albumTitle = albumTrack["albumTitle"] as? String
+                    musicItem.albumId = annotate["albumId"] as? String
+                    musicItem.explicitness = annotate["explicitness"] as? String
+                    if let rightsDict = annotate["rightsInfo"] {
+                        musicItem.hasInteractive = rightsDict["hasInteractive"] as? Bool ?? false
+                    }
+                    musicItem.type = MusicType.TRACK
+                    musicItem.isAlbum = true
+                    musicItem.albumArt = albumArt
+                    musicItem.duration = albumTrack["trackLength"] as! Int
+                    
+                    tracks.append(musicItem)
                 }
-                
-                
-                musicItem.name = albumTrack["songTitle"] as? String
-                musicItem.albumId = album["pandoraId"] as? String
-                
-                musicItem.artistName = albumTrack["artistName"] as? String ?? ""
-                
-                musicItem.artistId = annotate["artistId"] as? String ?? ""
-                musicItem.albumTitle = albumTrack["albumTitle"] as? String
-                musicItem.albumId = annotate["albumId"] as? String
-                musicItem.explicitness = annotate["explicitness"] as? String
-                if let rightsDict = annotate["rightsInfo"] {
-                    musicItem.hasInteractive = rightsDict["hasInteractive"] as? Bool ?? false
-                }
-                musicItem.type = MusicType.TRACK
-                musicItem.isAlbum = true
-                musicItem.albumArt = albumArt
-                musicItem.duration = albumTrack["trackLength"] as! Int
-
-                tracks.append(musicItem)
             }
         }
-
-
         return tracks;
     }
     
