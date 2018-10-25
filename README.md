@@ -10,7 +10,6 @@ If you don't have a Pandora account, you can [sign up here](https://www.pandora.
 # Download v0.0.1 (Pre-release)
 [.DMG Installer](https://github.com/skiptomyliu/milkshake/raw/master/App/Milkshake.dmg)
 
-[.ZIP download](https://github.com/skiptomyliu/milkshake/raw/master/App/Milkshake.zip)
 
 # Important note
 This client isn't a full Pandora replacement and hasn't been fully tested on the free version.  This client doesn't support creating playlists, you'll still need to create them on [pandora.com](https://www.pandora.com) before seeing it on Milkshake.
