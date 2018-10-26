@@ -1,4 +1,4 @@
-#  <img src="/images/icon_32x32@2x.png" width="32"> Milkshake Pandora Music Client
+#  <img src="/images/icon_32x32@2x.png" width="32"> Milkshake: Pandora Radio macOS app
 
 <img src="/images/screenshot1.png"  width="290"> <img src="/images/screenshot2.png"  width="290"> <img src="/images/screenshot3.png"  width="290">
 <img src="/images/screenshot4.png"  width="290"> <img src="/images/screenshot5.png"  width="290"> <img src="/images/screenshot6.png"  width="290">
