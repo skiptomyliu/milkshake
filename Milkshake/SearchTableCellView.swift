@@ -41,11 +41,18 @@ class SearchTableCellView: NSTableCellView {
     }
     
     func show_play() -> Bool {
-        return (
-            self.item.hasInteractive == true &&
-            (self.appDelegate.isPremium || (self.appDelegate.isPremium == false && self.item.cellType != CellType.ARTIST)) &&
-            (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION)
-        )
+        if self.appDelegate.isPremium {
+            return (
+                self.item.hasInteractive == true &&
+                (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION)
+            )
+        } else {
+            return (
+                self.item.hasInteractive == true &&
+                    (self.item.cellType != CellType.ARTIST) &&
+                    (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION || self.item.type == MusicType.ARTIST)
+            )
+        }
     }
     override func mouseEntered(with event: NSEvent) {
         let row:NSTableRowView = self.superview as! NSTableRowView
