@@ -186,8 +186,10 @@
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Milkshake" customModuleProvider="target">
                     <connections>
+                        <outlet property="menuArtists" destination="mjV-xy-KI5" id="vHt-WY-2i8"/>
                         <outlet property="menuCrossFade" destination="NtY-pt-7Kk" id="aPv-1I-B1q"/>
                         <outlet property="menuKeepWindowFront" destination="FhU-Ke-a4p" id="9wp-u3-rtj"/>
+                        <outlet property="menuPlaylist" destination="9VX-WE-gVg" id="SR4-l4-s2d"/>
                         <outlet property="menuShuffle" destination="pkH-kS-bb6" id="gbL-7H-doI"/>
                         <outlet property="menuSpectrum" destination="Kww-k5-3sZ" id="u4L-2D-zGw"/>
                     </connections>

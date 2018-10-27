@@ -112,7 +112,11 @@ class API: NSObject {
     }
     
     func search(txt:String, callbackHandler: @escaping(_ Dictionary:[String:AnyObject]) -> ()) {
-        let types =  ["AL","AR","CO","TR","SF","PL"]
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        var types =  ["AL","AR","CO","TR","SF","PL"]
+        if appDelegate.isPremium == false {
+            types =  ["AR","CO","TR"]
+        }
         let params: [String: Any] = [
             "query": txt,
             "types": types,

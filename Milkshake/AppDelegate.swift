@@ -46,6 +46,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
     @IBOutlet weak var menuCrossFade: NSMenuItem!
     @IBOutlet weak var menuShuffle: NSMenuItem!
     @IBOutlet weak var menuSpectrum: NSMenuItem!
+    @IBOutlet weak var menuPlaylist: NSMenuItem!
+    @IBOutlet weak var menuArtists: NSMenuItem!
     
     private var hotKey: HotKey? {
         didSet {
@@ -58,8 +60,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
                 let modifier = hotKey.keyCombo.carbonModifiers
                 let mainVc = self?.windowController?.contentViewController as! MainViewController
                 if keyCode == 0x12 && modifier == 0x100 { mainVc.loadNowPlaying(self!) }
-                else if keyCode == 0x13 && modifier == 0x100 { mainVc.loadStationResults(self!) }
-                else if keyCode == 0x14 && modifier == 0x100 { mainVc.loadPlaylistResults(self!) }
+                else if keyCode == 0x13 && modifier == 0x100 {
+                    mainVc.loadStationResults(self!)
+                }
+                else if keyCode == 0x14 && modifier == 0x100 && self!.isPremium {
+                    mainVc.loadPlaylistResults(self!)
+                }
                     // u
                 else if keyCode == 0x31 && modifier == 0x1100 { mainVc.showWindow() }
                     // p
@@ -191,12 +197,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
         }
     }
     
+
     func handleSuccessLogin(results: Dictionary<String, AnyObject>) {
         print(results)
         let authToken = results["authToken"] as! String
         let config = results["config"] as! [String: AnyObject]
         self.isPremium = (config["branding"] as! String).lowercased() == "pandorapremium"
-
+        
+        if self.isPremium == false {
+            self.menuArtists.isHidden = true
+            self.menuPlaylist.isHidden = true
+        }
         // Setting
         let defaults = UserDefaults.standard
         defaults.set(authToken, forKey: "authToken")
