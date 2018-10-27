@@ -40,10 +40,8 @@ class TapManager: NSObject {
     
     let tapInit: MTAudioProcessingTapInitCallback = {
         (tap, clientInfo, tapStorageOut) in
-        
         let nonOptionalSelf = clientInfo!.assumingMemoryBound(to: AppDelegate.self).pointee
-        
-        print("init \(tap, clientInfo, tapStorageOut, nonOptionalSelf)\n")
+        // print("init \(tap, clientInfo, tapStorageOut, nonOptionalSelf)\n")
     }
     
     let tapFinalize: MTAudioProcessingTapFinalizeCallback = {
@@ -82,8 +80,5 @@ class TapManager: NSObject {
             
         }
         
-    }
-    
+    }    
 }
-
-
