@@ -461,7 +461,7 @@ extension MainViewController: CellSelectedProtocol {
                         self.appDelegate.dj.setWithAlbum(items: tracks)
                     }
                 }
-                if self.appDelegate.isPremium == false {
+                if self.appDelegate.isPremium == false && item.cellType == CellType.SEARCH {
                     cell.setPlaying(isPlaying: true, isFocus: true)
                     appDelegate.radio.playerPause()
                     appDelegate.api.createStation(pandoraId:item.pandoraId!, callbackHandler: createStationCallback)

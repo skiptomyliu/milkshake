@@ -59,7 +59,6 @@ class TapManager: NSObject {
         print("unprepare \(tap)\n")
     }
     
-    
     let tapProcess: MTAudioProcessingTapProcessCallback = {
         (tap, numberFrames, flags, bufferListInOut, numberFramesOut, flagsOut) in
         

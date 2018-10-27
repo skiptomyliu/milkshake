@@ -40,13 +40,17 @@ class SearchTableCellView: NSTableCellView {
         self.addTrackingArea(trackingArea)
     }
     
+    func show_play() -> Bool {
+        return (
+            self.item.hasInteractive == true &&
+            (self.appDelegate.isPremium || (self.appDelegate.isPremium == false && self.item.cellType != CellType.ARTIST)) &&
+            (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION)
+        )
+    }
     override func mouseEntered(with event: NSEvent) {
         let row:NSTableRowView = self.superview as! NSTableRowView
         row.isSelected = true
-        if (self.item.hasInteractive == true &&
-            (self.appDelegate.isPremium == true || (self.appDelegate.isPremium == false && self.item.cellType != CellType.ARTIST) &&
-                (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION))
-            ) {
+        if self.show_play() {
             self.playButton.isHidden = false
             self.darkView.isHidden = false
         }
@@ -55,10 +59,7 @@ class SearchTableCellView: NSTableCellView {
     override func mouseExited(with event: NSEvent) {
         let row:NSTableRowView = self.superview as! NSTableRowView
         row.isSelected = false
-        if (self.item.hasInteractive == true &&
-            (self.appDelegate.isPremium == true || (self.appDelegate.isPremium == false && self.item.cellType != CellType.ARTIST) &&
-                (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION))
-            ) {
+        if self.show_play() {
             self.playButton.isHidden = true
             self.darkView.isHidden = self.playingImageView.animates ? false : true // hide if not playing
         }
@@ -79,7 +80,7 @@ class SearchTableCellView: NSTableCellView {
             }
         }
     }
-    
+
     func setCellWithSearchResult(result:MusicItem) {
         self.item = result
         
@@ -248,13 +249,9 @@ class SearchTableCellView: NSTableCellView {
         if self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM {
             self.mainVCDelegate?.cellPlayPlaylistSelectedProtocol(item: self.item)
         } else {
-            if (self.item.hasInteractive == true &&
-                (self.appDelegate.isPremium == true || (self.appDelegate.isPremium == false && self.item.cellType != CellType.ARTIST) &&
-                    (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION))
-                ) {
+            if self.show_play() {
                 self.mainVCDelegate?.cellSelectedProtocol(cell: self)
             }
-
         }
     }
     
