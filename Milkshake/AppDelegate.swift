@@ -130,6 +130,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
         self.loginWindowController = NSStoryboard.loginWindowController()
         (self.loginWindowController!.contentViewController as! LoginViewController).delegate = self
         self.loginWindowController?.window?.isMovableByWindowBackground = true
+        self.loginWindowController?.window?.titlebarAppearsTransparent = true // gives it "flat" look
         self.loginWindowController!.showWindow(self)
         
         OperationQueue.main.addOperation {
@@ -152,7 +153,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
             mainVC.showWindow()
         }
     }
-
+    
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        if let window = sender.windows.first {
+            if flag {
+                window.orderFront(nil)
+            } else {
+                window.makeKeyAndOrderFront(nil)
+            }
+        }
+        return true
+    }
+    
     func keyDown(event: NSEvent!) -> NSEvent {
         if let mvc = NSApplication.shared.mainWindow?.windowController?.contentViewController as? MainViewController {
             // cmd + w
@@ -197,7 +209,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
         }
     }
     
-
     func handleSuccessLogin(results: Dictionary<String, AnyObject>) {
         print(results)
         let authToken = results["authToken"] as! String
