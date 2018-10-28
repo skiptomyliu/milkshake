@@ -40,7 +40,6 @@ class MainViewController: NSViewController {
     var nowPlayingSearchCell: SearchTableCellView?
     let appDelegate = NSApplication.shared.delegate as! AppDelegate
     
-    
     /*
      
      Window Functions
