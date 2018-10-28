@@ -54,6 +54,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
             guard let hotKey = hotKey else {
                 return
             }
+
             hotKey.keyDownHandler = { [weak self] in
                 print(hotKey.keyCombo)
                 let keyCode = hotKey.keyCombo.carbonKeyCode
