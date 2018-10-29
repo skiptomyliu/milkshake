@@ -131,7 +131,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
         self.loginWindowController = NSStoryboard.loginWindowController()
         (self.loginWindowController!.contentViewController as! LoginViewController).delegate = self
         self.loginWindowController?.window?.isMovableByWindowBackground = true
-        self.loginWindowController?.window?.titlebarAppearsTransparent = true // gives it "flat" look
         self.loginWindowController!.showWindow(self)
         
         OperationQueue.main.addOperation {
@@ -228,7 +227,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
         print(self.api.X_AuthToken!)
         self.launchMain()
     }
-    
+
+    func isRadio() -> Bool {
+        return self.music == self.radio
+    }
+
     @IBAction func showWindowAction(_ sender: Any) {
         if let cvc = self.windowController?.contentViewController {
             let mainVC = cvc as! MainViewController

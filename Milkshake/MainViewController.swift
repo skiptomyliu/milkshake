@@ -211,15 +211,13 @@ class MainViewController: NSViewController {
         }
     }
     
-   
     func playStation(musicItem:MusicItem) {
         appDelegate.radio.playerPause()
         appDelegate.dj.playerPause()
-        let stationId = musicItem.stationId!
+        appDelegate.windowController?.window?.title = musicItem.name ?? ""
         appDelegate.radio.curPlayingItem = musicItem
-        appDelegate.radio.playStation(stationId: stationId, isStationStart: true, lastPlayedTrackToken: "")
+        appDelegate.radio.playStation(stationId: musicItem.stationId!, isStationStart: true, lastPlayedTrackToken: "")
     }
-    
     
     override func controlTextDidChange(_ obj: Notification) {
         self.textFieldChanged()
@@ -277,10 +275,6 @@ class MainViewController: NSViewController {
             }
         }
     }
-    
-    
-    
-    
     
     func loadNowPlaying(_ sender: Any) {
         self.nowPlayingViewController.view.frame = CGRect(x: 0, y: 0, width: self.resultsView.frame.size.width, height: self.resultsView.frame.size.height)
@@ -566,6 +560,11 @@ extension MainViewController: MusicChangedProtocol {
             self.roundView.backgroundImage = NSImage(named: NSImage.Name(rawValue: "grey.jpg"))
             self.roundView.setNeedsDisplay(self.roundView.frame)
         }
+
+        if appDelegate.isRadio() == false {
+            appDelegate.windowController?.window?.title = item.artistName ?? ""
+        }
+        
         self.nowPlayingViewController.setViewWithMusicItem(item: item)
         sweepNowPlaying()
     }

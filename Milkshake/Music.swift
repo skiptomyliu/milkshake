@@ -80,8 +80,6 @@ class Music: NSObject {
                 print("MAX FAILS REACHED")
             }
         }
-        
-        
     }
     
     func swapPlayer() {
@@ -222,5 +220,4 @@ class Music: NSObject {
     @objc func itemDidFinishPlaying(notification: NSNotification) {
         preconditionFailure("This method must be overridden")
     }
-
 }

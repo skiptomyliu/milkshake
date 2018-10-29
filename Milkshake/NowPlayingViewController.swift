@@ -188,7 +188,6 @@ class NowPlayingViewController: NSViewController {
         } else {
             self.spectrumView.barFillColor = NSColor(calibratedRed: 250/255.0, green: 148/255.0, blue: 55/255.0, alpha: 0.55)
         }
-
     }
     
     var isStation: Bool = false {
