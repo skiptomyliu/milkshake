@@ -6,11 +6,9 @@
 //  Copyright © 2017 Dean Liu. All rights reserved.
 //
 //  Used to be a different VC, now being re-purposed
-//  Currently  dedicated to slider scrubbing at moment.  
+//  Currently dedicated to slider scrubbing.
 
 import Cocoa
-import Alamofire
-
 
 class PlayerViewController: NSViewController, MusicTimeProtocol {
     
@@ -98,6 +96,4 @@ class PlayerViewController: NSViewController, MusicTimeProtocol {
             self.bgSlider.doubleValue = slider.doubleValue
         }
     }
-    
-    
 }

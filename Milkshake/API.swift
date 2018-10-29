@@ -26,7 +26,7 @@ class API: NSObject {
         var headers: [String: String]  = [
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "User-Agent": "Milkshakev001",
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:56.0) Gecko/20100101 Firefox/56.0",
             "X-CsrfToken": self.X_CsrfToken,
             "Cookie": "_ga=GA1.2.34567890.1234567890;csrftoken="+self.X_CsrfToken+";_gid=GA1.2.1234567890.1234567890; _uetsid=_uetff68c25a; at=wdLcyje3Hg3vjR29Hw5rSfPXK+OFmuiaA"
         ]
