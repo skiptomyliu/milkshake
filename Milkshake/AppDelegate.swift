@@ -155,7 +155,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
     }
     
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-        if let window = sender.windows.first {
+        
+        if let window = self.windowController?.window {
+            if flag {
+                window.orderFront(nil)
+            } else {
+                window.makeKeyAndOrderFront(nil)
+            }
+        } else if let window = self.loginWindowController?.window {
             if flag {
                 window.orderFront(nil)
             } else {
