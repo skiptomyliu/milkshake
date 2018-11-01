@@ -10,6 +10,8 @@ If you don't have a Pandora account, you can [sign up here](https://www.pandora.
 # Download v0.0.1 (Pre-release)
 [<img src="/images/badge-download.svg">](https://itunes.apple.com/us/app/milkshake/id1440379601?ls=1&mt=12)
 
+or
+
 [.DMG Installer](https://github.com/skiptomyliu/milkshake/raw/master/App/Milkshake.dmg)
 
 
