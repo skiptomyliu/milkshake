@@ -427,7 +427,7 @@ extension MainViewController: CellSelectedProtocol {
     
     func cellPlayPlaylistSelectedProtocol(item: MusicItem) {
         
-        func setWithAlbumAndPlay(_ items: [MusicItem]) {
+        func setWithAlbumAndPlay(_ items: [MusicItem]) {            
             self.appDelegate.dj.setWithAlbum(items: items)
             appDelegate.radio.playerPause()
             self.appDelegate.dj.playNext()
@@ -452,7 +452,7 @@ extension MainViewController: CellSelectedProtocol {
     
     func cellSelectedProtocol(cell: SearchTableCellView) {
         let item = cell.item
-        let type = item.type!
+        let type = item.type
         
         //XXX
         // When played, get current view controller tracks and set album
@@ -462,7 +462,7 @@ extension MainViewController: CellSelectedProtocol {
                 self.nowPlayingViewController.playPause(self)
             } else {
                 if let rvc = self._curViewController {
-                    if rvc is ResultsViewController && rvc != self.historyResultsViewController {
+                    if rvc is ResultsViewController && rvc != self.historyResultsViewController {  
                         let tracks = (rvc as! ResultsViewController).getAllTracks()
                         self.appDelegate.dj.setWithAlbum(items: tracks)
                     } else if rvc == self.historyResultsViewController {
@@ -584,7 +584,6 @@ extension MainViewController: MusicChangedProtocol {
         self.nowPlayingViewController.setViewWithMusicItem(item: item)
         
         // Update history vc
-        item.cellType = CellType.HISTORY
         _ = Util.saveToHistory(item: item)
         self.historyResultsViewController.insertMusicItem(item: item, index: 1)
         sweepNowPlaying()

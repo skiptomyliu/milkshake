@@ -45,7 +45,9 @@ class ResultsViewController: NSViewController {
     @objc func actionSelectedCell(sender: AnyObject) {
         let idx = self.searchTableView.selectedRow
         if let cellView = self.searchTableView.view(atColumn: 0, row: idx, makeIfNecessary: true) as? SearchTableCellView {
-            self.mainVCDelegate?.cellSelectedProtocol(cell: cellView)
+            if cellView.allow_click() {
+                self.mainVCDelegate?.cellSelectedProtocol(cell: cellView)
+            }
         }
     }
     

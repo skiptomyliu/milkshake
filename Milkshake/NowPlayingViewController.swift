@@ -159,7 +159,7 @@ class NowPlayingViewController: NSViewController {
             }
         }
         
-        let type = item.type!
+        let type = item.type
         if type == MusicType.ALBUM || type == MusicType.TRACK {
             self.subtitleTextField.stringValue = item.artistName!
         }

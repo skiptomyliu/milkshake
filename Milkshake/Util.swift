@@ -598,7 +598,6 @@ class Util: NSObject {
             dateFormatter.dateFormat = "MMMM yyyy"
             return dateFormatter.string(from: fromDate)
         }
-        
     }
     
     class func charLengthInSize(_ text:String, size: CGSize, fontAttributes:[NSAttributedStringKey : Any]) -> Int {
@@ -630,6 +629,7 @@ class Util: NSObject {
         if historyArray.count > 50 {
             historyArray.removeLast()
         }
+        item.cellType = CellType.HISTORY
         historyArray.insert(item, at: 0)
         let encodedData = NSKeyedArchiver.archivedData(withRootObject: historyArray)
         UserDefaults.standard.set(encodedData, forKey: getListenerHistoryKey())

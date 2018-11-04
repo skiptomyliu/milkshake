@@ -124,7 +124,10 @@ class MusicItem: NSObject, NSCoding {
         aCoder.encode(albumId, forKey: "albumId")
         aCoder.encode(albumTitle, forKey: "albumTitle")
         aCoder.encode(albumSeoToken, forKey: "albumSeoToken")
-        aCoder.encode(self.type?.rawValue, forKey: "type")
+        if let myType = self.type {
+            aCoder.encode(myType.rawValue, forKey: "type")
+        }
+        aCoder.encode(self.cellType.rawValue, forKey: "cellType")
         aCoder.encode(explicitness, forKey: "explicitness")
         aCoder.encode(token, forKey: "token")
         aCoder.encode(lastPlayed, forKey: "lastPlayed")
@@ -147,8 +150,16 @@ class MusicItem: NSObject, NSCoding {
         self.albumId = aDecoder.decodeObject(forKey: "albumId") as? String
         self.albumTitle = aDecoder.decodeObject(forKey: "albumTitle") as? String
         self.albumSeoToken = aDecoder.decodeObject(forKey: "albumSeoToken") as? String
-        let typeInt = aDecoder.decodeObject(forKey: "type") as? Int ?? 0
-        self.type = MusicType(rawValue: typeInt)
+
+        if aDecoder.containsValue(forKey: "type") {
+            let typeInt = aDecoder.decodeInteger(forKey: "type")
+            self.type = MusicType(rawValue: typeInt)
+        }
+
+        let cellTypeInt = aDecoder.decodeInteger(forKey: "cellType")
+        self.cellType = CellType(rawValue: cellTypeInt) ?? CellType.HISTORY
+        print(self.cellType)
+        
         self.explicitness = aDecoder.decodeObject(forKey: "explicitness") as? String
         self.token = aDecoder.decodeObject(forKey: "token") as? String
         self.lastPlayed = aDecoder.decodeObject(forKey: "lastPlayed") as? String

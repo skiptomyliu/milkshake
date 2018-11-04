@@ -49,6 +49,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
     @IBOutlet weak var menuSpectrum: NSMenuItem!
     @IBOutlet weak var menuPlaylist: NSMenuItem!
     @IBOutlet weak var menuArtists: NSMenuItem!
+    @IBOutlet weak var menuHistory: NSMenuItem!
     
     private var hotKey: HotKey? {
         didSet {
@@ -321,6 +322,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
         if let cvc = self.windowController?.contentViewController {
             let mainVC = cvc as! MainViewController
             mainVC.loadArtistResults(self)
+        }
+    }
+    
+    @IBAction func loadHistory(_ sender: Any) {
+        if let cvc = self.windowController?.contentViewController {
+            let mainVC = cvc as! MainViewController
+            mainVC.loadHistoryResults(self)
         }
     }
     
