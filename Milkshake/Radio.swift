@@ -48,30 +48,30 @@ class Radio: Music {
     }
     
     override func playNext() {
+        self.musicPreflightChange()
         // If we are out, we fetch for more
-        let appDelegate = NSApplication.shared.delegate as! AppDelegate
-        appDelegate.music = self
         if self.stationIdx+1 > self.stationTracks.count-1 {
             let prevToken = self.stationTracks[self.stationIdx].trackToken!
             self.playStation(stationId: self.stationId, isStationStart: false, lastPlayedTrackToken: prevToken)
         } else {
             self.stationIdx = (self.stationIdx + 1)
             let urlStr = self.stationTracks[self.stationIdx].audioURL!
-            self.curPlayingItem = self.stationTracks[self.stationIdx]
+//            self.curPlayingItem = self.stationTracks[self.stationIdx]
             let musicItem = self.stationTracks[self.stationIdx]
             
             // XXX:  We make an additional API call to annotate for additional info we need:
             // dominant color and albumId
+            let appDelegate = NSApplication.shared.delegate as! AppDelegate
             appDelegate.api.annotateObjectsSimple(trackIds:[musicItem.pandoraId!]) {
                 (results) in
                 if let trackDict = results[musicItem.pandoraId!] as? Dictionary<String, AnyObject>  {
                     if let icon = trackDict["icon"] {
-                        self.curPlayingItem.dominantColor = icon["dominantColor"] as? String
+                        musicItem.dominantColor = icon["dominantColor"] as? String
                     }
-                    self.curPlayingItem.artistId = trackDict["artistId"] as? String
-                    self.curPlayingItem.albumId = trackDict["albumId"] as? String
+                    musicItem.artistId = trackDict["artistId"] as? String
+                    musicItem.albumId = trackDict["albumId"] as? String
                 }
-                self.playAudio(item:self.stationTracks[self.stationIdx], url: urlStr)
+                self.playAudio(item:musicItem, url: urlStr)
             }
         }
     }

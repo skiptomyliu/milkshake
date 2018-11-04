@@ -11,6 +11,8 @@ import Cocoa
 
 // MARK: - MusicChangedProtocol
 extension MenuViewController: MusicChangedProtocol {
+    func musicPreflightChangedProtocol(item: MusicItem) {}
+    
     func musicChangedProtocol(item: MusicItem) {
         self.tableView.reloadData()
     }

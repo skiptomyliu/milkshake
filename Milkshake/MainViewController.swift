@@ -215,7 +215,7 @@ class MainViewController: NSViewController {
         appDelegate.radio.playerPause()
         appDelegate.dj.playerPause()
         appDelegate.windowController?.window?.title = musicItem.name ?? ""
-        appDelegate.radio.curPlayingItem = musicItem
+//        appDelegate.radio.curPlayingItem = musicItem
         appDelegate.radio.playStation(stationId: musicItem.stationId!, isStationStart: true, lastPlayedTrackToken: "")
     }
     
@@ -546,6 +546,13 @@ extension MainViewController: CellSelectedProtocol {
 
 // MARK: - MusicChangedProtocol
 extension MainViewController: MusicChangedProtocol {
+    func musicPreflightChangedProtocol(item: MusicItem) {
+        // Update history vc
+        if (item.pandoraId != nil) {
+            _ = Util.saveToHistory(item: item)
+            self.historyResultsViewController.insertMusicItem(item: item, index: 1)
+        }
+    }
     
     func musicPlayedProtocol() {
         self.sweepNowPlaying()
@@ -582,10 +589,6 @@ extension MainViewController: MusicChangedProtocol {
         }
         
         self.nowPlayingViewController.setViewWithMusicItem(item: item)
-        
-        // Update history vc
-        _ = Util.saveToHistory(item: item)
-        self.historyResultsViewController.insertMusicItem(item: item, index: 1)
         sweepNowPlaying()
     }
 }

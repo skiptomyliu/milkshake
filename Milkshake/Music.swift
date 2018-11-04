@@ -66,6 +66,7 @@ class Music: NSObject {
                 audioMix.inputParameters = [inputParams]
                 playerItem.audioMix = audioMix
             }
+            
             item.duration = Int(length)
             self.curPlayingItem = item
             self._playAudio(playerItem: playerItem)
@@ -112,7 +113,7 @@ class Music: NSObject {
     
     func removeTimeObserver() {
         if let obsToken = self.timeObserverToken {
-            print("removing token...")
+            print("removing observer token...")
             self._cur_player.removeTimeObserver(obsToken)
             timeObserverToken = nil
         }
@@ -208,6 +209,12 @@ class Music: NSObject {
             return true
         }
         return false
+    }
+    
+    func musicPreflightChange() {
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        self.mainVCDelegate!.musicPreflightChangedProtocol(item: appDelegate.music!.curPlayingItem)
+        appDelegate.music = self
     }
     
     func nowPlaying() -> String {
