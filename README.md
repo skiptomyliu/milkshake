@@ -7,7 +7,7 @@ Milkshake is a Mac OS X [Pandora](https://www.pandora.com) client.
 
 If you don't have a Pandora account, you can [sign up here](https://www.pandora.com/account/register)
 
-# Download v1.0.1 
+# Download v1.0.2
 [<img src="/images/badge-download.svg" width="300">](https://itunes.apple.com/us/app/milkshake/id1440379601?ls=1&mt=12)
 
 or
@@ -16,7 +16,7 @@ or
 
 
 # Important note
-This client isn't a full Pandora replacement and hasn't been fully tested on the free version.  This client doesn't support creating playlists, you'll still need to create them on [pandora.com](https://www.pandora.com) before seeing it on Milkshake.
+This client isn't a full Pandora replacement.  This client doesn't support creating playlists, you'll still need to create them on [pandora.com](https://www.pandora.com) before seeing it on Milkshake.
 
 # Features
   - Minimalist UI that focuses on album art
