@@ -498,9 +498,14 @@ extension MainViewController: CellSelectedProtocol {
                 appDelegate.api.catalogDetails(pandoraId: item.artistId!, callbackHandler: callbackArtist)
             }
         }
+        else if type == MusicType.SF {
+            cell.setPlaying(isPlaying: true, isFocus: true)
+            appDelegate.radio.playerPause()
+            appDelegate.api.createStation(pandoraId:item.pandoraId!, callbackHandler: createStationCallback)
+        }
         else if type == MusicType.STATION {
             // if playing already, pause
-            if item.stationId == self.appDelegate.music?.nowPlaying() {
+            if item.stationId != nil && item.stationId == self.appDelegate.music?.nowPlaying() {
                 self.nowPlayingViewController.playPause(self)
             } else {
                 cell.setPlaying(isPlaying: true, isFocus: true)

@@ -22,7 +22,6 @@ class Radio: Music {
         
         self.stationId = stationId
         appDelegate.api.getPlaylistFragment(stationId: stationId, isStationStart: isStationStart, lastPlayedTrackToken: lastPlayedTrackToken) { responseDict in
-            
             if responseDict["errorCode"] != nil {
                 // If another station listening, force
                 let appDelegate = NSApplication.shared.delegate as! AppDelegate
@@ -59,19 +58,21 @@ class Radio: Music {
 //            self.curPlayingItem = self.stationTracks[self.stationIdx]
             let musicItem = self.stationTracks[self.stationIdx]
             
-            // XXX:  We make an additional API call to annotate for additional info we need:
-            // dominant color and albumId
-            let appDelegate = NSApplication.shared.delegate as! AppDelegate
-            appDelegate.api.annotateObjectsSimple(trackIds:[musicItem.pandoraId!]) {
-                (results) in
-                if let trackDict = results[musicItem.pandoraId!] as? Dictionary<String, AnyObject>  {
-                    if let icon = trackDict["icon"] {
-                        musicItem.dominantColor = icon["dominantColor"] as? String
+            // We make an additional API call to annotate for additional info we need:
+            // artistId, dominant color and albumId
+            if let pandoraId = musicItem.pandoraId {
+                let appDelegate = NSApplication.shared.delegate as! AppDelegate
+                appDelegate.api.annotateObjectsSimple(trackIds:[pandoraId]) {
+                    (results) in
+                    if let trackDict = results[pandoraId] as? Dictionary<String, AnyObject>  {
+                        if let icon = trackDict["icon"] {
+                            musicItem.dominantColor = icon["dominantColor"] as? String
+                        }
+                        musicItem.artistId = trackDict["artistId"] as? String
+                        musicItem.albumId = trackDict["albumId"] as? String
                     }
-                    musicItem.artistId = trackDict["artistId"] as? String
-                    musicItem.albumId = trackDict["albumId"] as? String
+                    self.playAudio(item:musicItem, url: urlStr)
                 }
-                self.playAudio(item:musicItem, url: urlStr)
             }
         }
     }

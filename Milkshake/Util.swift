@@ -10,7 +10,7 @@ import Cocoa
 
 class Util: NSObject {
     
-    // Convert's string (TR, ST, AR, etc.) to MusicType
+    // Converts string (TR, ST, AR, etc.) to MusicType
     class func strToMusicType(_ type: String?) -> MusicType {
         var musicType = MusicType.UNDEFINED
         if let type = type {
@@ -32,6 +32,9 @@ class Util: NSObject {
                 break
             case "CO":
                 musicType = MusicType.COMPOSER
+                break
+            case "SF":
+                musicType = MusicType.SF
                 break
             default:
                 musicType = MusicType.UNDEFINED
@@ -68,6 +71,9 @@ class Util: NSObject {
                 musicItem.albumId = row["albumId"] as? String
                 musicItem.shareableUrlPath = row["shareableUrlPath"] as? String
                 musicItem.cellType = CellType.SEARCH
+                
+//                print(row)
+                
                 if let rightsDict = row["rightsInfo"] as? [String: AnyObject] {
                     musicItem.hasInteractive = rightsDict["hasInteractive"] as? Bool ?? false
                 }
@@ -332,9 +338,7 @@ class Util: NSObject {
     
     // When a station is played, parse the four tracks
     class func parseStationIntoItems(station: [String: AnyObject]) -> [MusicItem] {
-        
         var items: [MusicItem] = []
-        
         let tracks = station["tracks"] as! [[String: Any]]
         for track in tracks {
             // Refig this out:
@@ -358,9 +362,7 @@ class Util: NSObject {
             musicItem.albumSeoToken = track["albumSeoToken"] as? String
 //            musicItem.duration = track["duration"] as? Int ?? -1
             musicItem.duration = track["trackLength"] as? Int ?? -1
-            
             musicItem.allowSkip = track["allowSkip"] as? String
-            
             musicItem.userSeed = track["userSeed"] as? String
             musicItem.trackToken = track["trackToken"] as? String
             musicItem.stationId = track["stationId"] as? String
@@ -375,7 +377,6 @@ class Util: NSObject {
             
             items.append(musicItem)
         }
-        
         return items
     }
     
@@ -394,12 +395,10 @@ class Util: NSObject {
                     albumArt = albumArtArray[2]["url"] as? String ?? ""
                 }
             }
-           
             let musicItem = MusicItem()
             musicItem.pandoraId = station["pandoraId"] as? String
             musicItem.stationId = station["stationId"] as? String
             musicItem.name = station["name"] as? String
-            
             musicItem.lastPlayed = station["lastPlayed"] as? String
             musicItem.albumArt = albumArt
             musicItem.dateCreated = station["dateCreated"] as? String ?? ""

@@ -44,29 +44,29 @@ class SearchTableCellView: NSTableCellView {
         if self.appDelegate.isPremium {
             return (
                 self.item.hasInteractive == true &&
-                (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION)
+                (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION || self.item.type == MusicType.SF)
             )
         } else {
             return (
                 self.item.hasInteractive == true &&
                     (self.item.cellType == CellType.SEARCH) &&
-                    (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION || self.item.type == MusicType.ARTIST)
+                    (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION || self.item.type == MusicType.ARTIST || self.item.type == MusicType.SF)
             )
         }
     }
     
-    func allow_click() -> Bool {
+    func can_click() -> Bool {
         if self.appDelegate.isPremium {
             return (
                 self.item.hasInteractive == true &&
-                    (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION) ||
+                    (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION || self.item.type == MusicType.SF) ||
                 self.item.type == MusicType.ARTIST
             )
         } else {
             return (
                 self.item.hasInteractive == true &&
                     (self.item.cellType == CellType.SEARCH) &&
-                    (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION || self.item.type == MusicType.ARTIST)
+                    (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION || self.item.type == MusicType.ARTIST || self.item.type == MusicType.SF)
             )
         }
     }
@@ -112,7 +112,7 @@ class SearchTableCellView: NSTableCellView {
         self.darkView.wantsLayer = true
         self.darkView.layer?.backgroundColor = CGColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
-        let title = result.name!
+        let title = result.name ?? ""
         self.artistTextField.stringValue = title;
         let albumArt = result.albumArt ?? ""
 
@@ -176,7 +176,7 @@ class SearchTableCellView: NSTableCellView {
             self.typeTextField.stringValue = "Artist"
 //            result.token = API.getTokenFromItem(item: result)
         }
-        else if type == MusicType.STATION {
+        else if type == MusicType.STATION || type == MusicType.SF {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
             if let lastPlayedDateStr = result.lastPlayed {

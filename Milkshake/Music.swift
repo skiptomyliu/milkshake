@@ -213,7 +213,9 @@ class Music: NSObject {
     
     func musicPreflightChange() {
         let appDelegate = NSApplication.shared.delegate as! AppDelegate
-        self.mainVCDelegate!.musicPreflightChangedProtocol(item: appDelegate.music!.curPlayingItem)
+        if let music = appDelegate.music {
+            self.mainVCDelegate!.musicPreflightChangedProtocol(item: music.curPlayingItem)
+        }
         appDelegate.music = self
     }
     
