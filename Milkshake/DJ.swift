@@ -29,7 +29,6 @@ class DJ: Music {
         didSet { }
     }
     
-    
     // On Demand callbackAudio
     func callbackAudio(result: [String: AnyObject]) {
         if let audioUrlStr = result["audioURL"] as? String {
@@ -39,9 +38,9 @@ class DJ: Music {
     
     func playTrack(trackId: String, albumId: String) {
         print ("playing track")
-        let appDelegate = NSApplication.shared.delegate as? AppDelegate
-        appDelegate?.music = self
-        appDelegate!.api.getAudioPlaybackInfoPandoraId(pid: trackId, sid: albumId, callbackHandler: callbackAudio)
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        appDelegate.music = self
+        appDelegate.api.getAudioPlaybackInfoPandoraId(pid: trackId, sid: albumId, callbackHandler: callbackAudio)
         
         if self.tracks.count > 0 && self.tracksIdx < 0 {
             self.tracksIdx = self.tracksStr.index(of: trackId) ?? 0 // set current playing index track
@@ -84,6 +83,8 @@ class DJ: Music {
     }
     
     override func playNext() {
+       let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        appDelegate.music = self
         if self.isShuffled == false && self.shuffle {
             self.enableShuffle()
         }
@@ -96,6 +97,10 @@ class DJ: Music {
             } else if self.tracksIdx != 0 { // we're at the end, prevent infinite loop
                 self.playNext()
             }
+        } else if appDelegate.radio.stationTracks.count > 0 {
+            // If no more tracks and radio is set, play station (for when playing history)
+            self.playerStop()
+            appDelegate.radio.playNext()
         }
     }
     
@@ -110,7 +115,7 @@ class DJ: Music {
             } else if self.tracksIdx != self.tracks.count-1 { // we're at the start, prevent infinite loop
                 self.playPrev()
             }
-        }   
+        }
     }
     
     @objc override func itemDidFinishPlaying(notification: NSNotification) {
@@ -122,6 +127,4 @@ class DJ: Music {
     override func nowPlaying() -> String {
         return self.curPlayingItem.pandoraId ?? ""
     }
-
-    
 }

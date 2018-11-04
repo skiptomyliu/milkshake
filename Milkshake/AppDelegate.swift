@@ -41,6 +41,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
     var isArtAnimate: Bool = false
     var isSpectrumAnimate: Bool = true
     var isPremium: Bool = false
+    var listenerId: String = ""
     
     @IBOutlet weak var menuKeepWindowFront: NSMenuItem!
     @IBOutlet weak var menuCrossFade: NSMenuItem!
@@ -214,6 +215,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
             self.register(self) // hotkeys
             self.loginWindowController?.close()
         }
+
+//        if let bid = Bundle.main.bundleIdentifier {
+//            UserDefaults.standard.removePersistentDomain(forName: bid)
+//        }
     }
     
     func handleSuccessLogin(results: Dictionary<String, AnyObject>) {
@@ -221,6 +226,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
         let authToken = results["authToken"] as! String
         let config = results["config"] as! [String: AnyObject]
         self.isPremium = (config["branding"] as! String).lowercased() == "pandorapremium"
+        self.listenerId = results["listenerId"] as! String
         
         if self.isPremium == false {
             self.menuArtists.isHidden = true
@@ -387,6 +393,5 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
         hotKey = HotKey(keyCombo: KeyCombo(key: .two, modifiers: [.command])) //stations
         hotKey = HotKey(keyCombo: KeyCombo(key: .three, modifiers: [.command])) //playlist
     }
-    
 }
 

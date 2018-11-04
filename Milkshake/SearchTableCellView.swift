@@ -49,7 +49,7 @@ class SearchTableCellView: NSTableCellView {
         } else {
             return (
                 self.item.hasInteractive == true &&
-                    (self.item.cellType != CellType.ARTIST) &&
+                    (self.item.cellType == CellType.SEARCH) &&
                     (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION || self.item.type == MusicType.ARTIST)
             )
         }

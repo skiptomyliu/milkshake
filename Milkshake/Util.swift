@@ -59,7 +59,6 @@ class Util: NSObject {
                 musicItem.name = row["name"] as? String
                 musicItem.albumTitle = row["name"] as? String
                 musicItem.token = row["token"] as? String
-                
                 musicItem.pandoraId = row["pandoraId"] as? String
                 musicItem.type = strToMusicType(row["type"] as? String)
                 musicItem.releaseDate = row["releaseDate"] as? String
@@ -357,7 +356,9 @@ class Util: NSObject {
             
             musicItem.albumTitle = track["albumTitle"] as? String
             musicItem.albumSeoToken = track["albumSeoToken"] as? String
-            musicItem.duration = track["duration"] as? Int ?? -1
+//            musicItem.duration = track["duration"] as? Int ?? -1
+            musicItem.duration = track["trackLength"] as? Int ?? -1
+            
             musicItem.allowSkip = track["allowSkip"] as? String
             
             musicItem.userSeed = track["userSeed"] as? String
@@ -600,7 +601,6 @@ class Util: NSObject {
         
     }
     
-    
     class func charLengthInSize(_ text:String, size: CGSize, fontAttributes:[NSAttributedStringKey : Any]) -> Int {
         let attributeString = NSAttributedString(string: text, attributes: fontAttributes)
         let frameSetterRef = CTFramesetterCreateWithAttributedString(attributeString as CFAttributedString)
@@ -610,6 +610,30 @@ class Util: NSObject {
         return characterFitRange.length
     }
     
+    class func getListenerHistoryKey() -> String{
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        let listener_history = String(format:"%@_history", appDelegate.listenerId)
+        return listener_history
+    }
     
+    class func fetchFromHistory() -> [MusicItem] {
+        let historyData = UserDefaults.standard.object(forKey: getListenerHistoryKey()) as? Data
+        var historyArray = [] as [MusicItem]
+        if let historyData = historyData {
+            historyArray = NSKeyedUnarchiver.unarchiveObject(with: historyData) as? [MusicItem] ?? []
+        }
+        return historyArray
+    }
+    
+    class func saveToHistory(item: MusicItem) -> [MusicItem] {
+        var historyArray = fetchFromHistory()
+        if historyArray.count > 50 {
+            historyArray.removeLast()
+        }
+        historyArray.insert(item, at: 0)
+        let encodedData = NSKeyedArchiver.archivedData(withRootObject: historyArray)
+        UserDefaults.standard.set(encodedData, forKey: getListenerHistoryKey())
+        return historyArray
+    }
 }
 

@@ -198,7 +198,11 @@ class NowPlayingViewController: NSViewController {
             } else {
                 self.thumbsUpButton.isHidden = true
                 self.thumbsDownButton.isHidden = true
-                if appDelegate.dj.tracks.count > 1 {
+                
+                if appDelegate.dj.tracks.count <= 1 && appDelegate.radio.stationTracks.count > 0 {
+                    self.skipButton.isHidden = false
+                }
+                else if appDelegate.dj.tracks.count > 1 {
                     self.skipButton.isHidden = false
                 } else {
                     self.skipButton.isHidden = true

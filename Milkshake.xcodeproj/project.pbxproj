@@ -23,6 +23,7 @@
 		050687A81FF7F160007B9F39 /* playcell.png in Resources */ = {isa = PBXBuildFile; fileRef = 050687A71FF7F160007B9F39 /* playcell.png */; };
 		050687AA1FF80950007B9F39 /* playlisticon.png in Resources */ = {isa = PBXBuildFile; fileRef = 050687A91FF8094F007B9F39 /* playlisticon.png */; };
 		050687AC1FF81B28007B9F39 /* thumbs-up-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 050687AB1FF81B28007B9F39 /* thumbs-up-on.png */; };
+		050EE4B1218E7B6D00B6E5A8 /* history.png in Resources */ = {isa = PBXBuildFile; fileRef = 050EE4B0218E7B6D00B6E5A8 /* history.png */; };
 		0513C74B20098E4200B84483 /* Callback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0513C74A20098E4200B84483 /* Callback.swift */; };
 		0513C794200BB7C800B84483 /* MyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0513C793200BB7C800B84483 /* MyButton.swift */; };
 		051C3DDD1FF94BF500D1212F /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 051C3DDC1FF94BF500D1212F /* back.png */; };
@@ -97,6 +98,7 @@
 		050687A71FF7F160007B9F39 /* playcell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playcell.png; sourceTree = "<group>"; };
 		050687A91FF8094F007B9F39 /* playlisticon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playlisticon.png; sourceTree = "<group>"; };
 		050687AB1FF81B28007B9F39 /* thumbs-up-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbs-up-on.png"; sourceTree = "<group>"; };
+		050EE4B0218E7B6D00B6E5A8 /* history.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = history.png; sourceTree = "<group>"; };
 		0513C74A20098E4200B84483 /* Callback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Callback.swift; sourceTree = "<group>"; };
 		0513C793200BB7C800B84483 /* MyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyButton.swift; sourceTree = "<group>"; };
 		051C3DDC1FF94BF500D1212F /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
@@ -308,6 +310,7 @@
 				0506878D1FF6C63C007B9F39 /* fastforward.png */,
 				05B1E8401FF5FE0D00253BA4 /* grey.jpg */,
 				05AAD9E52002F6DF00CE8A18 /* guitar.png */,
+				050EE4B0218E7B6D00B6E5A8 /* history.png */,
 				050687A31FF70FAB007B9F39 /* menu.png */,
 				051C3DDE1FF94BFE00D1212F /* next.png */,
 				0506878B1FF6C5D6007B9F39 /* pause.png */,
@@ -413,6 +416,7 @@
 				050687921FF6CD2F007B9F39 /* thumbs-up.png in Resources */,
 				050687941FF6CD34007B9F39 /* thumbs-down.png in Resources */,
 				05AAD9E62002F6DF00CE8A18 /* guitar.png in Resources */,
+				050EE4B1218E7B6D00B6E5A8 /* history.png in Resources */,
 				050687A81FF7F160007B9F39 /* playcell.png in Resources */,
 				050687A41FF70FAC007B9F39 /* menu.png in Resources */,
 				05D4F5F0217CEE5100283085 /* milkshake_512x512.png in Resources */,

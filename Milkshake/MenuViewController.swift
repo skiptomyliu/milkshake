@@ -77,9 +77,9 @@ class MenuViewController: NSViewController  {
         super.viewDidLoad()
         
         if (appDelegate.isPremium) {
-            self.menuItems = [("NOW PLAYING", "playing"), ("STATIONS", "radio"), ("PLAYLISTS", "playlisticon"), ("ARTISTS", "guitar")]
+            self.menuItems = [("NOW PLAYING", "playing"), ("STATIONS", "radio"), ("PLAYLISTS", "playlisticon"), ("ARTISTS", "guitar"), ("HISTORY", "history")]
         } else {
-            self.menuItems = [("NOW PLAYING", "playing"), ("STATIONS", "radio")]
+            self.menuItems = [("NOW PLAYING", "playing"), ("STATIONS", "radio"), ("HISTORY", "history")]
         }
         self.tableView.selectionHighlightStyle = .none
         let nib = NSNib(nibNamed: NSNib.Name(rawValue: "MenuTableCellView"), bundle: Bundle.main)
