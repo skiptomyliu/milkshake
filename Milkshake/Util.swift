@@ -335,6 +335,9 @@ class Util: NSObject {
         return items
     }
     
+    class func isRadioInteractive(rights: [String]) -> Bool {
+        return rights.contains("allowReplay")
+    }
     
     // When a station is played, parse the four tracks
     class func parseStationIntoItems(station: [String: AnyObject]) -> [MusicItem] {
@@ -371,6 +374,11 @@ class Util: NSObject {
             musicItem.name = track["songTitle"] as? String
             musicItem.rating = track["rating"] as? Int ?? 0
             
+            // Station tracks don't show hasInteractive, so we deduce it ourselves
+            if let rightsArray = track["rights"] as? Array<String> {
+                musicItem.hasInteractive = self.isRadioInteractive(rights: rightsArray)
+                musicItem.rights = rightsArray
+            }
             musicItem.type = MusicType.TRACK
             musicItem.shareableUrlPath = track["shareableUrlPath"] as? String
             musicItem.albumArt = albumArt
@@ -379,7 +387,7 @@ class Util: NSObject {
         }
         return items
     }
-    
+
     // Lists radio stations
     class func parseStationSearchIntoItems(stationResult: [String: AnyObject]) -> [MusicItem] {
         var items: [MusicItem] = []
