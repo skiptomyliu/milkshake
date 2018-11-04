@@ -157,9 +157,7 @@ class MusicItem: NSObject, NSCoding {
         }
 
         let cellTypeInt = aDecoder.decodeInteger(forKey: "cellType")
-        self.cellType = CellType(rawValue: cellTypeInt) ?? CellType.HISTORY
-        print(self.cellType)
-        
+        self.cellType = CellType(rawValue: cellTypeInt) ?? CellType.HISTORY        
         self.explicitness = aDecoder.decodeObject(forKey: "explicitness") as? String
         self.token = aDecoder.decodeObject(forKey: "token") as? String
         self.lastPlayed = aDecoder.decodeObject(forKey: "lastPlayed") as? String
