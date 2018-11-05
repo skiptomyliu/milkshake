@@ -10,7 +10,7 @@ import Cocoa
 
 class Util: NSObject {
     
-    // Convert's string (TR, ST, AR, etc.) to MusicType
+    // Converts string (TR, ST, AR, etc.) to MusicType
     class func strToMusicType(_ type: String?) -> MusicType {
         var musicType = MusicType.UNDEFINED
         if let type = type {
@@ -32,6 +32,9 @@ class Util: NSObject {
                 break
             case "CO":
                 musicType = MusicType.COMPOSER
+                break
+            case "SF":
+                musicType = MusicType.SF
                 break
             default:
                 musicType = MusicType.UNDEFINED
@@ -59,7 +62,6 @@ class Util: NSObject {
                 musicItem.name = row["name"] as? String
                 musicItem.albumTitle = row["name"] as? String
                 musicItem.token = row["token"] as? String
-                
                 musicItem.pandoraId = row["pandoraId"] as? String
                 musicItem.type = strToMusicType(row["type"] as? String)
                 musicItem.releaseDate = row["releaseDate"] as? String
@@ -69,6 +71,9 @@ class Util: NSObject {
                 musicItem.albumId = row["albumId"] as? String
                 musicItem.shareableUrlPath = row["shareableUrlPath"] as? String
                 musicItem.cellType = CellType.SEARCH
+                
+//                print(row)
+                
                 if let rightsDict = row["rightsInfo"] as? [String: AnyObject] {
                     musicItem.hasInteractive = rightsDict["hasInteractive"] as? Bool ?? false
                 }
@@ -330,12 +335,13 @@ class Util: NSObject {
         return items
     }
     
+    class func isRadioInteractive(rights: [String]) -> Bool {
+        return rights.contains("allowReplay")
+    }
     
     // When a station is played, parse the four tracks
     class func parseStationIntoItems(station: [String: AnyObject]) -> [MusicItem] {
-        
         var items: [MusicItem] = []
-        
         let tracks = station["tracks"] as! [[String: Any]]
         for track in tracks {
             // Refig this out:
@@ -357,9 +363,9 @@ class Util: NSObject {
             
             musicItem.albumTitle = track["albumTitle"] as? String
             musicItem.albumSeoToken = track["albumSeoToken"] as? String
-            musicItem.duration = track["duration"] as? Int ?? -1
+//            musicItem.duration = track["duration"] as? Int ?? -1
+            musicItem.duration = track["trackLength"] as? Int ?? -1
             musicItem.allowSkip = track["allowSkip"] as? String
-            
             musicItem.userSeed = track["userSeed"] as? String
             musicItem.trackToken = track["trackToken"] as? String
             musicItem.stationId = track["stationId"] as? String
@@ -368,16 +374,20 @@ class Util: NSObject {
             musicItem.name = track["songTitle"] as? String
             musicItem.rating = track["rating"] as? Int ?? 0
             
+            // Station tracks don't show hasInteractive, so we deduce it ourselves
+            if let rightsArray = track["rights"] as? Array<String> {
+                musicItem.hasInteractive = self.isRadioInteractive(rights: rightsArray)
+                musicItem.rights = rightsArray
+            }
             musicItem.type = MusicType.TRACK
             musicItem.shareableUrlPath = track["shareableUrlPath"] as? String
             musicItem.albumArt = albumArt
             
             items.append(musicItem)
         }
-        
         return items
     }
-    
+
     // Lists radio stations
     class func parseStationSearchIntoItems(stationResult: [String: AnyObject]) -> [MusicItem] {
         var items: [MusicItem] = []
@@ -393,12 +403,10 @@ class Util: NSObject {
                     albumArt = albumArtArray[2]["url"] as? String ?? ""
                 }
             }
-           
             let musicItem = MusicItem()
             musicItem.pandoraId = station["pandoraId"] as? String
             musicItem.stationId = station["stationId"] as? String
             musicItem.name = station["name"] as? String
-            
             musicItem.lastPlayed = station["lastPlayed"] as? String
             musicItem.albumArt = albumArt
             musicItem.dateCreated = station["dateCreated"] as? String ?? ""
@@ -597,9 +605,7 @@ class Util: NSObject {
             dateFormatter.dateFormat = "MMMM yyyy"
             return dateFormatter.string(from: fromDate)
         }
-        
     }
-    
     
     class func charLengthInSize(_ text:String, size: CGSize, fontAttributes:[NSAttributedStringKey : Any]) -> Int {
         let attributeString = NSAttributedString(string: text, attributes: fontAttributes)
@@ -610,6 +616,31 @@ class Util: NSObject {
         return characterFitRange.length
     }
     
+    class func getListenerHistoryKey() -> String{
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        let listener_history = String(format:"%@_history", appDelegate.listenerId)
+        return listener_history
+    }
     
+    class func fetchFromHistory() -> [MusicItem] {
+        let historyData = UserDefaults.standard.object(forKey: getListenerHistoryKey()) as? Data
+        var historyArray = [] as [MusicItem]
+        if let historyData = historyData {
+            historyArray = NSKeyedUnarchiver.unarchiveObject(with: historyData) as? [MusicItem] ?? []
+        }
+        return historyArray
+    }
+    
+    class func saveToHistory(item: MusicItem) -> [MusicItem] {
+        var historyArray = fetchFromHistory()
+        if historyArray.count > 50 {
+            historyArray.removeLast()
+        }
+        item.cellType = CellType.HISTORY
+        historyArray.insert(item, at: 0)
+        let encodedData = NSKeyedArchiver.archivedData(withRootObject: historyArray)
+        UserDefaults.standard.set(encodedData, forKey: getListenerHistoryKey())
+        return historyArray
+    }
 }
 

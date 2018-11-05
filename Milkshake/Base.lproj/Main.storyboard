@@ -163,6 +163,11 @@
                                                 <action selector="loadArtists:" target="Voe-Tx-rLC" id="KEf-AJ-eL6"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="History" keyEquivalent="5" id="kqj-WT-dpB">
+                                            <connections>
+                                                <action selector="loadHistory:" target="Voe-Tx-rLC" id="SK2-Gi-hqA"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -188,6 +193,7 @@
                     <connections>
                         <outlet property="menuArtists" destination="mjV-xy-KI5" id="vHt-WY-2i8"/>
                         <outlet property="menuCrossFade" destination="NtY-pt-7Kk" id="aPv-1I-B1q"/>
+                        <outlet property="menuHistory" destination="kqj-WT-dpB" id="dZy-1u-IpQ"/>
                         <outlet property="menuKeepWindowFront" destination="FhU-Ke-a4p" id="9wp-u3-rtj"/>
                         <outlet property="menuPlaylist" destination="9VX-WE-gVg" id="SR4-l4-s2d"/>
                         <outlet property="menuShuffle" destination="pkH-kS-bb6" id="gbL-7H-doI"/>

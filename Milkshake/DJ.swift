@@ -29,28 +29,28 @@ class DJ: Music {
         didSet { }
     }
     
-    
     // On Demand callbackAudio
     func callbackAudio(result: [String: AnyObject]) {
-        if let audioUrlStr = result["audioURL"] as? String {
-            self.playAudio(item:self.curPlayingItem, url: audioUrlStr)
-        }
-    }
-    
-    func playTrack(trackId: String, albumId: String) {
-        print ("playing track")
-        let appDelegate = NSApplication.shared.delegate as? AppDelegate
-        appDelegate?.music = self
-        appDelegate!.api.getAudioPlaybackInfoPandoraId(pid: trackId, sid: albumId, callbackHandler: callbackAudio)
-        
-        if self.tracks.count > 0 && self.tracksIdx < 0 {
-            self.tracksIdx = self.tracksStr.index(of: trackId) ?? 0 // set current playing index track
+        if let response = result["response"] as?  [String: AnyObject],
+           let musicItem = result["musicItem"] as? MusicItem {
+            if let audioUrlStr = response["audioURL"] as? String {
+                self.playAudio(item:musicItem, url: audioUrlStr)
+            }
         }
     }
     
     func playTrack(musicItem: MusicItem) {
-        self.curPlayingItem = musicItem
-        self.playTrack(trackId: musicItem.pandoraId!, albumId: musicItem.albumId!)
+        print ("playing track")
+        self.musicPreflightChange()
+//        appDelegate.api.getAudioPlaybackInfoPandoraId(pid: musicItem.pandoraId!, sid: musicItem.albumId!, callbackHandler: callbackAudio)
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        appDelegate.api.getAudioPlaybackInfoPandoraId(item: musicItem, callbackHandler: callbackAudio)
+        
+        if self.tracks.count > 0 && self.tracksIdx < 0 {
+            self.tracksIdx = self.tracksStr.index(of: musicItem.pandoraId!) ?? 0 // set current playing index track
+        }
+//        self.curPlayingItem = musicItem
+//        self.playTrack(trackId: musicItem.pandoraId!, albumId: musicItem.albumId!)
     }
     
     func reset() {
@@ -84,11 +84,14 @@ class DJ: Music {
     }
     
     override func playNext() {
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
         if self.isShuffled == false && self.shuffle {
             self.enableShuffle()
         }
         
         if self.tracks.count > 0 {
+            // nested here because radio.playNext will cause double preflight
+            self.musicPreflightChange()
             self.tracksIdx = (self.tracksIdx + 1) % (self.tracks.count)
             let nextTrack = self.tracks[self.tracksIdx]
             if nextTrack.hasInteractive {
@@ -96,6 +99,10 @@ class DJ: Music {
             } else if self.tracksIdx != 0 { // we're at the end, prevent infinite loop
                 self.playNext()
             }
+        } else if appDelegate.radio.stationTracks.count > 0 {
+            // If no more tracks and radio is set, play station (for when playing history)
+            self.playerStop()
+            appDelegate.radio.playNext()
         }
     }
     
@@ -110,7 +117,7 @@ class DJ: Music {
             } else if self.tracksIdx != self.tracks.count-1 { // we're at the start, prevent infinite loop
                 self.playPrev()
             }
-        }   
+        }
     }
     
     @objc override func itemDidFinishPlaying(notification: NSNotification) {
@@ -122,6 +129,4 @@ class DJ: Music {
     override func nowPlaying() -> String {
         return self.curPlayingItem.pandoraId ?? ""
     }
-
-    
 }

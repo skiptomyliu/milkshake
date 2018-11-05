@@ -5,7 +5,6 @@
 //  Created by Dean Liu on 11/27/17.
 //  Copyright © 2017 Dean Liu. All rights reserved.
 //
-//
 
 import Cocoa
 import QuartzCore
@@ -26,8 +25,10 @@ class MainViewController: NSViewController {
     var stationResultsViewController: ResultsViewController = ResultsViewController(nibName: NSNib.Name(rawValue: "ResultsViewController"), bundle: nil)
     var playlistResultsViewController: ResultsViewController = ResultsViewController(nibName: NSNib.Name(rawValue: "ResultsViewController"), bundle: nil)
     var artistResultsViewController: ResultsViewController = ResultsViewController(nibName: NSNib.Name(rawValue: "ResultsViewController"), bundle: nil)
+    var historyResultsViewController = ResultsViewController(nibName: NSNib.Name(rawValue: "ResultsViewController"), bundle: nil)
     var playerViewController: PlayerViewController = PlayerViewController(nibName: NSNib.Name(rawValue: "PlayerViewController"), bundle: nil)
     var nowPlayingViewController = NowPlayingViewController(nibName: NSNib.Name(rawValue: "NowPlayingViewController"), bundle: nil)
+
     
     var menuViewController = MenuViewController(nibName: NSNib.Name(rawValue: "MenuViewController"), bundle: nil)
     var popover = NSPopover()
@@ -86,7 +87,6 @@ class MainViewController: NSViewController {
         // self.playFirstStation()
     }
     
-
     func playFirstStation() {
         self.appDelegate.api.getStations() { (results) in
             let stationResults = Callback.callbackStationsList(results: results)
@@ -215,7 +215,7 @@ class MainViewController: NSViewController {
         appDelegate.radio.playerPause()
         appDelegate.dj.playerPause()
         appDelegate.windowController?.window?.title = musicItem.name ?? ""
-        appDelegate.radio.curPlayingItem = musicItem
+//        appDelegate.radio.curPlayingItem = musicItem
         appDelegate.radio.playStation(stationId: musicItem.stationId!, isStationStart: true, lastPlayedTrackToken: "")
     }
     
@@ -249,7 +249,7 @@ class MainViewController: NSViewController {
     func sweepNowPlaying() {
         if let music = self.appDelegate.music {
             let rc = self._curViewController
-            if rc is ResultsViewController {
+            if rc is ResultsViewController && rc != self.historyResultsViewController {
                 let rvc = rc as! ResultsViewController
                 let rows = rvc.search_results.count
                 for i in 0..<rows {
@@ -308,6 +308,20 @@ class MainViewController: NSViewController {
         }
     }
     
+    func loadHistoryResults(_ sender: Any) {
+        self.historyResultsViewController.view.frame = CGRect(x: 0, y: 0, width: self.resultsView.frame.size.width, height: self.resultsView.frame.size.height)
+        self.historyResultsViewController.mainVCDelegate = self
+        self.pushVC(vc: self.historyResultsViewController)
+        let historyHeader = MusicItem()
+        historyHeader.name = "PLAY HISTORY"
+        historyHeader.isHeader = true
+        if self.historyResultsViewController.search_results.count <= 0 {
+            var historyArray = Util.fetchFromHistory()
+            historyArray.insert(historyHeader, at: 0)
+            self.historyResultsViewController.setResults(results: historyArray)
+        }
+    }
+    
     /*
      
      IBActions
@@ -358,7 +372,6 @@ class MainViewController: NSViewController {
         self.popover.show(relativeTo: (sender as AnyObject).bounds, of: sender as! NSView, preferredEdge: NSRectEdge.maxY)
     }
 }
-
 
 // MARK: - NSTextFieldDelegate
 extension MainViewController: NSTextFieldDelegate {
@@ -414,7 +427,7 @@ extension MainViewController: CellSelectedProtocol {
     
     func cellPlayPlaylistSelectedProtocol(item: MusicItem) {
         
-        func setWithAlbumAndPlay(_ items: [MusicItem]) {
+        func setWithAlbumAndPlay(_ items: [MusicItem]) {            
             self.appDelegate.dj.setWithAlbum(items: items)
             appDelegate.radio.playerPause()
             self.appDelegate.dj.playNext()
@@ -439,7 +452,7 @@ extension MainViewController: CellSelectedProtocol {
     
     func cellSelectedProtocol(cell: SearchTableCellView) {
         let item = cell.item
-        let type = item.type!
+        let type = item.type
         
         //XXX
         // When played, get current view controller tracks and set album
@@ -449,11 +462,14 @@ extension MainViewController: CellSelectedProtocol {
                 self.nowPlayingViewController.playPause(self)
             } else {
                 if let rvc = self._curViewController {
-                    if rvc is ResultsViewController {
+                    if rvc is ResultsViewController && rvc != self.historyResultsViewController {  
                         let tracks = (rvc as! ResultsViewController).getAllTracks()
                         self.appDelegate.dj.setWithAlbum(items: tracks)
+                    } else if rvc == self.historyResultsViewController {
+                        
                     }
                 }
+                // If not premium, create a station from track
                 if self.appDelegate.isPremium == false && item.cellType == CellType.SEARCH {
                     cell.setPlaying(isPlaying: true, isFocus: true)
                     appDelegate.radio.playerPause()
@@ -482,9 +498,14 @@ extension MainViewController: CellSelectedProtocol {
                 appDelegate.api.catalogDetails(pandoraId: item.artistId!, callbackHandler: callbackArtist)
             }
         }
+        else if type == MusicType.SF {
+            cell.setPlaying(isPlaying: true, isFocus: true)
+            appDelegate.radio.playerPause()
+            appDelegate.api.createStation(pandoraId:item.pandoraId!, callbackHandler: createStationCallback)
+        }
         else if type == MusicType.STATION {
             // if playing already, pause
-            if item.stationId == self.appDelegate.music?.nowPlaying() {
+            if item.stationId != nil && item.stationId == self.appDelegate.music?.nowPlaying() {
                 self.nowPlayingViewController.playPause(self)
             } else {
                 cell.setPlaying(isPlaying: true, isFocus: true)
@@ -530,6 +551,13 @@ extension MainViewController: CellSelectedProtocol {
 
 // MARK: - MusicChangedProtocol
 extension MainViewController: MusicChangedProtocol {
+    func musicPreflightChangedProtocol(item: MusicItem) {
+        // Update history vc
+        if (item.pandoraId != nil) {
+            _ = Util.saveToHistory(item: item)
+            self.historyResultsViewController.insertMusicItem(item: item, index: 1)
+        }
+    }
     
     func musicPlayedProtocol() {
         self.sweepNowPlaying()
@@ -574,7 +602,13 @@ extension MainViewController: MusicChangedProtocol {
 extension MainViewController: MenuSelectedProtocol {
     func menuSelectedProtocol(index: Int) {
         self.popover.performClose(self)
-        switch index {
+        var idx = index
+        var freeMapping: [Int: Int] = [0: 0, 1:1, 2:4]
+        if appDelegate.isPremium == false {
+            idx = freeMapping[index] ?? 0
+        }
+        
+        switch idx {
         case 0:
             self.loadNowPlaying(self)
             break
@@ -583,8 +617,13 @@ extension MainViewController: MenuSelectedProtocol {
             break
         case 2:
             self.loadPlaylistResults(self)
+            break
         case 3:
             self.loadArtistResults(self)
+            break
+        case 4:
+            self.loadHistoryResults(self)
+            break
         default:
             break
         }

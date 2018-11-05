@@ -113,9 +113,9 @@ class API: NSObject {
     
     func search(txt:String, callbackHandler: @escaping(_ Dictionary:[String:AnyObject]) -> ()) {
         let appDelegate = NSApplication.shared.delegate as! AppDelegate
-        var types =  ["AL","AR","CO","TR","SF","PL"]
+        var types =  ["AL", "AR", "CO", "PL", "SF", "TR"]
         if appDelegate.isPremium == false {
-            types =  ["AR","CO","TR"]
+            types =  ["AR", "CO", "SF", "TR"]
         }
         let params: [String: Any] = [
             "query": txt,
@@ -130,13 +130,27 @@ class API: NSObject {
         self.request("https://www.pandora.com/api/v3/sod/search", params: params, callbackHandler: callbackHandler)
     }
     
-    func getAudioPlaybackInfoPandoraId(pid:String, sid:String, callbackHandler: @escaping(_ Dictionary:[String:AnyObject]) -> ()) {
-        
+//    func getAudioPlaybackInfoPandoraId(pid:String, sid:String, callbackHandler: @escaping(_ Dictionary:[String:AnyObject]) -> ()) {
+//
+//        let params: [String: Any] = [
+//            "pandoraId": pid,
+//            "sourcePandoraId": sid,
+//        ]
+//        self.request("https://www.pandora.com/api/v1/ondemand/getAudioPlaybackInfo", params: params, callbackHandler: callbackHandler)
+//    }
+    
+    func getAudioPlaybackInfoPandoraId(item:MusicItem, callbackHandler: @escaping(_ Dictionary:[String:AnyObject]) -> ()) {
         let params: [String: Any] = [
-            "pandoraId": pid,
-            "sourcePandoraId": sid,
-        ]
-        self.request("https://www.pandora.com/api/v1/ondemand/getAudioPlaybackInfo", params: params, callbackHandler: callbackHandler)
+            "pandoraId": item.pandoraId!,
+            "sourcePandoraId": item.albumId!,
+            ]
+        self.request("https://www.pandora.com/api/v1/ondemand/getAudioPlaybackInfo", params: params) { (response) in
+            let returnDict: [String: Any] = [
+                "musicItem": item,
+                "response": response
+            ]
+            callbackHandler(returnDict as [String : AnyObject])
+        }
     }
     
     //  Fetching album is a 2-part sequential request:

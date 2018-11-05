@@ -41,14 +41,12 @@ class Music: NSObject {
     var MAXFAILS = 5 // failures before stopping to proceed to next track.  Used for Radio
     var curFail = 0  // current number of failures
     
-    
     override init() {
         self._cur_player = self.player0
         self._ptr_player0 = self.player0
         self._ptr_player1 = self.player1
         self._ptr_player0.volume = 1.0
         self._ptr_player1.volume = 0.0
-    
         super.init()
     }
     
@@ -56,13 +54,11 @@ class Music: NSObject {
         // Error handling
         // Only play if there's length
         let playerItem = AVPlayerItem(url: URL(string: url)!)
-        
         let tap = tapManager.tap()
         
         let length = Float(playerItem.asset.duration.value)/Float(playerItem.asset.duration.timescale)
         print("Music - URL: ", url)
         if length > 0.0  {
-            
             if let audioTrack = playerItem.asset.tracks(withMediaType: AVMediaType.audio).first {
                 let inputParams = AVMutableAudioMixInputParameters(track: audioTrack)
                 inputParams.audioTapProcessor = tap?.takeUnretainedValue()
@@ -70,6 +66,8 @@ class Music: NSObject {
                 audioMix.inputParameters = [inputParams]
                 playerItem.audioMix = audioMix
             }
+            
+            item.duration = Int(length)
             self.curPlayingItem = item
             self._playAudio(playerItem: playerItem)
         } else {
@@ -115,7 +113,7 @@ class Music: NSObject {
     
     func removeTimeObserver() {
         if let obsToken = self.timeObserverToken {
-            print("removing token...")
+            print("removing observer token...")
             self._cur_player.removeTimeObserver(obsToken)
             timeObserverToken = nil
         }
@@ -160,7 +158,6 @@ class Music: NSObject {
                 self?.playerVCDelegate!.updateMusicTimeProtocol(duration: Float(CMTimeGetSeconds((self?._cur_player.currentItem?.currentTime())!)), totalTime: Float(CMTimeGetSeconds((self?._cur_player.currentItem?.duration)!)))
         }
         
-        
         self.nowVCDelegate!.musicPlayedProtocol()
         self.nowVCDelegate!.musicChangedProtocol(item: self.curPlayingItem)
         self.mainVCDelegate!.musicPlayedProtocol()
@@ -186,6 +183,15 @@ class Music: NSObject {
             self.menuVCDelegate!.musicPausedProtocol()
         }
     }
+    
+    // Remove current playing item and stop
+    func playerStop() {
+        if isPlaying() {
+            self._cur_player.pause()
+            self.removeTimeObserver()
+            self._cur_player.replaceCurrentItem(with: nil)
+        }
+    }
 
     func playerRepeat() {
         self._cur_player.currentItem?.seek(to: kCMTimeZero, completionHandler: nil)
@@ -203,6 +209,14 @@ class Music: NSObject {
             return true
         }
         return false
+    }
+    
+    func musicPreflightChange() {
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        if let music = appDelegate.music {
+            self.mainVCDelegate!.musicPreflightChangedProtocol(item: music.curPlayingItem)
+        }
+        appDelegate.music = self
     }
     
     func nowPlaying() -> String {

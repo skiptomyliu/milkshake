@@ -45,7 +45,9 @@ class ResultsViewController: NSViewController {
     @objc func actionSelectedCell(sender: AnyObject) {
         let idx = self.searchTableView.selectedRow
         if let cellView = self.searchTableView.view(atColumn: 0, row: idx, makeIfNecessary: true) as? SearchTableCellView {
-            self.mainVCDelegate?.cellSelectedProtocol(cell: cellView)
+            if cellView.can_click() {
+                self.mainVCDelegate?.cellSelectedProtocol(cell: cellView)
+            }
         }
     }
     
@@ -75,13 +77,27 @@ class ResultsViewController: NSViewController {
     
     func setResults(results: [MusicItem]){
         self.search_results = results
-        self.searchTableView.reloadData()
-        self.searchTableView.scrollRowToVisible(0)
+        if self.searchTableView != nil {
+            self.searchTableView.reloadData()
+            self.searchTableView.scrollRowToVisible(0)
+        }
     }
     
     func setResults(_ results: [MusicItem], defaultSelectRow: Bool){
         self.setResults(results: results)
         self.searchTableView.selectRowIndexes(NSIndexSet(index: 0) as IndexSet, byExtendingSelection: false)
+    }
+    
+    func insertMusicItem(item: MusicItem, index: Int) {
+        if self.searchTableView != nil {
+            if self.search_results.count <= index {
+                self.search_results.append(item)
+            } else {
+                self.search_results.insert(item, at: index)
+            }
+            self.searchTableView.reloadData()
+            self.searchTableView.scrollRowToVisible(0)
+        }
     }
     
     func removeAllObjects() {

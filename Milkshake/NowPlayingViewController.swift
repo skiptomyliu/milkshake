@@ -10,8 +10,11 @@ import Cocoa
 
 // MARK: - NSTextFieldDelegate
 extension NowPlayingViewController: MusicChangedProtocol {
-    // MusicChangedProtocol (driven by Music.swift)
+    func musicPreflightChangedProtocol(item: MusicItem) {
+        
+    }
     
+    // MusicChangedProtocol (driven by Music.swift)
     func musicChangedProtocol(item:MusicItem) {
         self.setEnable(true)
         self.setViewWithMusicItem(item: item)
@@ -159,7 +162,7 @@ class NowPlayingViewController: NSViewController {
             }
         }
         
-        let type = item.type!
+        let type = item.type
         if type == MusicType.ALBUM || type == MusicType.TRACK {
             self.subtitleTextField.stringValue = item.artistName!
         }
@@ -198,7 +201,11 @@ class NowPlayingViewController: NSViewController {
             } else {
                 self.thumbsUpButton.isHidden = true
                 self.thumbsDownButton.isHidden = true
-                if appDelegate.dj.tracks.count > 1 {
+                
+                if appDelegate.dj.tracks.count <= 1 && appDelegate.radio.stationTracks.count > 0 {
+                    self.skipButton.isHidden = false
+                }
+                else if appDelegate.dj.tracks.count > 1 {
                     self.skipButton.isHidden = false
                 } else {
                     self.skipButton.isHidden = true

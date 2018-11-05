@@ -22,6 +22,7 @@ protocol CellSelectedProtocol: class {
 }
 
 protocol MusicChangedProtocol: class {
+    func musicPreflightChangedProtocol(item: MusicItem)
     func musicChangedProtocol(item: MusicItem)
     func musicPlayedProtocol()
     func musicPausedProtocol()
