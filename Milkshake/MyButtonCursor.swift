@@ -34,5 +34,4 @@ class MyButtonCursor: NSButton {
             super.resetCursorRects()
         }
     }
-    
 }

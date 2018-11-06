@@ -90,8 +90,9 @@ class DJ: Music {
         }
         
         if self.tracks.count > 0 {
+            // XXX Switching to radio wont save the track
             // nested here because radio.playNext will cause double preflight
-            self.musicPreflightChange()
+//            self.musicPreflightChange()
             self.tracksIdx = (self.tracksIdx + 1) % (self.tracks.count)
             let nextTrack = self.tracks[self.tracksIdx]
             if nextTrack.hasInteractive {

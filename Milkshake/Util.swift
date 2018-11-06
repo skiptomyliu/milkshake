@@ -633,7 +633,7 @@ class Util: NSObject {
     
     class func saveToHistory(item: MusicItem) -> [MusicItem] {
         var historyArray = fetchFromHistory()
-        if historyArray.count > 50 {
+        if historyArray.count > 30 {
             historyArray.removeLast()
         }
         item.cellType = CellType.HISTORY

@@ -14,16 +14,20 @@ class SearchTableCellView: NSTableCellView {
 
     @IBOutlet weak var artistTextField: NSTextField!
     @IBOutlet weak var typeTextField: NSTextField!
-    
     @IBOutlet weak var cellImageView: NSImageView!
     @IBOutlet weak var darkView: NSView!
+    @IBOutlet weak var largeDarkView: NSView!
     @IBOutlet weak var eBox: NSBox! // explicit
     @IBOutlet weak var rBox: NSBox! // radio
     @IBOutlet weak var pBox: NSBox! // premium
     @IBOutlet weak var latestReleaseField: NSTextField!
     @IBOutlet weak var playButton: MyButtonCursor!
+
     @IBOutlet weak var artistLink: FlatButton!
     @IBOutlet weak var albumLink: FlatButton!
+    
+    @IBOutlet weak var thumbsUpButton: PlayerButton!
+    @IBOutlet weak var thumbsDownButton: PlayerButton!
     
     var playingImageView = NSImageView()
     var transparentBlackBox = NSBox()
@@ -77,7 +81,9 @@ class SearchTableCellView: NSTableCellView {
         if self.show_play() {
             self.playButton.isHidden = false
             self.darkView.isHidden = false
+            self.largeDarkView.isHidden = false
         }
+        showHide(alpha: 0.9, duration: 0.7)
     }
     
     override func mouseExited(with event: NSEvent) {
@@ -86,9 +92,30 @@ class SearchTableCellView: NSTableCellView {
         if self.show_play() {
             self.playButton.isHidden = true
             self.darkView.isHidden = self.playingImageView.animates ? false : true // hide if not playing
+            self.largeDarkView.isHidden = true
         }
+        showHide(alpha: 0.0, duration: 0.7)
     }
     
+    func showHide(alpha:CGFloat, duration: Double) {
+        if alpha > 0 {
+            self.largeDarkView.animator().alphaValue = 0.7
+//            self.largeDarkView.isHidden = true
+        } else {
+            self.largeDarkView.animator().alphaValue = 0
+//            self.largeDarkView.isHidden = true
+        }
+        self.thumbsUpButton.animator().alphaValue = alpha
+        self.thumbsDownButton.animator().alphaValue = alpha
+//        self.playButton.animator().alphaValue = alpha
+//        self.albumLink.animator().alphaValue = alpha
+        NSAnimationContext.runAnimationGroup({(context) -> Void in
+            context.duration = duration
+        }) {
+            // animation done
+        }
+    }
+
     override var backgroundStyle: NSView.BackgroundStyle {
         willSet { }
         didSet {
@@ -152,7 +179,6 @@ class SearchTableCellView: NSTableCellView {
                 self.artistLink.setNeedsDisplay()
             }
             self.setArtistLinkAndAlbumLink()
-            
             let curPlaying = self.appDelegate.music?.curPlayingItem
             if result.pandoraId == curPlaying?.pandoraId {
                 self.setPlaying(isPlaying: true)
@@ -191,13 +217,15 @@ class SearchTableCellView: NSTableCellView {
         } else if type == MusicType.PLAYLIST {
             self.typeTextField.stringValue = String(format: "Tracks: %i", self.item.totalTracks)
         }
-
+        
+        self.setViewWithMusicItem(item: self.item)
         self.playingImageView.frame = CGRect(x: 18, y: 10, width: 30, height: 30);
         self.playingImageView.animates = false
         self.playingImageView.image = NSImage(named: NSImage.Name(rawValue: "playing.gif"))
         self.playingImageView.canDrawSubviewsIntoLayer = true
         self.playingImageView.isHidden = true
         self.addSubview(self.playingImageView)
+        
 
         self.setPlaying(isPlaying: false)
     }
@@ -278,12 +306,63 @@ class SearchTableCellView: NSTableCellView {
             }
         }
     }
+
+    func setEnable(_ isEnabled:Bool) {
+        self.thumbsUpButton.isHidden = !isEnabled
+        self.thumbsDownButton.isHidden = !isEnabled
+    }
     
+    func setViewWithMusicItem(item: MusicItem) {
+        self.item = item
+        if item.canFeedback() {
+            self.setEnable(true)
+            if item.rating > 0 {
+                
+                self.thumbsUpButton.isToggle = true
+            } else {
+                self.thumbsUpButton.isToggle = false
+            }
+        } else {
+            self.setEnable(false)
+        }
+        
+        self.largeDarkView.alphaValue = 0
+        self.largeDarkView.wantsLayer = true
+        self.largeDarkView.layer?.backgroundColor = CGColor.black
+    }
+    
+    // Actions
     @IBAction func loadArtist(_ sender: Any) {
         self.mainVCDelegate?.cellArtistSelectedProtocol(item: self.item)
     }
 
     @IBAction func loadAlbum(_ sender: Any) {
         self.mainVCDelegate?.cellAlbumSelectedProtocol(item: self.item)
+    }
+    
+    @IBAction func thumbsDown(_ sender: Any) {
+        print("THUMB DOWN")
+        let appDelegate = NSApplication.shared.delegate as? AppDelegate
+        let trackToken = self.item.trackToken!
+        appDelegate!.api.addFeedback(trackToken: trackToken, isPositive: false) { responseDict in
+            print("Thumbsdown Feedback response: ")
+            print(responseDict)
+        }
+        self.thumbsDownButton.isToggle = !self.thumbsUpButton.isToggle
+        self.thumbsUpButton.isToggle = false
+    }
+    
+    @IBAction func thumbsUp(_ sender: Any) {
+//        self.thumbsUpButton.isToggle = true // !self.thumbsUpButton.isToggle
+        print("THUMB UP")
+        
+        let appDelegate = NSApplication.shared.delegate as? AppDelegate
+        let trackToken = self.item.trackToken!
+        appDelegate!.api.addFeedback(trackToken: trackToken, isPositive: true) { responseDict in
+            print("Thumbsup Feedback response: ")
+            print(responseDict)
+        }
+        self.thumbsDownButton.isToggle = false
+        self.thumbsUpButton.isToggle = !self.thumbsUpButton.isToggle
     }
 }
