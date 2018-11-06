@@ -47,7 +47,6 @@ class Radio: Music {
     }
     
     override func playNext() {
-        self.musicPreflightChange()
         // If we are out, we fetch for more
         if self.stationIdx+1 > self.stationTracks.count-1 {
             let prevToken = self.stationTracks[self.stationIdx].trackToken!
@@ -71,6 +70,7 @@ class Radio: Music {
                         musicItem.artistId = trackDict["artistId"] as? String
                         musicItem.albumId = trackDict["albumId"] as? String
                     }
+                    self.musicPreflightChange()
                     self.playAudio(item:musicItem, url: urlStr)
                 }
             }

@@ -91,7 +91,7 @@ class DJ: Music {
         
         if self.tracks.count > 0 {
             // nested here because radio.playNext will cause double preflight
-            self.musicPreflightChange()
+//            self.musicPreflightChange()
             self.tracksIdx = (self.tracksIdx + 1) % (self.tracks.count)
             let nextTrack = self.tracks[self.tracksIdx]
             if nextTrack.hasInteractive {
