@@ -299,6 +299,14 @@ class API: NSObject {
         self.request("https://www.pandora.com/api/v1/station/addFeedback", params: params, callbackHandler: callbackHandler)
     }
     
+    func deleteFeedback(trackToken:String, isPositive:Bool, callbackHandler: @escaping(_ Dictionary:[String: AnyObject]) -> ()) {
+        let params: [String: Any] = [
+            "trackToken": trackToken,
+            "isPositive": isPositive,
+            ]
+        self.request("https://www.pandora.com/api/v1/station/deleteFeedback", params: params, callbackHandler: callbackHandler)
+    }
+    
     func trackStarted(trackToken: String, callbackHandler: @escaping(_ Dictionary:[String: AnyObject]) -> ()) {
         let params: [String: Any] = [
             "trackToken": trackToken

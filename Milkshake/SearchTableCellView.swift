@@ -42,6 +42,9 @@ class SearchTableCellView: NSTableCellView {
         super.awakeFromNib()
         let trackingArea = NSTrackingArea(rect: self.frame, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways], owner: self, userInfo: nil)
         self.addTrackingArea(trackingArea)
+        
+        let thumbTrackingArea = NSTrackingArea.init(rect:CGRect(x: self.frame.size.width-50, y: 0, width: self.frame.width, height: self.frame.size.height), options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways], owner: self, userInfo: nil)
+        self.addTrackingArea(thumbTrackingArea)
     }
     
     func show_play() -> Bool {
@@ -81,9 +84,10 @@ class SearchTableCellView: NSTableCellView {
         if self.show_play() {
             self.playButton.isHidden = false
             self.darkView.isHidden = false
-            self.largeDarkView.isHidden = false
         }
-        showHide(alpha: 0.9, duration: 0.7)
+        if event.locationInWindow.x > self.frame.size.width-100 {
+            showHideThumbs(alpha: 0.9, duration: 0.7)
+        }
     }
     
     override func mouseExited(with event: NSEvent) {
@@ -92,27 +96,28 @@ class SearchTableCellView: NSTableCellView {
         if self.show_play() {
             self.playButton.isHidden = true
             self.darkView.isHidden = self.playingImageView.animates ? false : true // hide if not playing
-            self.largeDarkView.isHidden = true
         }
-        showHide(alpha: 0.0, duration: 0.7)
+        showHideThumbs(alpha: 0.0, duration: 0.7)
     }
     
-    func showHide(alpha:CGFloat, duration: Double) {
-        if alpha > 0 {
-            self.largeDarkView.animator().alphaValue = 0.7
-//            self.largeDarkView.isHidden = true
-        } else {
-            self.largeDarkView.animator().alphaValue = 0
-//            self.largeDarkView.isHidden = true
-        }
-        self.thumbsUpButton.animator().alphaValue = alpha
-        self.thumbsDownButton.animator().alphaValue = alpha
-//        self.playButton.animator().alphaValue = alpha
-//        self.albumLink.animator().alphaValue = alpha
-        NSAnimationContext.runAnimationGroup({(context) -> Void in
-            context.duration = duration
-        }) {
-            // animation done
+    func showHideThumbs(alpha:CGFloat, duration: Double) {
+        if self.item.cellType == CellType.HISTORY && self.item.canFeedback() {
+            if alpha > 0 {
+                self.largeDarkView.animator().alphaValue = 0.8
+                self.largeDarkView.isHidden = false
+            } else {
+                self.largeDarkView.animator().alphaValue = 0
+                self.largeDarkView.isHidden = true
+            }
+            self.thumbsUpButton.isHidden = false
+            self.thumbsDownButton.isHidden = false
+            self.thumbsUpButton.animator().alphaValue = alpha
+            self.thumbsDownButton.animator().alphaValue = alpha
+            NSAnimationContext.runAnimationGroup({(context) -> Void in
+                context.duration = duration
+            }) {
+                // animation done
+            }
         }
     }
 
@@ -314,18 +319,18 @@ class SearchTableCellView: NSTableCellView {
     
     func setViewWithMusicItem(item: MusicItem) {
         self.item = item
+        self.thumbsUpButton.isHidden = true
+        self.thumbsDownButton.isHidden = true
         if item.canFeedback() {
-            self.setEnable(true)
             if item.rating > 0 {
-                
                 self.thumbsUpButton.isToggle = true
             } else {
                 self.thumbsUpButton.isToggle = false
+                // self.thumbsDownButton.isToggle = true
             }
         } else {
             self.setEnable(false)
         }
-        
         self.largeDarkView.alphaValue = 0
         self.largeDarkView.wantsLayer = true
         self.largeDarkView.layer?.backgroundColor = CGColor.black
@@ -353,14 +358,19 @@ class SearchTableCellView: NSTableCellView {
     }
     
     @IBAction func thumbsUp(_ sender: Any) {
-//        self.thumbsUpButton.isToggle = true // !self.thumbsUpButton.isToggle
-        print("THUMB UP")
-        
         let appDelegate = NSApplication.shared.delegate as? AppDelegate
         let trackToken = self.item.trackToken!
-        appDelegate!.api.addFeedback(trackToken: trackToken, isPositive: true) { responseDict in
-            print("Thumbsup Feedback response: ")
-            print(responseDict)
+        
+        if self.thumbsUpButton.isToggle {
+            appDelegate!.api.deleteFeedback(trackToken: trackToken, isPositive: false) { responseDict in
+                print("UNTHUMB Feedback response: ")
+                print(responseDict)
+            }
+        } else {
+            appDelegate!.api.addFeedback(trackToken: trackToken, isPositive: true) { responseDict in
+                print("Thumbsup Feedback response: ")
+                print(responseDict)
+            }
         }
         self.thumbsDownButton.isToggle = false
         self.thumbsUpButton.isToggle = !self.thumbsUpButton.isToggle
