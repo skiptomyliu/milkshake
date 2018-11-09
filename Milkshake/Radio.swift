@@ -47,6 +47,8 @@ class Radio: Music {
     }
     
     override func playNext() {
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        appDelegate.dj.tracks.removeAll()
         // If we are out, we fetch for more
         if self.stationIdx+1 > self.stationTracks.count-1 {
             let prevToken = self.stationTracks[self.stationIdx].trackToken!
