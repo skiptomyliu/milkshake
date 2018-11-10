@@ -24,6 +24,8 @@
 		050687AA1FF80950007B9F39 /* playlisticon.png in Resources */ = {isa = PBXBuildFile; fileRef = 050687A91FF8094F007B9F39 /* playlisticon.png */; };
 		050687AC1FF81B28007B9F39 /* thumbs-up-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 050687AB1FF81B28007B9F39 /* thumbs-up-on.png */; };
 		050EE4B1218E7B6D00B6E5A8 /* history.png in Resources */ = {isa = PBXBuildFile; fileRef = 050EE4B0218E7B6D00B6E5A8 /* history.png */; };
+		050EE4B32195CAAC00B6E5A8 /* thumbs-down-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 050EE4B22195CAAB00B6E5A8 /* thumbs-down-on.png */; };
+		050EE4B521967B0B00B6E5A8 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050EE4B421967B0B00B6E5A8 /* History.swift */; };
 		0513C74B20098E4200B84483 /* Callback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0513C74A20098E4200B84483 /* Callback.swift */; };
 		0513C794200BB7C800B84483 /* MyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0513C793200BB7C800B84483 /* MyButton.swift */; };
 		051C3DDD1FF94BF500D1212F /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 051C3DDC1FF94BF500D1212F /* back.png */; };
@@ -99,6 +101,8 @@
 		050687A91FF8094F007B9F39 /* playlisticon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playlisticon.png; sourceTree = "<group>"; };
 		050687AB1FF81B28007B9F39 /* thumbs-up-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbs-up-on.png"; sourceTree = "<group>"; };
 		050EE4B0218E7B6D00B6E5A8 /* history.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = history.png; sourceTree = "<group>"; };
+		050EE4B22195CAAB00B6E5A8 /* thumbs-down-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbs-down-on.png"; sourceTree = "<group>"; };
+		050EE4B421967B0B00B6E5A8 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		0513C74A20098E4200B84483 /* Callback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Callback.swift; sourceTree = "<group>"; };
 		0513C793200BB7C800B84483 /* MyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyButton.swift; sourceTree = "<group>"; };
 		051C3DDC1FF94BF500D1212F /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
@@ -192,6 +196,7 @@
 				0513C74A20098E4200B84483 /* Callback.swift */,
 				05ED20F31FCDB1F300123317 /* CellSelectedProtocol.swift */,
 				05ED20F51FCE543200123317 /* DJ.swift */,
+				050EE4B421967B0B00B6E5A8 /* History.swift */,
 				05ED21031FD2563400123317 /* Music.swift */,
 				05ED21121FD6ED8E00123317 /* MusicItem.swift */,
 				059C04B2201EB1030007E456 /* MutableCollection+shuffle.swift */,
@@ -324,6 +329,7 @@
 				050687911FF6CD2F007B9F39 /* thumbs-up.png */,
 				050687AB1FF81B28007B9F39 /* thumbs-up-on.png */,
 				050687931FF6CD34007B9F39 /* thumbs-down.png */,
+				050EE4B22195CAAB00B6E5A8 /* thumbs-down-on.png */,
 				05D4F5EF217CEE5100283085 /* milkshake_512x512.png */,
 			);
 			name = resources;
@@ -417,6 +423,7 @@
 				050687941FF6CD34007B9F39 /* thumbs-down.png in Resources */,
 				05AAD9E62002F6DF00CE8A18 /* guitar.png in Resources */,
 				050EE4B1218E7B6D00B6E5A8 /* history.png in Resources */,
+				050EE4B32195CAAC00B6E5A8 /* thumbs-down-on.png in Resources */,
 				050687A81FF7F160007B9F39 /* playcell.png in Resources */,
 				050687A41FF70FAC007B9F39 /* menu.png in Resources */,
 				05D4F5F0217CEE5100283085 /* milkshake_512x512.png in Resources */,
@@ -547,6 +554,7 @@
 				05ED20E71FCD2FBD00123317 /* SearchTableCellView.swift in Sources */,
 				059A061E200D66EB003C81F1 /* NIFFTHelper.swift in Sources */,
 				05412FEC1FDF73720067DCFE /* PlayerViewController.swift in Sources */,
+				050EE4B521967B0B00B6E5A8 /* History.swift in Sources */,
 				05ED20E21FCD125C00123317 /* ResultsViewController.swift in Sources */,
 				05ED20F11FCD440500123317 /* MyWindow.swift in Sources */,
 			);

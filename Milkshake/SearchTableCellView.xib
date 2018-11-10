@@ -120,17 +120,6 @@
                         <action selector="playAction:" target="IdS-gb-l7q" id="ney-lk-iEF"/>
                     </connections>
                 </button>
-                <button hidden="YES" fixedFrame="YES" alphaValue="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="FSF-Zp-FeO" customClass="MyButtonCursor" customModule="Milkshake" customModuleProvider="target">
-                    <rect key="frame" x="21" y="15" width="20" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="playcell" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="pe2-EF-aui">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="playAction:" target="IdS-gb-l7q" id="tNS-X5-86Z"/>
-                    </connections>
-                </button>
                 <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vvF-8n-pVf" customClass="FlatButton" customModule="Milkshake" customModuleProvider="target">
                     <rect key="frame" x="100" y="8" width="90" height="20"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -153,6 +142,43 @@
                         <action selector="loadAlbum:" target="IdS-gb-l7q" id="sgN-zO-1KJ"/>
                     </connections>
                 </button>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1ot-8W-sxs" userLabel="Large Dark View">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </customView>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T3i-4A-PGz" userLabel="Thumb Up" customClass="PlayerButton" customModule="Milkshake" customModuleProvider="target">
+                    <rect key="frame" x="270" y="15" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="thumbs-up" imagePosition="only" alignment="center" alternateImage="thumbs-up-on" imageScaling="proportionallyUpOrDown" inset="2" id="5kr-dL-JOn">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="thumbsUp:" target="IdS-gb-l7q" id="TA9-LO-WrS"/>
+                    </connections>
+                </button>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S1P-3v-WbH" userLabel="Thumb Down" customClass="PlayerButton" customModule="Milkshake" customModuleProvider="target">
+                    <rect key="frame" x="242" y="15" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="thumbs-down" imagePosition="only" alignment="center" alternateImage="thumbs-down-on" imageScaling="proportionallyUpOrDown" inset="2" id="QrS-Ao-7ez">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="thumbsDown:" target="IdS-gb-l7q" id="c1E-Mm-0LA"/>
+                    </connections>
+                </button>
+                <button hidden="YES" fixedFrame="YES" alphaValue="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="FSF-Zp-FeO" customClass="MyButtonCursor" customModule="Milkshake" customModuleProvider="target">
+                    <rect key="frame" x="21" y="15" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="playcell" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="pe2-EF-aui">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="playAction:" target="IdS-gb-l7q" id="tNS-X5-86Z"/>
+                    </connections>
+                </button>
             </subviews>
             <accessibility identifier="SearchTableCellView"/>
             <connections>
@@ -162,10 +188,13 @@
                 <outlet property="cellImageView" destination="4Lm-84-hXx" id="Ote-ue-SRl"/>
                 <outlet property="darkView" destination="XwA-rr-BLR" id="chn-rP-3jG"/>
                 <outlet property="eBox" destination="Wmg-Hq-Y4h" id="VpP-ki-3tN"/>
+                <outlet property="largeDarkView" destination="1ot-8W-sxs" id="MpX-Ik-VId"/>
                 <outlet property="latestReleaseField" destination="IQ1-NU-tbG" id="Rqe-ii-Tj2"/>
                 <outlet property="pBox" destination="byu-N2-ALa" id="NE5-sp-INP"/>
                 <outlet property="playButton" destination="FSF-Zp-FeO" id="9bY-1S-cha"/>
                 <outlet property="rBox" destination="3uV-cJ-jfO" id="MAL-IG-vVp"/>
+                <outlet property="thumbsDownButton" destination="S1P-3v-WbH" id="vho-Ah-vWm"/>
+                <outlet property="thumbsUpButton" destination="T3i-4A-PGz" id="Bkc-9B-B3X"/>
                 <outlet property="typeTextField" destination="LSH-c0-bsc" id="d6C-LD-uf0"/>
             </connections>
             <point key="canvasLocation" x="64" y="112"/>
@@ -174,5 +203,9 @@
     <resources>
         <image name="album-500" width="500" height="500"/>
         <image name="playcell" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="thumbs-down" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="thumbs-down-on" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="thumbs-up" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="thumbs-up-on" width="51.200000762939453" height="51.200000762939453"/>
     </resources>
 </document>

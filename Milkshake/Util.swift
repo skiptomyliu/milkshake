@@ -342,48 +342,49 @@ class Util: NSObject {
     // When a station is played, parse the four tracks
     class func parseStationIntoItems(station: [String: AnyObject]) -> [MusicItem] {
         var items: [MusicItem] = []
-        let tracks = station["tracks"] as! [[String: Any]]
-        for track in tracks {
-            // Refig this out:
-            let albumArtArray = track["albumArt"] as! [AnyObject]
-            var albumArt = ""
-            
-            if(albumArtArray.count > 0) {
-                // XXX: May error out, may not always be enough
-                albumArt = albumArtArray[2]["url"] as? String ?? ""
+        if let tracks = station["tracks"] as? [[String: Any]] {
+            for track in tracks {
+                // Refig this out:
+                let albumArtArray = track["albumArt"] as! [AnyObject]
+                var albumArt = ""
+                
+                if(albumArtArray.count > 0) {
+                    // XXX: May error out, may not always be enough
+                    albumArt = albumArtArray[2]["url"] as? String ?? ""
+                }
+                
+                let musicItem = MusicItem()
+                musicItem.pandoraId = track["pandoraId"] as? String
+                musicItem.artistName = track["artistName"] as? String
+                
+                // Format of artist id when fetching from station: R23136
+                let artistMusicId = String((track["artistMusicId"] as! String).dropFirst(1))
+                musicItem.artistId = String(format:"AR:%@", artistMusicId)
+                
+                musicItem.albumTitle = track["albumTitle"] as? String
+                musicItem.albumSeoToken = track["albumSeoToken"] as? String
+    //            musicItem.duration = track["duration"] as? Int ?? -1
+                musicItem.duration = track["trackLength"] as? Int ?? -1
+                musicItem.allowSkip = track["allowSkip"] as? String
+                musicItem.userSeed = track["userSeed"] as? String
+                musicItem.trackToken = track["trackToken"] as? String
+                musicItem.stationId = track["stationId"] as? String
+                musicItem.audioURL = track["audioURL"] as? String
+                musicItem.musicId = track["musicId"] as? String
+                musicItem.name = track["songTitle"] as? String
+                musicItem.rating = track["rating"] as? Int ?? 0
+                
+                // Station tracks don't show hasInteractive, so we deduce it ourselves
+                if let rightsArray = track["rights"] as? Array<String> {
+                    musicItem.hasInteractive = self.isRadioInteractive(rights: rightsArray)
+                    musicItem.rights = rightsArray
+                }
+                musicItem.type = MusicType.TRACK
+                musicItem.shareableUrlPath = track["shareableUrlPath"] as? String
+                musicItem.albumArt = albumArt
+                
+                items.append(musicItem)
             }
-            
-            let musicItem = MusicItem()
-            musicItem.pandoraId = track["pandoraId"] as? String
-            musicItem.artistName = track["artistName"] as? String
-            
-            // Format of artist id when fetching from station: R23136
-            let artistMusicId = String((track["artistMusicId"] as! String).dropFirst(1))
-            musicItem.artistId = String(format:"AR:%@", artistMusicId)
-            
-            musicItem.albumTitle = track["albumTitle"] as? String
-            musicItem.albumSeoToken = track["albumSeoToken"] as? String
-//            musicItem.duration = track["duration"] as? Int ?? -1
-            musicItem.duration = track["trackLength"] as? Int ?? -1
-            musicItem.allowSkip = track["allowSkip"] as? String
-            musicItem.userSeed = track["userSeed"] as? String
-            musicItem.trackToken = track["trackToken"] as? String
-            musicItem.stationId = track["stationId"] as? String
-            musicItem.audioURL = track["audioURL"] as? String
-            musicItem.musicId = track["musicId"] as? String
-            musicItem.name = track["songTitle"] as? String
-            musicItem.rating = track["rating"] as? Int ?? 0
-            
-            // Station tracks don't show hasInteractive, so we deduce it ourselves
-            if let rightsArray = track["rights"] as? Array<String> {
-                musicItem.hasInteractive = self.isRadioInteractive(rights: rightsArray)
-                musicItem.rights = rightsArray
-            }
-            musicItem.type = MusicType.TRACK
-            musicItem.shareableUrlPath = track["shareableUrlPath"] as? String
-            musicItem.albumArt = albumArt
-            
-            items.append(musicItem)
         }
         return items
     }
@@ -614,33 +615,6 @@ class Util: NSObject {
         var characterFitRange = CFRange()
         CTFramesetterSuggestFrameSizeWithConstraints(frameSetterRef, CFRangeMake(0, 0), nil, size, &characterFitRange)
         return characterFitRange.length
-    }
-    
-    class func getListenerHistoryKey() -> String{
-        let appDelegate = NSApplication.shared.delegate as! AppDelegate
-        let listener_history = String(format:"%@_history", appDelegate.listenerId)
-        return listener_history
-    }
-    
-    class func fetchFromHistory() -> [MusicItem] {
-        let historyData = UserDefaults.standard.object(forKey: getListenerHistoryKey()) as? Data
-        var historyArray = [] as [MusicItem]
-        if let historyData = historyData {
-            historyArray = NSKeyedUnarchiver.unarchiveObject(with: historyData) as? [MusicItem] ?? []
-        }
-        return historyArray
-    }
-    
-    class func saveToHistory(item: MusicItem) -> [MusicItem] {
-        var historyArray = fetchFromHistory()
-        if historyArray.count > 30 {
-            historyArray.removeLast()
-        }
-        item.cellType = CellType.HISTORY
-        historyArray.insert(item, at: 0)
-        let encodedData = NSKeyedArchiver.archivedData(withRootObject: historyArray)
-        UserDefaults.standard.set(encodedData, forKey: getListenerHistoryKey())
-        return historyArray
     }
 }
 

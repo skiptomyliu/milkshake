@@ -170,7 +170,7 @@ class API: NSObject {
     func callbackAlbum(results: [String: AnyObject], callbackHandler: @escaping(_ Dictionary:[String:AnyObject]) -> ()) {
         let items = Util.parseAlbumIntoTracks(album: results)
         var trackIds = [String]()
-        for  item in items{
+        for  item in items {
             trackIds.append(item.pandoraId!)
         }
         self.annotateObjectsSimple(trackIds: trackIds, results:results,  callbackHandler: callbackHandler)
@@ -274,7 +274,7 @@ class API: NSObject {
         ]
         self.request("https://www.pandora.com/api/v1/station/getStations", params: params, callbackHandler: callbackHandler)
     }
-    
+    // Get music tracks of station
     func getPlaylistFragment(stationId:String, isStationStart:Bool, lastPlayedTrackToken:String?, callbackHandler: @escaping(_ Dictionary:[String: AnyObject]) -> ()) {
         var params: [String: Any] = [
             "stationId": stationId,
@@ -297,6 +297,14 @@ class API: NSObject {
             "isPositive": isPositive,
         ]
         self.request("https://www.pandora.com/api/v1/station/addFeedback", params: params, callbackHandler: callbackHandler)
+    }
+    
+    func deleteFeedback(trackToken:String, isPositive:Bool, callbackHandler: @escaping(_ Dictionary:[String: AnyObject]) -> ()) {
+        let params: [String: Any] = [
+            "trackToken": trackToken,
+            "isPositive": isPositive,
+            ]
+        self.request("https://www.pandora.com/api/v1/station/deleteFeedback", params: params, callbackHandler: callbackHandler)
     }
     
     func trackStarted(trackToken: String, callbackHandler: @escaping(_ Dictionary:[String: AnyObject]) -> ()) {

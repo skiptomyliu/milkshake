@@ -99,12 +99,7 @@ class PlayerButton: MyButtonCursor {
             } else{
                 self.image = self.ogImage
             }
-            
         }
         didSet { }
     }
-
-    
-    
 }
-

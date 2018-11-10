@@ -114,6 +114,10 @@ class MusicItem: NSObject, NSCoding {
         super.init()
     }
     
+    func canFeedback() -> Bool {
+        return (self.trackToken != nil && self.stationId != nil) && self.type == MusicType.TRACK
+    }
+    
     func encode(with aCoder: NSCoder) {
         aCoder.encode(name, forKey: "name")
         aCoder.encode(artistName, forKey: "artistName")
@@ -138,6 +142,8 @@ class MusicItem: NSObject, NSCoding {
         aCoder.encode(duration, forKey: "duration")
         aCoder.encode(trackToken, forKey: "trackToken")
         aCoder.encode(stationId, forKey: "stationId")
+        aCoder.encode(rating, forKey: "rating")
+        
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -168,5 +174,7 @@ class MusicItem: NSObject, NSCoding {
         self.duration = aDecoder.decodeInteger(forKey: "duration")
         self.trackToken = aDecoder.decodeObject(forKey: "trackToken") as? String
         self.stationId = aDecoder.decodeObject(forKey: "stationId") as? String
+        let ratingInt = aDecoder.decodeInteger(forKey: "rating")
+        self.rating = ratingInt
     }
 }
