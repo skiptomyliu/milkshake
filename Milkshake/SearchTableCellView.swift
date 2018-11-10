@@ -324,9 +324,13 @@ class SearchTableCellView: NSTableCellView {
         if item.canFeedback() {
             if item.rating > 0 {
                 self.thumbsUpButton.isToggle = true
+                self.thumbsDownButton.isToggle = false
+            } else if item.rating < 0 {
+                self.thumbsUpButton.isToggle = false
+                self.thumbsDownButton.isToggle = true
             } else {
                 self.thumbsUpButton.isToggle = false
-                // self.thumbsDownButton.isToggle = true
+                self.thumbsDownButton.isToggle = false
             }
         } else {
             self.setEnable(false)
@@ -346,30 +350,42 @@ class SearchTableCellView: NSTableCellView {
     }
     
     @IBAction func thumbsDown(_ sender: Any) {
-        print("THUMB DOWN")
-        let appDelegate = NSApplication.shared.delegate as? AppDelegate
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
         let trackToken = self.item.trackToken!
-        appDelegate!.api.addFeedback(trackToken: trackToken, isPositive: false) { responseDict in
-            print("Thumbsdown Feedback response: ")
-            print(responseDict)
+        print(item.rating)
+        
+        if self.thumbsDownButton.isToggle {
+            appDelegate.api.deleteFeedback(trackToken: trackToken, isPositive: false) { responseDict in
+                print("UNTHUMBDOWN Feedback response: ")
+                print(responseDict)
+                appDelegate.history.storeThumbForId(pandoraId: self.item.pandoraId!, rating: 0)
+            }
+        } else {
+            appDelegate.api.addFeedback(trackToken: trackToken, isPositive: false) { responseDict in
+                print("THUMBSDOWN Feedback response: ")
+                print(responseDict)
+                
+                appDelegate.history.storeThumbForId(pandoraId: self.item.pandoraId!, rating: -1)
+            }
         }
-        self.thumbsDownButton.isToggle = !self.thumbsUpButton.isToggle
+        self.thumbsDownButton.isToggle = !self.thumbsDownButton.isToggle
         self.thumbsUpButton.isToggle = false
     }
     
     @IBAction func thumbsUp(_ sender: Any) {
-        let appDelegate = NSApplication.shared.delegate as? AppDelegate
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
         let trackToken = self.item.trackToken!
-        
         if self.thumbsUpButton.isToggle {
-            appDelegate!.api.deleteFeedback(trackToken: trackToken, isPositive: false) { responseDict in
+            appDelegate.api.deleteFeedback(trackToken: trackToken, isPositive: false) { responseDict in
                 print("UNTHUMB Feedback response: ")
                 print(responseDict)
+                appDelegate.history.storeThumbForId(pandoraId: self.item.pandoraId!, rating: 0)
             }
         } else {
-            appDelegate!.api.addFeedback(trackToken: trackToken, isPositive: true) { responseDict in
+            appDelegate.api.addFeedback(trackToken: trackToken, isPositive: true) { responseDict in
                 print("Thumbsup Feedback response: ")
                 print(responseDict)
+                appDelegate.history.storeThumbForId(pandoraId: self.item.pandoraId!, rating: 1)
             }
         }
         self.thumbsDownButton.isToggle = false

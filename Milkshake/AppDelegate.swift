@@ -35,7 +35,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
     var music: Music? // pointer to either dj or radio
     var dj: DJ
     var radio: Radio
-    
+    var history: History
     var windowController: NSWindowController?
     var loginWindowController: NSWindowController?
     var isArtAnimate: Bool = false
@@ -125,6 +125,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
         self.api = API()
         self.dj = DJ()
         self.radio = Radio()
+        self.history = History()
         super.init()
     }
 

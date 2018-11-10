@@ -5,7 +5,6 @@
 //  Created by Dean Liu on 11/28/17.
 //  Copyright © 2017 Dean Liu. All rights reserved.
 //
-
 import Cocoa
 import AVKit
 
@@ -56,7 +55,6 @@ class DJ: Music {
     func reset() {
         self.tracksIdx = -1
         self.isShuffled = false
-        
         self.tracks.removeAll()
         self.tracksStr.removeAll()
         self.tracksShuffled.removeAll()
@@ -88,7 +86,6 @@ class DJ: Music {
         if self.isShuffled == false && self.shuffle {
             self.enableShuffle()
         }
-        
         if self.tracks.count > 0 {
             // XXX Switching to radio wont save the track
             // nested here because radio.playNext will cause double preflight

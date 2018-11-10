@@ -160,7 +160,7 @@
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S1P-3v-WbH" userLabel="Thumb Down" customClass="PlayerButton" customModule="Milkshake" customModuleProvider="target">
                     <rect key="frame" x="242" y="15" width="20" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="thumbs-down" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="QrS-Ao-7ez">
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="thumbs-down" imagePosition="only" alignment="center" alternateImage="thumbs-down-on" imageScaling="proportionallyUpOrDown" inset="2" id="QrS-Ao-7ez">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -204,6 +204,7 @@
         <image name="album-500" width="500" height="500"/>
         <image name="playcell" width="51.200000762939453" height="51.200000762939453"/>
         <image name="thumbs-down" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="thumbs-down-on" width="51.200000762939453" height="51.200000762939453"/>
         <image name="thumbs-up" width="51.200000762939453" height="51.200000762939453"/>
         <image name="thumbs-up-on" width="51.200000762939453" height="51.200000762939453"/>
     </resources>

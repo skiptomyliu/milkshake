@@ -170,7 +170,7 @@ class API: NSObject {
     func callbackAlbum(results: [String: AnyObject], callbackHandler: @escaping(_ Dictionary:[String:AnyObject]) -> ()) {
         let items = Util.parseAlbumIntoTracks(album: results)
         var trackIds = [String]()
-        for  item in items{
+        for  item in items {
             trackIds.append(item.pandoraId!)
         }
         self.annotateObjectsSimple(trackIds: trackIds, results:results,  callbackHandler: callbackHandler)

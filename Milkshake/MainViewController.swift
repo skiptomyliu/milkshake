@@ -316,7 +316,7 @@ class MainViewController: NSViewController {
         historyHeader.name = "PLAY HISTORY"
         historyHeader.isHeader = true
         if self.historyResultsViewController.search_results.count <= 0 {
-            var historyArray = Util.fetchFromHistory()
+            var historyArray = appDelegate.history.fetchMusicFromHistory()
             historyArray.insert(historyHeader, at: 0)
             self.historyResultsViewController.setResults(results: historyArray)
         }
@@ -554,7 +554,7 @@ extension MainViewController: MusicChangedProtocol {
     func musicPreflightChangedProtocol(item: MusicItem) {
         // Update history vc
         if (item.pandoraId != nil) {
-            _ = Util.saveToHistory(item: item)
+            _ = appDelegate.history.saveToHistory(item: item)
             self.historyResultsViewController.insertMusicItem(item: item, index: 1)
         }
     }

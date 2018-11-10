@@ -228,14 +228,24 @@ class NowPlayingViewController: NSViewController {
     
     // Actions
     @IBAction func thumbsDown(_ sender: Any) {
+        self.item.rating = -1
         let appDelegate = NSApplication.shared.delegate as! AppDelegate
         appDelegate.radio.thumbDown()
+        appDelegate.history.storeThumbForId(pandoraId: self.item.pandoraId!, rating: -1)
     }
     
     @IBAction func thumbsUp(_ sender: Any) {
         let appDelegate = NSApplication.shared.delegate as! AppDelegate
-        appDelegate.radio.thumbUp()
         self.thumbsUpButton.isToggle = !self.thumbsUpButton.isToggle
+        if self.thumbsUpButton.isToggle {
+            appDelegate.radio.thumbUp()
+            self.item.rating = 1
+            appDelegate.history.storeThumbForId(pandoraId: self.item.pandoraId!, rating: 1)
+        } else {
+            appDelegate.radio.unthumbUp()
+            self.item.rating = 0
+            appDelegate.history.storeThumbForId(pandoraId: self.item.pandoraId!, rating: 0)
+        }
     }
     
     @IBAction func skipSong(_ sender: Any) {

@@ -47,31 +47,34 @@ class Radio: Music {
     }
     
     override func playNext() {
-        // If we are out, we fetch for more
-        if self.stationIdx+1 > self.stationTracks.count-1 {
-            let prevToken = self.stationTracks[self.stationIdx].trackToken!
-            self.playStation(stationId: self.stationId, isStationStart: false, lastPlayedTrackToken: prevToken)
-        } else {
-            self.stationIdx = (self.stationIdx + 1)
-            let urlStr = self.stationTracks[self.stationIdx].audioURL!
-//            self.curPlayingItem = self.stationTracks[self.stationIdx]
-            let musicItem = self.stationTracks[self.stationIdx]
-            
-            // We make an additional API call to annotate for additional info we need:
-            // artistId, dominant color and albumId
-            if let pandoraId = musicItem.pandoraId {
-                let appDelegate = NSApplication.shared.delegate as! AppDelegate
-                appDelegate.api.annotateObjectsSimple(trackIds:[pandoraId]) {
-                    (results) in
-                    if let trackDict = results[pandoraId] as? Dictionary<String, AnyObject>  {
-                        if let icon = trackDict["icon"] {
-                            musicItem.dominantColor = icon["dominantColor"] as? String
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        appDelegate.dj.tracks.removeAll()
+        if self.stationTracks.count > 0 {
+            // If we are out, we fetch for more
+            if self.stationIdx+1 > self.stationTracks.count-1 {
+                let prevToken = self.stationTracks[self.stationIdx].trackToken!
+                self.playStation(stationId: self.stationId, isStationStart: false, lastPlayedTrackToken: prevToken)
+            } else {
+                self.stationIdx = (self.stationIdx + 1)
+                let urlStr = self.stationTracks[self.stationIdx].audioURL!
+                let musicItem = self.stationTracks[self.stationIdx]
+                
+                // We make an additional API call to annotate for additional info we need:
+                // artistId, dominant color and albumId
+                if let pandoraId = musicItem.pandoraId {
+                    let appDelegate = NSApplication.shared.delegate as! AppDelegate
+                    appDelegate.api.annotateObjectsSimple(trackIds:[pandoraId]) {
+                        (results) in
+                        if let trackDict = results[pandoraId] as? Dictionary<String, AnyObject>  {
+                            if let icon = trackDict["icon"] {
+                                musicItem.dominantColor = icon["dominantColor"] as? String
+                            }
+                            musicItem.artistId = trackDict["artistId"] as? String
+                            musicItem.albumId = trackDict["albumId"] as? String
                         }
-                        musicItem.artistId = trackDict["artistId"] as? String
-                        musicItem.albumId = trackDict["albumId"] as? String
+                        self.musicPreflightChange()
+                        self.playAudio(item:musicItem, url: urlStr)
                     }
-                    self.musicPreflightChange()
-                    self.playAudio(item:musicItem, url: urlStr)
                 }
             }
         }
@@ -82,8 +85,10 @@ class Radio: Music {
     }
     
     func thumbDown() {
+        
         let appDelegate = NSApplication.shared.delegate as? AppDelegate
-        let trackToken = self.stationTracks[self.stationIdx].trackToken!
+        let musicItem = self.stationTracks[self.stationIdx]
+        let trackToken = musicItem.trackToken!
         appDelegate!.api.addFeedback(trackToken: trackToken, isPositive: false) { responseDict in
             print("Thumbsdown feedback response: ")
             print(responseDict)
@@ -93,10 +98,22 @@ class Radio: Music {
     
     func thumbUp() {
         let appDelegate = NSApplication.shared.delegate as? AppDelegate
-        let trackToken = self.stationTracks[self.stationIdx].trackToken!
+        let musicItem = self.stationTracks[self.stationIdx]
+        let trackToken = musicItem.trackToken!
         appDelegate!.api.addFeedback(trackToken: trackToken, isPositive: true) { responseDict in
             print("Thumbsup Feedback response: ")
             print(responseDict)
+        }
+    }
+    
+    func unthumbUp() {
+        let appDelegate = NSApplication.shared.delegate as? AppDelegate
+        let musicItem = self.stationTracks[self.stationIdx]
+        let trackToken = musicItem.trackToken!
+        appDelegate!.api.deleteFeedback(trackToken: trackToken, isPositive: false) { responseDict in
+            print("UNTHUMBDOWN Feedback response: ")
+            print(responseDict)
+            appDelegate!.history.storeThumbForId(pandoraId: musicItem.pandoraId!, rating: 0)
         }
     }
     
