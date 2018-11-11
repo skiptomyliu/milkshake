@@ -195,7 +195,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
             } else if event.keyCode == 0x35 {
                 mvc.escKeyProtocol()
             } else {
-                mvc.view.window?.makeFirstResponder(mvc.searchField)
+//                mvc.view.window?.makeFirstResponder(mvc.searchField)
             }
 
         }
