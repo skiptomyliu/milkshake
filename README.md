@@ -7,7 +7,7 @@ Milkshake is a Mac OS X [Pandora](https://www.pandora.com) client.
 
 If you don't have a Pandora account, you can [sign up here](https://www.pandora.com/account/register)
 
-# Download v1.0.2
+# Download v1.0.3
 [<img src="/images/badge-download.svg" width="300">](https://itunes.apple.com/us/app/milkshake/id1440379601?ls=1&mt=12)
 
 or
@@ -24,6 +24,7 @@ This client isn't a full Pandora replacement.  This client doesn't support creat
   - Cross fading
   - Keep player as front window
   - Easy navigation
+  - Pandora Premium users will be able to play on demand
 
 # Shortcuts
 Keys | Action 
