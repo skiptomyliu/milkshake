@@ -53,31 +53,55 @@ class Music: NSObject {
     func playAudio(item: MusicItem, url: String) {
         // Error handling
         // Only play if there's length
-        let playerItem = AVPlayerItem(url: URL(string: url)!)
-        let tap = tapManager.tap()
         
-        let length = Float(playerItem.asset.duration.value)/Float(playerItem.asset.duration.timescale)
-        print("Music - URL: ", url)
-        if length > 0.0  {
-            if let audioTrack = playerItem.asset.tracks(withMediaType: AVMediaType.audio).first {
-                let inputParams = AVMutableAudioMixInputParameters(track: audioTrack)
-                inputParams.audioTapProcessor = tap?.takeUnretainedValue()
-                let audioMix = AVMutableAudioMix()
-                audioMix.inputParameters = [inputParams]
-                playerItem.audioMix = audioMix
-            }
-            
+        let asset = AVURLAsset(url: URL(string: url)!)
+        let playableKey = "playable"
+        // Load the "playable" property
+        asset.loadValuesAsynchronously(forKeys: [playableKey]) {
+            var error: NSError? = nil
+            let status = asset.statusOfValue(forKey: playableKey, error: &error)
+            let playerItem = AVPlayerItem(asset: asset)
+            let length = Float(item.duration)
+            print("Music - URL: ", url)
             item.duration = Int(length)
             self.curPlayingItem = item
-            self._playAudio(playerItem: playerItem)
-        } else {
-            self.curFail += 1
-            if self.curFail < MAXFAILS {
-                self.playNext()
-            } else{
-                print("MAX FAILS REACHED")
+            DispatchQueue.main.async {
+                self._playAudio(playerItem: playerItem)
+            }
+            switch status {
+            case .loaded:
+                let tap = self.tapManager.tap()
+                let length = Float(playerItem.asset.duration.value)/Float(playerItem.asset.duration.timescale)
+                if length > 0.0  {
+                    if let audioTrack = playerItem.asset.tracks(withMediaType: AVMediaType.audio).first {
+                        let inputParams = AVMutableAudioMixInputParameters(track: audioTrack)
+                        inputParams.audioTapProcessor = tap?.takeUnretainedValue()
+                        let audioMix = AVMutableAudioMix()
+                        audioMix.inputParameters = [inputParams]
+                        playerItem.audioMix = audioMix
+                    }
+                } else {
+                    self.curFail += 1
+                    if self.curFail < self.MAXFAILS {
+                        self.playNext()
+                    } else{
+                        print("MAX FAILS REACHED")
+                    }
+                }
+                break
+            // Sucessfully loaded. Continue processing.
+            case .failed:
+                break
+            // Handle error
+            case .cancelled:
+                break
+            // Terminate processing
+            default:
+                break
+                // Handle all other cases
             }
         }
+        
     }
     
     func swapPlayer() {
