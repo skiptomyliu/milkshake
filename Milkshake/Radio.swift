@@ -58,7 +58,7 @@ class Radio: Music {
                 self.stationIdx = (self.stationIdx + 1)
                 let urlStr = self.stationTracks[self.stationIdx].audioURL!
                 let musicItem = self.stationTracks[self.stationIdx]
-                
+                self.playAudio(item:musicItem, url: urlStr)
                 // We make an additional API call to annotate for additional info we need:
                 // artistId, dominant color and albumId
                 if let pandoraId = musicItem.pandoraId {
@@ -73,7 +73,7 @@ class Radio: Music {
                             musicItem.albumId = trackDict["albumId"] as? String
                         }
                         self.musicPreflightChange()
-                        self.playAudio(item:musicItem, url: urlStr)
+//                        self.playAudio(item:musicItem, url: urlStr)
                     }
                 }
             }

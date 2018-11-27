@@ -27,7 +27,7 @@
                 <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bfk-pi-k6h" userLabel="Background Slider">
                     <rect key="frame" x="-4" y="-8" width="308" height="19"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <sliderCell key="cell" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="mpj-KI-pZf" customClass="MySliderCell" customModule="Milkshake" customModuleProvider="target"/>
+                    <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="mpj-KI-pZf" customClass="MySliderCell" customModule="Milkshake" customModuleProvider="target"/>
                     <connections>
                         <action selector="sliderDragged:" target="-2" id="ctG-Wl-XhK"/>
                     </connections>

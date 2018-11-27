@@ -96,8 +96,7 @@ class MusicItem: NSObject, NSCoding {
                 self.albumArt = String(format:"https://dyn-images.p-cdn.com/?l=%@&w=500&h=500", urlString)
             }
         }
-        didSet { }
-        
+        didSet { }   
     }
     
     // Artist Details
