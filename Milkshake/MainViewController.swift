@@ -15,8 +15,8 @@ class MainViewController: NSViewController {
     @IBOutlet weak var resultsView: NSView!
     @IBOutlet weak var playerView: NSView!
     @IBOutlet var roundView: RoundView!
+    @IBOutlet weak var loadingIndicator: NSProgressIndicator!
     @IBOutlet weak var searchButton: NSButton!
-
     @IBOutlet weak var backButton: NSButton!
     @IBOutlet weak var nextButton: NSButton!
     
@@ -551,6 +551,16 @@ extension MainViewController: CellSelectedProtocol {
 
 // MARK: - MusicChangedProtocol
 extension MainViewController: MusicChangedProtocol {
+    func musicLoadingIndicatorProtocol(isStart: Bool) {
+        if isStart {
+            loadingIndicator.isHidden = false
+            loadingIndicator.startAnimation(self)
+        } else {
+            loadingIndicator.isHidden = true
+            loadingIndicator.stopAnimation(self)
+        }
+    }
+    
     func musicPreflightChangedProtocol(item: MusicItem) {
         // Update history vc
         if (item.pandoraId != nil) {

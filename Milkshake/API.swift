@@ -14,9 +14,11 @@ import Locksmith
 
 class API: NSObject {
     var X_AuthToken: String?
-    var X_CsrfToken: String = "0123456789abcdef";
+    var X_CsrfToken: String = "0123456789abcdef"
     var RETRY = 1
     var curRetry = 0
+    var base_cookie = "_ga=GA1.2.34567890.1234567890;csrftoken=0123456789abcdef;_gid=GA1.2.1234567890.1234567890; _uetsid=_uetff68c25a;"
+    var cookies = ""
     
     // Base network request function called by all API methods
     // footnote (fn1) If the X_Auth token is expired, repeat the request once.
@@ -28,7 +30,7 @@ class API: NSObject {
             "Accept": "application/json",
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:56.0) Gecko/20100101 Firefox/56.0",
             "X-CsrfToken": self.X_CsrfToken,
-            "Cookie": "_ga=GA1.2.34567890.1234567890;csrftoken="+self.X_CsrfToken+";_gid=GA1.2.1234567890.1234567890; _uetsid=_uetff68c25a; at=wdLcyje3Hg3vjR29Hw5rSfPXK+OFmuiaA"
+            "Cookie": self.cookies
         ]
         
         if let X_AuthToken = self.X_AuthToken {
@@ -44,6 +46,15 @@ class API: NSObject {
         )
         .responseJSON { response in
             if let responseValue = response.result.value {
+                if let responseCookie = HTTPCookieStorage.shared.cookies {
+                    self.parseCookie(cookies: responseCookie)
+                }
+                if let headerFields = response.response?.allHeaderFields as? [String: String],
+                    let URL = response.request?.url
+                {
+                    let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: URL)
+                    print(cookies)
+                }
                 let rv = responseValue as! [String: AnyObject]
                 if (rv["errorCode"] as? Int) == 1001 {
                     print("Needs to be refreshed!")
@@ -80,6 +91,16 @@ class API: NSObject {
             }
         }
     }
+    
+    func parseCookie(cookies: [HTTPCookie]) {
+        var cookieStr = ""
+        for cookie in cookies {
+            cookieStr = cookieStr + cookie.name + "=" + cookie.value + ";"
+        }
+        self.cookies = self.base_cookie + cookieStr
+        print(self.cookies)
+    }
+        
     
     func auth(username:String, pass:String, callbackHandler:@escaping(_ Dictionary:[String:AnyObject]) -> ()) {
         let parameters: [String: Any] = [
