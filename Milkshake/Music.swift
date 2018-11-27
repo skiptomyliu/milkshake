@@ -62,7 +62,8 @@ class Music: NSObject {
             "Connection": "keep-alive",
             "Upgrade-Insecure-Requests": "1"
         ]
-        let asset = AVURLAsset(url: URL(string: url)!, options: ["AVURLAssetHTTPHeaderFieldsKey": headers])
+//        let asset = AVURLAsset(url: URL(string: url)!, options: ["AVURLAssetHTTPHeaderFieldsKey": headers])
+        let asset = AVURLAsset(url: URL(string: url)!)
         let playableKey = "playable"
         // Load the "playable" property
         self.mainVCDelegate?.musicLoadingIndicatorProtocol(isStart: true)
