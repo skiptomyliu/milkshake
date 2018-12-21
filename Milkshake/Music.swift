@@ -40,12 +40,13 @@ class Music: NSObject {
     
     var MAXFAILS = 5 // failures before stopping to proceed to next track.  Used for Radio
     var curFail = 0  // current number of failures
+    var baseVolume = Float(1.0)
     
     override init() {
         self._cur_player = self.player0
         self._ptr_player0 = self.player0
         self._ptr_player1 = self.player1
-        self._ptr_player0.volume = 1.0
+        self._ptr_player0.volume = self.baseVolume
         self._ptr_player1.volume = 0.0
         super.init()
     }
@@ -78,6 +79,10 @@ class Music: NSObject {
                 print("MAX FAILS REACHED")
             }
         }
+    }
+    
+    func setVolume(value: Float) {
+        self._cur_player.volume = value
     }
     
     func swapPlayer() {
@@ -130,7 +135,6 @@ class Music: NSObject {
             if let task = self._crossFadeTask {
                 task.cancel()
             }
-
             self.crossFade(player1: self._ptr_player0, player2: self._ptr_player1) {
                 print("Done fading....")
             }

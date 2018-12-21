@@ -69,12 +69,7 @@ class PlayerViewController: NSViewController, MusicTimeProtocol {
             self.userSlider.doubleValue = percent
         }
     }
-    
-    @IBAction func fastForward(_ sender: Any) {
-        let appDelegate = NSApplication.shared.delegate as! AppDelegate
-        appDelegate.music?.playNext()
-    }
-    
+  
     @IBAction func sliderDragged(_ sender: Any) {
         let slider = sender as! NSSlider
         
