@@ -44,7 +44,7 @@ class NowPlayingViewController: NSViewController {
     @IBOutlet weak var playButton: PlayerButton!
     @IBOutlet weak var artistLink: FlatButton!
     @IBOutlet weak var albumLink: FlatButton!
-    
+    @IBOutlet weak var volumeSlider: NSSlider!
     @IBOutlet weak var spectrumView: SpectrumAnalyzerView!
     
     let appDelegate = NSApplication.shared.delegate as! AppDelegate
@@ -55,7 +55,7 @@ class NowPlayingViewController: NSViewController {
         super.viewDidLoad()
         // Do view setup here.
         
-        let area = NSTrackingArea.init(rect:CGRect(x: 0, y: 100, width: self.view.frame.width, height: 100), options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways], owner: self, userInfo: nil)
+        let area = NSTrackingArea.init(rect:CGRect(x: 0, y: 50, width: self.view.frame.width, height: 150), options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways], owner: self, userInfo: nil)
         self.imageView.addTrackingArea(area)
         self.initState()
         self.setEnable(false)
@@ -81,6 +81,7 @@ class NowPlayingViewController: NSViewController {
         self.repeatButton.alphaValue = 0
         self.playButton.alphaValue = 0
         self.albumLink.alphaValue = 0
+        self.volumeSlider.alphaValue = 0
     }
     
     func setEnable(_ isEnabled:Bool) {
@@ -92,6 +93,7 @@ class NowPlayingViewController: NSViewController {
         self.repeatButton.isHidden = !isEnabled
         self.playButton.isHidden = !isEnabled
         self.albumLink.isHidden = !isEnabled
+        self.volumeSlider.isHidden = !isEnabled
     }
     
     func showHide(alpha:CGFloat, duration: Double) {
@@ -106,6 +108,8 @@ class NowPlayingViewController: NSViewController {
         self.repeatButton.animator().alphaValue = alpha
         self.playButton.animator().alphaValue = alpha
         self.albumLink.animator().alphaValue = alpha
+        self.volumeSlider.animator().alphaValue = alpha
+        
         NSAnimationContext.runAnimationGroup({(context) -> Void in
             context.duration = duration
         }) {
@@ -280,4 +284,8 @@ class NowPlayingViewController: NSViewController {
         showHide(alpha: 0.0, duration: 0.0)
     }
     
+    @IBAction func sliderDragged(_ sender: Any) {
+        let slider = sender as! NSSlider
+        self.appDelegate.music?.setVolume(value: slider.floatValue)
+    }
 }
