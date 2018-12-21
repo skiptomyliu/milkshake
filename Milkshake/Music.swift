@@ -54,16 +54,6 @@ class Music: NSObject {
     func playAudio(item: MusicItem, url: String) {
         // Error handling
         // Only play if there's length
-        let headers: [String: String]  = [
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "Accept-Language": "en-US,en;q=0.5",
-            "Accept-Encoding": "gzip, deflate",
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:62.0) Gecko/20100101 Firefox/62.0",
-            "Cookie": "_ga=GA1.2.33095514.1473904558; _parrable_hawk=01.1517284772.f1a2c298e21c4e32421c6ff79503ed01be6a47742022ec745839a665773b8306030ddd36494fab2961b04641f409cacc65b9452fcc08e5d03dd7ab58c1ea186911ec2291a127742cf531; AMCV_041A7C73585A5C360A495CC2%40AdobeOrg=-1303530583%7CMCIDTS%7C17853%7CMCMID%7C73994729107815420820068411911598503453%7CMCAAMLH-1543073909%7C9%7CMCAAMB-1543073909%7C6G1ynYcLPuiQxYZrsz_pkqfLG9yMXBpb2zX5dvJdYQJzPXImdj0y%7CMCOPTOUT-1542476309s%7CNONE%7CvVersion%7C3.3.0; __gads=ID=e5cb4547991e4bac:T=1542469774:S=ALNI_MZ22bzo3iLA1af39vwOH73kxGeLfQ; _gid=GA1.2.1727912926.1542469109; AMCVS_041A7C73585A5C360A495CC2%40AdobeOrg=1; s_sq=pandora.comprod%252Cpandoraglobal%3D%2526pid%253Dnow_playing%2526pidt%253D1%2526oid%253Dfunction%252528%252529%25257B%25257D%2526oidt%253D2%2526ot%253DSUBMIT; s_cc=true",
-            "Connection": "keep-alive",
-            "Upgrade-Insecure-Requests": "1"
-        ]
-//        let asset = AVURLAsset(url: URL(string: url)!, options: ["AVURLAssetHTTPHeaderFieldsKey": headers])
         let asset = AVURLAsset(url: URL(string: url)!)
         let playableKey = "playable"
         // Load the "playable" property
@@ -76,6 +66,7 @@ class Music: NSObject {
             print("Music - URL: ", url)
             item.duration = Int(length)
             self.curPlayingItem = item
+            self.removeTimeObserver()
             DispatchQueue.main.async {
                 self._playAudio(playerItem: playerItem)
             }
@@ -153,9 +144,8 @@ class Music: NSObject {
     
     func removeTimeObserver() {
         if let obsToken = self.timeObserverToken {
-            print("removing observer token...")
             self._cur_player.removeTimeObserver(obsToken)
-            timeObserverToken = nil
+            self.timeObserverToken = nil
         }
     }
     
@@ -180,7 +170,6 @@ class Music: NSObject {
         DispatchQueue.main.async {
             self.mainVCDelegate?.musicLoadingIndicatorProtocol(isStart: false)
         }
-        
         self._addTimeObserver(playerItem: playerItem)
         
         self.nowVCDelegate!.musicPlayedProtocol()
