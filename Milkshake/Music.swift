@@ -66,7 +66,9 @@ class Music: NSObject {
             print("Music - URL: ", url)
             item.duration = Int(length)
             self.curPlayingItem = item
-            self.removeTimeObserver()
+            DispatchQueue.main.sync {
+                self.removeTimeObserver()
+            }
             DispatchQueue.main.async {
                 self._playAudio(playerItem: playerItem)
             }
