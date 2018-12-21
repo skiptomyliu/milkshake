@@ -56,7 +56,7 @@ class PlayerViewController: NSViewController, MusicTimeProtocol {
         self.updateSliderTime(duration: duration, totalTime: totalTime)
         let timeLeft = totalTime - duration
 
-        if (timeLeft <= 10 && timeLeft > 0 && appDelegate.music?.crossFade == true) {
+        if (timeLeft <= 10 && appDelegate.music?.crossFade == true && appDelegate.music?.timeObserverToken != nil) {
             appDelegate.music?.removeTimeObserver()
             appDelegate.music?.playNext()
         }
