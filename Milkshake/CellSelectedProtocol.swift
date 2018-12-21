@@ -26,6 +26,7 @@ protocol MusicChangedProtocol: class {
     func musicChangedProtocol(item: MusicItem)
     func musicPlayedProtocol()
     func musicPausedProtocol()
+    func musicLoadingIndicatorProtocol(isStart:Bool)
 }
 
 protocol MusicTimeProtocol: class {
@@ -35,7 +36,6 @@ protocol MusicTimeProtocol: class {
 protocol MenuSelectedProtocol: class {
     func menuSelectedProtocol(index:Int)
 }
-
 
 protocol LoginProtocol: class {
     func handleSuccessLogin(results:Dictionary<String,AnyObject>)

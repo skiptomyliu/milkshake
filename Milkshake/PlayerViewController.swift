@@ -72,7 +72,6 @@ class PlayerViewController: NSViewController, MusicTimeProtocol {
   
     @IBAction func sliderDragged(_ sender: Any) {
         let slider = sender as! NSSlider
-        
         let event = NSApplication.shared.currentEvent
         let startingDrag = event?.type == NSEvent.EventType.leftMouseDown
         let endingDrag = event?.type == NSEvent.EventType.leftMouseUp
@@ -85,9 +84,11 @@ class PlayerViewController: NSViewController, MusicTimeProtocol {
         if endingDrag {
             self.isUserDraggingSlider = false
             self.appDelegate.music?.scrub(toPercent: slider.doubleValue)
+            self.appDelegate.music?.addTimeObserver()
         }
         
         if dragging {
+            self.isUserDraggingSlider = true
             self.bgSlider.doubleValue = slider.doubleValue
         }
     }

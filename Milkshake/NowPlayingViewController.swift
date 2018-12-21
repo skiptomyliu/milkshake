@@ -10,10 +10,8 @@ import Cocoa
 
 // MARK: - NSTextFieldDelegate
 extension NowPlayingViewController: MusicChangedProtocol {
-    func musicPreflightChangedProtocol(item: MusicItem) {
-        
-    }
-    
+    func musicLoadingIndicatorProtocol(isStart: Bool) {}
+    func musicPreflightChangedProtocol(item: MusicItem) {}
     // MusicChangedProtocol (driven by Music.swift)
     func musicChangedProtocol(item:MusicItem) {
         self.setEnable(true)

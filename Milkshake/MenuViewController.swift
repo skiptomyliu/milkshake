@@ -11,6 +11,8 @@ import Cocoa
 
 // MARK: - MusicChangedProtocol
 extension MenuViewController: MusicChangedProtocol {
+    func musicLoadingIndicatorProtocol(isStart: Bool) {}
+    
     func musicPreflightChangedProtocol(item: MusicItem) {}
     
     func musicChangedProtocol(item: MusicItem) {
