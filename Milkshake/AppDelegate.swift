@@ -398,9 +398,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
         hotKey = HotKey(keyCombo: KeyCombo(key: .r, modifiers: [.command, .control])) //repeat
         hotKey = HotKey(keyCombo: KeyCombo(key: .leftBracket, modifiers: [.command, .control])) //next track
         hotKey = HotKey(keyCombo: KeyCombo(key: .rightBracket, modifiers: [.command, .control])) //prev track
-        hotKey = HotKey(keyCombo: KeyCombo(key: .one, modifiers: [.command])) //now playing
-        hotKey = HotKey(keyCombo: KeyCombo(key: .two, modifiers: [.command])) //stations
-        hotKey = HotKey(keyCombo: KeyCombo(key: .three, modifiers: [.command])) //playlist
+//        hotKey = HotKey(keyCombo: KeyCombo(key: .one, modifiers: [.command])) //now playing
+//        hotKey = HotKey(keyCombo: KeyCombo(key: .two, modifiers: [.command])) //stations
+//        hotKey = HotKey(keyCombo: KeyCombo(key: .three, modifiers: [.command])) //playlist
     }
 }
 
