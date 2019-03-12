@@ -162,7 +162,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
         icon?.isTemplate = true
         statusItem?.image = icon
         statusItem?.menu = self.toolbarMenu
-
     }
     
     func applicationDidBecomeActive(_ notification: Notification) {
@@ -310,7 +309,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
     }
     
     @IBAction func thumbUp(_ sender: Any) {
-        if let music = self.music {
+        if let cvc = self.windowController?.contentViewController {
+            let mainVC = cvc as! MainViewController
+            mainVC.nowPlayingViewController.thumbsUp(self)
+        } else if let music = self.music {
             if music is Radio {
                 (music as! Radio).thumbUp()
             }

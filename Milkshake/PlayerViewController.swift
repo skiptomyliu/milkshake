@@ -43,7 +43,6 @@ class PlayerViewController: NSViewController, MusicTimeProtocol {
         self.userSlider.isEnabled = true
     }
     
-    
     func setViewWithMusicItem(item: MusicItem) {
         self.enable()
     }

@@ -185,8 +185,7 @@ class Util: NSObject {
         } else {
             musicItem.heroImage = ""
         }
-
-        musicItem.listenerCount = catalog[artistKey]!["stationListenerCount"]! as! Int
+        musicItem.listenerCount = catalog[artistKey]!["stationListenerCount"] as? Int ?? 0
         return musicItem
     }
         
