@@ -50,11 +50,14 @@ class Radio: Music {
         let appDelegate = NSApplication.shared.delegate as! AppDelegate
         // clear existing DJ tracks
         appDelegate.dj.tracks.removeAll()
+
+        // If token has expired, the tracks will have been cleared,
+        // this will then trigger a station request for fresh tracks
         if self.stationTracks.count <= 0  {
             self.playStation(stationId: self.stationId, isStationStart: false, lastPlayedTrackToken: nil)
         } else if self.stationIdx+1 > self.stationTracks.count-1 {
-                let prevToken = self.stationTracks[self.stationIdx].trackToken!
-                self.playStation(stationId: self.stationId, isStationStart: false, lastPlayedTrackToken: prevToken)
+            let prevToken = self.stationTracks[self.stationIdx].trackToken!
+            self.playStation(stationId: self.stationId, isStationStart: false, lastPlayedTrackToken: prevToken)
         } else {
             self.stationIdx = (self.stationIdx + 1)
             let urlStr = self.stationTracks[self.stationIdx].audioURL!
