@@ -48,33 +48,33 @@ class Radio: Music {
     
     override func playNext() {
         let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        // clear existing DJ tracks
         appDelegate.dj.tracks.removeAll()
-        if self.stationTracks.count > 0 {
-            // If we are out, we fetch for more
-            if self.stationIdx+1 > self.stationTracks.count-1 {
+        if self.stationTracks.count <= 0  {
+            self.playStation(stationId: self.stationId, isStationStart: false, lastPlayedTrackToken: nil)
+        } else if self.stationIdx+1 > self.stationTracks.count-1 {
                 let prevToken = self.stationTracks[self.stationIdx].trackToken!
                 self.playStation(stationId: self.stationId, isStationStart: false, lastPlayedTrackToken: prevToken)
-            } else {
-                self.stationIdx = (self.stationIdx + 1)
-                let urlStr = self.stationTracks[self.stationIdx].audioURL!
-                let musicItem = self.stationTracks[self.stationIdx]
-                self.playAudio(item:musicItem, url: urlStr)
-                // We make an additional API call to annotate for additional info we need:
-                // artistId, dominant color and albumId
-                if let pandoraId = musicItem.pandoraId {
-                    let appDelegate = NSApplication.shared.delegate as! AppDelegate
-                    appDelegate.api.annotateObjectsSimple(trackIds:[pandoraId]) {
-                        (results) in
-                        if let trackDict = results[pandoraId] as? Dictionary<String, AnyObject>  {
-                            if let icon = trackDict["icon"] {
-                                musicItem.dominantColor = icon["dominantColor"] as? String
-                            }
-                            musicItem.artistId = trackDict["artistId"] as? String
-                            musicItem.albumId = trackDict["albumId"] as? String
+        } else {
+            self.stationIdx = (self.stationIdx + 1)
+            let urlStr = self.stationTracks[self.stationIdx].audioURL!
+            let musicItem = self.stationTracks[self.stationIdx]
+            self.playAudio(item:musicItem, url: urlStr)
+            // We make an additional API call to annotate for additional info we need:
+            // artistId, dominant color and albumId
+            if let pandoraId = musicItem.pandoraId {
+                let appDelegate = NSApplication.shared.delegate as! AppDelegate
+                appDelegate.api.annotateObjectsSimple(trackIds:[pandoraId]) {
+                    (results) in
+                    if let trackDict = results[pandoraId] as? Dictionary<String, AnyObject>  {
+                        if let icon = trackDict["icon"] {
+                            musicItem.dominantColor = icon["dominantColor"] as? String
                         }
-                        self.musicPreflightChange()
-//                        self.playAudio(item:musicItem, url: urlStr)
+                        musicItem.artistId = trackDict["artistId"] as? String
+                        musicItem.albumId = trackDict["albumId"] as? String
                     }
+                    self.musicPreflightChange()
+//                        self.playAudio(item:musicItem, url: urlStr)
                 }
             }
         }

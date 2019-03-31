@@ -56,16 +56,20 @@ class API: NSObject {
                     print(cookies)
                 }
                 let rv = responseValue as! [String: AnyObject]
+
                 if (rv["errorCode"] as? Int) == 1001 {
-                    print("Needs to be refreshed!")
+                    print("Token needs to be refreshed!!")
                     self.X_AuthToken = ""
                     if let dictionary = Locksmith.loadDataForUserAccount(userAccount: "Milkshake") {
                         let username = dictionary["username"] as! String
                         let password = dictionary["password"] as! String
                         self.auth(username: username, pass: password) { responseDict in
                             self.X_AuthToken = responseDict["authToken"] as? String;
+                            
+                            // Clear the station queues because they're all expired
+                            let appDelegate = NSApplication.shared.delegate as! AppDelegate
+                            appDelegate.radio.stationTracks.removeAll()
                             // (fn1) After setting new token, we repeat the request
-                            print(self.X_AuthToken ?? "Empty Token")
                             self.request(url, params: params, callbackHandler: callbackHandler)
                         }
                     } else {
