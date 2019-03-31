@@ -552,12 +552,14 @@ extension MainViewController: CellSelectedProtocol {
 // MARK: - MusicChangedProtocol
 extension MainViewController: MusicChangedProtocol {
     func musicLoadingIndicatorProtocol(isStart: Bool) {
-        if isStart {
-            loadingIndicator.isHidden = false
-            loadingIndicator.startAnimation(self)
-        } else {
-            loadingIndicator.isHidden = true
-            loadingIndicator.stopAnimation(self)
+        DispatchQueue.main.async {
+            if isStart {
+                self.loadingIndicator.isHidden = false
+                self.loadingIndicator.startAnimation(self)
+            } else {
+                self.loadingIndicator.isHidden = true
+                self.loadingIndicator.stopAnimation(self)
+            }
         }
     }
     

@@ -59,18 +59,25 @@ class API: NSObject {
 
                 if (rv["errorCode"] as? Int) == 1001 {
                     print("Token needs to be refreshed!!")
+                    print(self.X_AuthToken)
                     self.X_AuthToken = ""
+
                     if let dictionary = Locksmith.loadDataForUserAccount(userAccount: "Milkshake") {
                         let username = dictionary["username"] as! String
                         let password = dictionary["password"] as! String
                         self.auth(username: username, pass: password) { responseDict in
                             self.X_AuthToken = responseDict["authToken"] as? String;
-                            
                             // Clear the station queues because they're all expired
-                            let appDelegate = NSApplication.shared.delegate as! AppDelegate
-                            appDelegate.radio.stationTracks.removeAll()
-                            // (fn1) After setting new token, we repeat the request
-                            self.request(url, params: params, callbackHandler: callbackHandler)
+                            print(self.X_AuthToken)
+                            if url.hasSuffix("annotateObjectsSimple") {
+                                print("Clearing out... trying again")
+                                let appDelegate = NSApplication.shared.delegate as! AppDelegate
+                                appDelegate.radio.stationTracks.removeAll()
+                                appDelegate.radio.playNext()
+                            } else {
+                                // (fn1) After setting new token, we repeat the request
+                                self.request(url, params: params, callbackHandler: callbackHandler)
+                            }
                         }
                     } else {
                         // xxx: todo:
