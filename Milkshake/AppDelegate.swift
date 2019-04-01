@@ -43,6 +43,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
     var isPremium: Bool = false
     var listenerId: String = ""
     
+    var statusItem: NSStatusItem?
+    
     @IBOutlet weak var menuKeepWindowFront: NSMenuItem!
     @IBOutlet weak var menuCrossFade: NSMenuItem!
     @IBOutlet weak var menuShuffle: NSMenuItem!
@@ -50,6 +52,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
     @IBOutlet weak var menuPlaylist: NSMenuItem!
     @IBOutlet weak var menuArtists: NSMenuItem!
     @IBOutlet weak var menuHistory: NSMenuItem!
+    
     
     private var hotKey: HotKey? {
         didSet {
@@ -129,6 +132,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
         super.init()
     }
 
+    @IBOutlet weak var toolbarMenu: NSMenu!
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         self.loginWindowController = NSStoryboard.loginWindowController()
@@ -143,7 +148,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
         self.loginWindowController!.window?.makeKey()
         self.loginWindowController!.window?.makeKeyAndOrderFront(nil)
         self.api.X_AuthToken = "BI2rvoepGAXRGYy3Yr9iVFh7fL+FAYfWG4hJpRtIVdB2DZenI/yXST/g=="
+        initStatusItem()
 //        self.launchMain()
+    }
+    
+    
+    
+    
+    private func initStatusItem() {
+        self.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+//        statusItem?.title = "Test Item"
+        let icon = NSImage(named: NSImage.Name(rawValue: "milkshake_20x20.png"))
+        icon?.isTemplate = true
+        statusItem?.image = icon
+        statusItem?.menu = self.toolbarMenu
     }
     
     func applicationDidBecomeActive(_ notification: Notification) {
@@ -291,7 +309,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
     }
     
     @IBAction func thumbUp(_ sender: Any) {
-        if let music = self.music {
+        if let cvc = self.windowController?.contentViewController {
+            let mainVC = cvc as! MainViewController
+            mainVC.nowPlayingViewController.thumbsUp(self)
+        } else if let music = self.music {
             if music is Radio {
                 (music as! Radio).thumbUp()
             }

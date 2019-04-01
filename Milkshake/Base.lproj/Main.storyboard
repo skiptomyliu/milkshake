@@ -408,8 +408,51 @@
                         <outlet property="menuPlaylist" destination="9VX-WE-gVg" id="SR4-l4-s2d"/>
                         <outlet property="menuShuffle" destination="pkH-kS-bb6" id="gbL-7H-doI"/>
                         <outlet property="menuSpectrum" destination="Kww-k5-3sZ" id="u4L-2D-zGw"/>
+                        <outlet property="toolbarMenu" destination="f1b-hB-vOY" id="2aG-Zc-FpK"/>
                     </connections>
                 </customObject>
+                <menu id="f1b-hB-vOY">
+                    <items>
+                        <menuItem title="Show Window" id="wzY-Rq-1yz">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="showWindowAction:" target="Voe-Tx-rLC" id="JkW-75-Ybw"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem isSeparatorItem="YES" id="tPZ-LO-jg7"/>
+                        <menuItem title="Play / Pause" id="wyQ-az-9th">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="playPause:" target="Voe-Tx-rLC" id="u60-rJ-QiV"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Next Track" id="Mum-G7-kFf">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="nextSong:" target="Voe-Tx-rLC" id="QGX-HP-ZEG"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Repeat Track" id="R2t-Ky-vWq">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="repeatSong:" target="Voe-Tx-rLC" id="hND-0r-pbr"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem isSeparatorItem="YES" id="0i5-ae-zJq"/>
+                        <menuItem title="Thumb Down" id="Qg1-vs-yc9" userLabel="Thumb down">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="thumbDown:" target="Voe-Tx-rLC" id="4Rn-5W-L2E"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Thumb Up" id="wQo-uF-lU5" userLabel="Thumb Up">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="thumbUp:" target="Voe-Tx-rLC" id="1lf-nZ-2cM"/>
+                            </connections>
+                        </menuItem>
+                    </items>
+                </menu>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>

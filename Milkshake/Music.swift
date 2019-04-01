@@ -94,7 +94,7 @@ class Music: NSObject {
                 }
                 break
             case .failed:
-            // Handle error
+                // Handle error
                 self.mainVCDelegate?.musicLoadingIndicatorProtocol(isStart: false)
                 break
             case .cancelled:

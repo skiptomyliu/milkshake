@@ -41,6 +41,7 @@
 		054A311F1FF5E32A0022D06E /* ArtTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 054A311E1FF5E32A0022D06E /* ArtTableCellView.xib */; };
 		054A31221FF5EBE60022D06E /* NowPlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054A31201FF5EBE60022D06E /* NowPlayingViewController.swift */; };
 		054A31231FF5EBE60022D06E /* NowPlayingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 054A31211FF5EBE60022D06E /* NowPlayingViewController.xib */; };
+		0557E0782205557200EE9563 /* milkshake_20x20.png in Resources */ = {isa = PBXBuildFile; fileRef = 0557E0772205557200EE9563 /* milkshake_20x20.png */; };
 		059A061E200D66EB003C81F1 /* NIFFTHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059A061D200D66EB003C81F1 /* NIFFTHelper.swift */; };
 		059A0620200DC7ED003C81F1 /* SpectrumAnalyzerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059A061F200DC7ED003C81F1 /* SpectrumAnalyzerView.swift */; };
 		059C04B3201EB1030007E456 /* MutableCollection+shuffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059C04B2201EB1030007E456 /* MutableCollection+shuffle.swift */; };
@@ -118,6 +119,7 @@
 		054A311E1FF5E32A0022D06E /* ArtTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArtTableCellView.xib; sourceTree = "<group>"; };
 		054A31201FF5EBE60022D06E /* NowPlayingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingViewController.swift; sourceTree = "<group>"; };
 		054A31211FF5EBE60022D06E /* NowPlayingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NowPlayingViewController.xib; sourceTree = "<group>"; };
+		0557E0772205557200EE9563 /* milkshake_20x20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkshake_20x20.png; sourceTree = "<group>"; };
 		059A061D200D66EB003C81F1 /* NIFFTHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NIFFTHelper.swift; sourceTree = "<group>"; };
 		059A061F200DC7ED003C81F1 /* SpectrumAnalyzerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrumAnalyzerView.swift; sourceTree = "<group>"; };
 		059C04B2201EB1030007E456 /* MutableCollection+shuffle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MutableCollection+shuffle.swift"; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 		48F749591FCCEEE200F0A853 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				0557E0772205557200EE9563 /* milkshake_20x20.png */,
 				05ED21161FDA2CF600123317 /* album-500.png */,
 				051C3DDC1FF94BF500D1212F /* back.png */,
 				0506878D1FF6C63C007B9F39 /* fastforward.png */,
@@ -422,6 +425,7 @@
 				050687921FF6CD2F007B9F39 /* thumbs-up.png in Resources */,
 				050687941FF6CD34007B9F39 /* thumbs-down.png in Resources */,
 				05AAD9E62002F6DF00CE8A18 /* guitar.png in Resources */,
+				0557E0782205557200EE9563 /* milkshake_20x20.png in Resources */,
 				050EE4B1218E7B6D00B6E5A8 /* history.png in Resources */,
 				050EE4B32195CAAC00B6E5A8 /* thumbs-down-on.png in Resources */,
 				050687A81FF7F160007B9F39 /* playcell.png in Resources */,
