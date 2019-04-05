@@ -279,7 +279,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Controls" id="GEO-Iw-cKr">
                                     <items>
-                                        <menuItem title="Show Window" keyEquivalent=" " id="qmP-yr-VuS">
+                                        <menuItem title="Show Window" keyEquivalent="m" id="qmP-yr-VuS">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                             <connections>
                                                 <action selector="showWindowAction:" target="Voe-Tx-rLC" id="ocd-ai-vwl"/>

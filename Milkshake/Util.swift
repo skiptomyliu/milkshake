@@ -455,13 +455,14 @@ class Util: NSObject {
                 musicItem.rights = rightsDict
             }
             
-            let annotated = annotationsDict[pandoraId] as! [String: AnyObject]
-            musicItem.name = annotated["name"] as? String
-            musicItem.duration = annotated["duration"] as? Int ?? -1
-            musicItem.shareableUrlPath = annotated["shareableUrlPath"] as? String
-            musicItem.totalTracks = annotated["totalTracks"] as! Int
-            musicItem.type = MusicType.PLAYLIST
-            musicItem.thorLayersRaw = annotated["thorLayers"] as? String ?? ""
+            if let annotated = annotationsDict[pandoraId] as? [String: AnyObject] {
+                musicItem.name = annotated["name"] as? String
+                musicItem.duration = annotated["duration"] as? Int ?? -1
+                musicItem.shareableUrlPath = annotated["shareableUrlPath"] as? String
+                musicItem.totalTracks = annotated["totalTracks"] as! Int
+                musicItem.type = MusicType.PLAYLIST
+                musicItem.thorLayersRaw = annotated["thorLayers"] as? String ?? ""
+            }
             
             items.append(musicItem)
         }
