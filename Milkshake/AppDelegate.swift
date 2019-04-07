@@ -72,9 +72,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
                 else if keyCode == 0x14 && modifier == 0x100 && self!.isPremium {
                     mainVc.loadPlaylistResults(self!)
                 }
-                    // u
-                else if keyCode == 0x31 && modifier == 0x1100 { mainVc.showWindow() }
-                    // p
+                // u
+                else if keyCode == 0x2E && modifier == 0x1100 { mainVc.showWindow() }
+                // p
                 else if keyCode == 0x23 && modifier == 0x1100 {
                     if let music = self?.music {
                         if music.isPlaying() {
@@ -414,7 +414,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
     @IBAction func register(_ sender: Any?) {
         hotKey = HotKey(keyCombo: KeyCombo(key: .minus, modifiers: [.command, .control]))
         hotKey = HotKey(keyCombo: KeyCombo(key: .equal, modifiers: [.command, .control]))
-        hotKey = HotKey(keyCombo: KeyCombo(key: .space, modifiers: [.command, .control])) // bring up menu
+        hotKey = HotKey(keyCombo: KeyCombo(key: .m, modifiers: [.command, .control])) // bring up menu
         hotKey = HotKey(keyCombo: KeyCombo(key: .p, modifiers: [.command, .control])) //play/pause
         hotKey = HotKey(keyCombo: KeyCombo(key: .r, modifiers: [.command, .control])) //repeat
         hotKey = HotKey(keyCombo: KeyCombo(key: .leftBracket, modifiers: [.command, .control])) //next track
