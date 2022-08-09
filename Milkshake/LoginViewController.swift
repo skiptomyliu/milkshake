@@ -61,6 +61,13 @@ class LoginViewController: NSViewController {
         }
     }
     
+    func callbackPartnerAuth(results: [String: AnyObject]) {
+        let token = results["result"]!["partnerAuthToken"] as? String
+        let syncTime = results["result"]!["syncTime"] as? String
+        print(token)
+        
+    }
+    
     @IBAction func loginAction(_ sender: Any) {
         let username = usernameField.stringValue
         let password = passwordField.stringValue
@@ -70,6 +77,8 @@ class LoginViewController: NSViewController {
             try? Locksmith.updateData(data: userData, forUserAccount: "Milkshake")
         }
         
-        self.appDelegate.api.auth(username: self.usernameField.stringValue, pass: self.passwordField.stringValue, callbackHandler: callbackLogin);
+        self.appDelegate.api.partnerAuth(callbackHandler: callbackPartnerAuth);
+        
+//        self.appDelegate.api.auth(username: self.usernameField.stringValue, pass: self.passwordField.stringValue, callbackHandler: callbackLogin);
     }
 }

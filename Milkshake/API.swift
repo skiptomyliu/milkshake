@@ -20,6 +20,24 @@ class API: NSObject {
     var base_cookie = "_ga=GA1.2.34567890.1234567890;csrftoken=0123456789abcdef;_gid=GA1.2.1234567890.1234567890; _uetsid=_uetff68c25a;"
     var cookies = ""
     
+    func requestTuner(_ url:String, params:[String: Any], callbackHandler: @escaping(_ Dictionary:[String:AnyObject]) -> ()) {
+        Alamofire.request(
+            url,
+            method: .post,
+            parameters: params,
+            encoding: JSONEncoding.default
+//            headers: headers
+            )
+            .responseJSON { response in
+                if let responseValue = response.result.value {
+                    print(responseValue)
+                    let rv = responseValue as! [String: AnyObject]
+                    if (rv["stat"] as? String) == "ok"{
+                        callbackHandler((response.result.value as? [String: AnyObject])!)
+                    }
+                }
+        }
+    }
     // Base network request function called by all API methods
     // footnote (fn1) If the X_Auth token is expired, repeat the request once.
     // footnote (fn2) If a request fails, repeat the request once
@@ -45,6 +63,7 @@ class API: NSObject {
             headers: headers
         )
         .responseJSON { response in
+            
             if let responseValue = response.result.value {
                 if let responseCookie = HTTPCookieStorage.shared.cookies {
                     self.parseCookie(cookies: responseCookie)
@@ -131,6 +150,19 @@ class API: NSObject {
         ]
         let url: String = "https://www.pandora.com/api/v1/auth/login"
         self.request(url, params: params, callbackHandler: callbackHandler)
+    }
+    
+    func partnerAuth(callbackHandler:@escaping(_ Dictionary:[String:AnyObject]) ->()){
+        let params: [String: Any] = [
+            "username": "android",
+            "password": "AC7IBG09A3DTSYM4R41UJWL07VLN8JI7",
+            "deviceModel": "android-generic",
+            "version": "5",
+        ]
+        
+        let url: String = "https://tuner.pandora.com:443/services/json/?method=auth.partnerLogin"
+        self.requestTuner(url, params: params, callbackHandler: callbackHandler)
+        // "R=U!LH$O2B#"
     }
     
     func playbackResumed(forceActive:Bool, callbackHandler:@escaping(_ Dictionary:[String:AnyObject]) -> ()) {
