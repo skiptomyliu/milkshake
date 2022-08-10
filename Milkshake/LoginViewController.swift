@@ -9,6 +9,7 @@
 import Cocoa
 import Locksmith
 
+
 // MARK: - NSTextFieldDelegate
 extension LoginViewController: NSTextFieldDelegate {
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
@@ -62,9 +63,20 @@ class LoginViewController: NSViewController {
     }
     
     func callbackPartnerAuth(results: [String: AnyObject]) {
-        let token = results["result"]!["partnerAuthToken"] as? String
-        let syncTime = results["result"]!["syncTime"] as? String
-        print(token)
+        let token = results["result"]!["partnerAuthToken"] as! String
+        let partnerId = results["result"]!["partnerId"] as! String
+        let syncTimeEnc = results["result"]!["syncTime"] as! String
+        
+        
+        let syncTime = PandoraDecryptTime(syncTimeEnc,"R=U!LH$O2B#")
+        print(syncTime)
+        
+        self.appDelegate.api.partnerAuthUserLogin(username: self.usernameField.stringValue, password: self.passwordField.stringValue, partnerAuthToken: token, partnerId: partnerId, syncTime: syncTime, callbackHandler: callbackPartnerAuthUserLogin);
+    }
+    
+    func callbackPartnerAuthUserLogin(results: [String: AnyObject]) {
+        
+        print(results)
         
     }
     
@@ -77,7 +89,7 @@ class LoginViewController: NSViewController {
             try? Locksmith.updateData(data: userData, forUserAccount: "Milkshake")
         }
         
-        self.appDelegate.api.partnerAuth(callbackHandler: callbackPartnerAuth);
+        self.appDelegate.api.partnerAuthPartnerLogin(callbackHandler: callbackPartnerAuth);
         
 //        self.appDelegate.api.auth(username: self.usernameField.stringValue, pass: self.passwordField.stringValue, callbackHandler: callbackLogin);
     }

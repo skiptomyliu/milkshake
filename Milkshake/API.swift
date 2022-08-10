@@ -12,6 +12,7 @@ import Foundation
 import Alamofire
 import Locksmith
 
+
 class API: NSObject {
     var X_AuthToken: String?
     var X_CsrfToken: String = "0123456789abcdef"
@@ -20,13 +21,34 @@ class API: NSObject {
     var base_cookie = "_ga=GA1.2.34567890.1234567890;csrftoken=0123456789abcdef;_gid=GA1.2.1234567890.1234567890; _uetsid=_uetff68c25a;"
     var cookies = ""
     
-    func requestTuner(_ url:String, params:[String: Any], callbackHandler: @escaping(_ Dictionary:[String:AnyObject]) -> ()) {
-        Alamofire.request(
-            url,
-            method: .post,
-            parameters: params,
-            encoding: JSONEncoding.default
-//            headers: headers
+    func requestTuner(_ url:String, params:[String: Any], encrypted:Bool, callbackHandler: @escaping(_ Dictionary:[String:AnyObject]) -> ()) {
+        
+        if encrypted {
+            var jsonData2: Data;
+            do {
+                jsonData2 = try JSONSerialization.data(withJSONObject: params)
+            } catch {
+                print(error.localizedDescription)
+                //XXX Call error
+                return
+            }
+            var request = URLRequest(url: URL(string: url)!)
+            request.httpMethod = HTTPMethod.post.rawValue
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            let encryptedBody = PandoraEncryptData(jsonData2, "6#26FRL$ZWD")
+            request.httpBody = encryptedBody
+
+            Alamofire.request(request).responseJSON { (response) in
+                callbackHandler((response.result.value as? [String: AnyObject])!)
+            }
+        } else {
+            Alamofire.request(
+                url,
+                method: .post,
+                parameters: params,
+                encoding: JSONEncoding.default
+    //            headers: headers
             )
             .responseJSON { response in
                 if let responseValue = response.result.value {
@@ -36,6 +58,7 @@ class API: NSObject {
                         callbackHandler((response.result.value as? [String: AnyObject])!)
                     }
                 }
+            }
         }
     }
     // Base network request function called by all API methods
@@ -152,8 +175,8 @@ class API: NSObject {
         self.request(url, params: params, callbackHandler: callbackHandler)
     }
     
-    func partnerAuth(callbackHandler:@escaping(_ Dictionary:[String:AnyObject]) ->()){
-        let params: [String: Any] = [
+    func partnerAuthPartnerLogin(callbackHandler:@escaping(_ Dictionary:[String:AnyObject]) ->()){
+        let params: [String: String] = [
             "username": "android",
             "password": "AC7IBG09A3DTSYM4R41UJWL07VLN8JI7",
             "deviceModel": "android-generic",
@@ -161,8 +184,30 @@ class API: NSObject {
         ]
         
         let url: String = "https://tuner.pandora.com:443/services/json/?method=auth.partnerLogin"
-        self.requestTuner(url, params: params, callbackHandler: callbackHandler)
-        // "R=U!LH$O2B#"
+        self.requestTuner(url, params: params, encrypted: false, callbackHandler: callbackHandler)
+    }
+    
+    func partnerAuthUserLogin(username:String, password:String, partnerAuthToken:String, partnerId:String, syncTime:Int, callbackHandler:@escaping(_ Dictionary:[String:AnyObject]) ->()){
+        let params: [String: Any] = [
+            "loginType": "user",
+            "username": username,
+            "password": password,
+            "partnerAuthToken": partnerAuthToken,
+            "syncTime": syncTime,
+//            "returnIsSubscriber": true,
+        ]
+        print(params)
+        var urlParams = URLComponents(string: "https://tuner.pandora.com/")!
+        urlParams.path = "/services/json/"
+        urlParams.queryItems = [
+            URLQueryItem(name: "method", value: "auth.userLogin"),
+            URLQueryItem(name: "auth_token", value: partnerAuthToken),
+            URLQueryItem(name: "partner_id", value: partnerId),
+        ]
+        
+//        let url: String = "https://tuner.pandora.com:443/services/json/?method=auth.userLogin&auth_token=\(tokenEncoded)&partner_id=\(partnerId)"
+        print("url: ", urlParams.url!.absoluteString)
+        self.requestTuner(urlParams.url!.absoluteString, params: params, encrypted: true, callbackHandler: callbackHandler)
     }
     
     func playbackResumed(forceActive:Bool, callbackHandler:@escaping(_ Dictionary:[String:AnyObject]) -> ()) {
