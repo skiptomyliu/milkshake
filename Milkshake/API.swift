@@ -54,7 +54,7 @@ class API: NSObject {
                 if let responseValue = response.result.value {
                     print(responseValue)
                     let rv = responseValue as! [String: AnyObject]
-                    if (rv["stat"] as? String) == "ok"{
+                    if (rv["stat"] as? String) == "ok" {
                         callbackHandler((response.result.value as? [String: AnyObject])!)
                     }
                 }
@@ -196,7 +196,6 @@ class API: NSObject {
             "syncTime": syncTime,
 //            "returnIsSubscriber": true,
         ]
-        print(params)
         var urlParams = URLComponents(string: "https://tuner.pandora.com/")!
         urlParams.path = "/services/json/"
         urlParams.queryItems = [
@@ -204,8 +203,6 @@ class API: NSObject {
             URLQueryItem(name: "auth_token", value: partnerAuthToken),
             URLQueryItem(name: "partner_id", value: partnerId),
         ]
-        
-//        let url: String = "https://tuner.pandora.com:443/services/json/?method=auth.userLogin&auth_token=\(tokenEncoded)&partner_id=\(partnerId)"
         print("url: ", urlParams.url!.absoluteString)
         self.requestTuner(urlParams.url!.absoluteString, params: params, encrypted: true, callbackHandler: callbackHandler)
     }

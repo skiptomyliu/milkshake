@@ -69,15 +69,19 @@ class LoginViewController: NSViewController {
         
         
         let syncTime = PandoraDecryptTime(syncTimeEnc,"R=U!LH$O2B#")
-        print(syncTime)
         
         self.appDelegate.api.partnerAuthUserLogin(username: self.usernameField.stringValue, password: self.passwordField.stringValue, partnerAuthToken: token, partnerId: partnerId, syncTime: syncTime, callbackHandler: callbackPartnerAuthUserLogin);
     }
     
     func callbackPartnerAuthUserLogin(results: [String: AnyObject]) {
-        
-        print(results)
-        
+        if (results["stat"] as? String) != "ok"{
+            if (results["code"] as? Int ?? 0) >= 0 {
+                errorTextField.stringValue = "Invalid username or credentials"
+            }
+        } else {
+            let result = results["result"] as! Dictionary<String, AnyObject>
+            self.delegate?.handleSuccessLogin(results: result)
+        }
     }
     
     @IBAction func loginAction(_ sender: Any) {

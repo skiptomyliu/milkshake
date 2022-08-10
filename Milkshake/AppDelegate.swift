@@ -242,11 +242,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
     }
     
     func handleSuccessLogin(results: Dictionary<String, AnyObject>) {
-        print(results)
-        let authToken = results["authToken"] as! String
-        let config = results["config"] as! [String: AnyObject]
-        self.isPremium = (config["branding"] as! String).lowercased() == "pandorapremium"
-        self.listenerId = results["listenerId"] as! String
+        let authToken = results["userAuthToken"] as! String
+        self.listenerId = results["userId"] as! String
+//        self.isPremium = (config["branding"] as! String).lowercased() == "pandorapremium"
+//        self.listenerId = results["listenerId"] as! String
         
         if self.isPremium == false {
             self.menuArtists.isHidden = true
