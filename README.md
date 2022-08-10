@@ -1,10 +1,5 @@
 #  <img src="/images/icon_32x32@2x.png" width="32"> Milkshake: Pandora Radio macOS app
 
-## MAINTENANCE MODE
-
-## The app can no longer be logged into due to changes on Pandora login API.  There's an issue tracking this work in this [Issue](https://github.com/skiptomyliu/milkshake/issues/42#issuecomment-1003235490).  This repo is in indefinite hiatus until I can find time to migrate from the REST API to the [JSON API](https://6xq.net/pandora-apidoc/json/). 
-
-
 <img src="/images/screenshot1.png"  width="290"> <img src="/images/screenshot2.png"  width="290"> <img src="/images/screenshot3.png"  width="290">
 <img src="/images/screenshot4.png"  width="290"> <img src="/images/screenshot5.png"  width="290"> <img src="/images/screenshot6.png"  width="290">
 
