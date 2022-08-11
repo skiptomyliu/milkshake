@@ -79,6 +79,7 @@
 		05ED21131FD6ED8F00123317 /* MusicItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05ED21121FD6ED8E00123317 /* MusicItem.swift */; };
 		05ED21171FDA2CF600123317 /* album-500.png in Resources */ = {isa = PBXBuildFile; fileRef = 05ED21161FDA2CF600123317 /* album-500.png */; };
 		05ED21191FDC423A00123317 /* FlatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05ED21181FDC423A00123317 /* FlatButton.swift */; };
+		05F3C2B828A49F28007387A5 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F3C2B728A49F28007387A5 /* constants.swift */; };
 		48F749471FCCEBD000F0A853 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F749461FCCEBD000F0A853 /* AppDelegate.swift */; };
 		48F749491FCCEBD000F0A853 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F749481FCCEBD000F0A853 /* MainViewController.swift */; };
 		48F7494B1FCCEBD000F0A853 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48F7494A1FCCEBD000F0A853 /* Assets.xcassets */; };
@@ -164,6 +165,7 @@
 		05ED21121FD6ED8E00123317 /* MusicItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicItem.swift; sourceTree = "<group>"; };
 		05ED21161FDA2CF600123317 /* album-500.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "album-500.png"; sourceTree = "<group>"; };
 		05ED21181FDC423A00123317 /* FlatButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatButton.swift; sourceTree = "<group>"; };
+		05F3C2B728A49F28007387A5 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
 		48F749431FCCEBD000F0A853 /* Milkshake.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Milkshake.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F749461FCCEBD000F0A853 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		48F749481FCCEBD000F0A853 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -238,13 +240,6 @@
 			name = classes;
 			sourceTree = "<group>";
 		};
-		05ED21051FD3629A00123317 /* test */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = test;
-			sourceTree = "<group>";
-		};
 		153A7C2C805AFCDA84A9FF61 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -278,8 +273,8 @@
 			children = (
 				05D3420628A34A320039D620 /* imported */,
 				05B86E091FE388B9009EEC4F /* Milkshake.entitlements */,
-				05ED21051FD3629A00123317 /* test */,
 				48F749461FCCEBD000F0A853 /* AppDelegate.swift */,
+				05F3C2B728A49F28007387A5 /* constants.swift */,
 				05ED20D31FCCFA3000123317 /* classes */,
 				48F749561FCCEBFF00F0A853 /* views */,
 				48F749551FCCEBF800F0A853 /* controllers */,
@@ -578,6 +573,7 @@
 				05ED20E51FCD182E00123317 /* Util.swift in Sources */,
 				05ED20FE1FCFABC200123317 /* SearchTableRowView.swift in Sources */,
 				05ED20FC1FCFA80F00123317 /* MyTableView.swift in Sources */,
+				05F3C2B828A49F28007387A5 /* constants.swift in Sources */,
 				059C04B72027E6980007E456 /* TapManager.swift in Sources */,
 				054A311D1FF5E3190022D06E /* ArtTableCellView.swift in Sources */,
 				05ED20E71FCD2FBD00123317 /* SearchTableCellView.swift in Sources */,

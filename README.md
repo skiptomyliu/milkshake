@@ -8,7 +8,7 @@ Milkshake is a Mac OS X [Pandora](https://www.pandora.com) client.
 If you don't have a Pandora account, you can [sign up here](https://www.pandora.com/account/register)
 
 # Download v1.1.0
-[.DMG Installer](https://github.com/skiptomyliu/milkshake/raw/master/App/Milkshake.dmg)
+[💾 DMG Installer](https://github.com/skiptomyliu/milkshake/raw/master/App/Milkshake.dmg)
 
 
 # Important note
