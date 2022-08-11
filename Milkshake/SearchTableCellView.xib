@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,7 +14,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LSH-c0-bsc">
-                    <rect key="frame" x="65" y="5" width="148" height="20"/>
+                    <rect key="frame" x="65" y="5" width="170" height="20"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Type" id="WX1-2Q-5Dy">
                         <font key="font" size="12" name="LucidaGrande"/>
@@ -34,7 +34,7 @@
                 <box fixedFrame="YES" boxType="custom" borderType="bezel" cornerRadius="3" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Wmg-Hq-Y4h">
                     <rect key="frame" x="272" y="16" width="20" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES"/>
-                    <view key="contentView" ambiguous="YES" id="kxB-3j-teF">
+                    <view key="contentView" id="kxB-3j-teF">
                         <rect key="frame" x="1" y="1" width="18" height="16"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -54,7 +54,7 @@
                 <box fixedFrame="YES" boxType="custom" borderType="bezel" cornerRadius="3" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="byu-N2-ALa" userLabel="PBox">
                     <rect key="frame" x="140" y="1" width="110" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES"/>
-                    <view key="contentView" ambiguous="YES" id="p9G-pr-Za0">
+                    <view key="contentView" id="p9G-pr-Za0">
                         <rect key="frame" x="1" y="1" width="108" height="16"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -74,7 +74,7 @@
                 <box fixedFrame="YES" boxType="custom" borderType="bezel" cornerRadius="3" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="3uV-cJ-jfO" userLabel="RBox">
                     <rect key="frame" x="11" y="16" width="45" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES"/>
-                    <view key="contentView" ambiguous="YES" id="6B2-qK-xgG">
+                    <view key="contentView" id="6B2-qK-xgG">
                         <rect key="frame" x="1" y="1" width="43" height="16"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -144,7 +144,7 @@
                 </button>
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1ot-8W-sxs" userLabel="Large Dark View">
                     <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </customView>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T3i-4A-PGz" userLabel="Thumb Up" customClass="PlayerButton" customModule="Milkshake" customModuleProvider="target">
                     <rect key="frame" x="270" y="15" width="20" height="20"/>

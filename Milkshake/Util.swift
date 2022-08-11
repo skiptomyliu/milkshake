@@ -50,7 +50,7 @@ class Util: NSObject {
 //        print(results)
         if let resultsOrder = results["results"] as? [String] {
             for key in resultsOrder {
-                var row = results["annotations"]![key]! as! [String: AnyObject]
+                let row = results["annotations"]![key]! as! [String: AnyObject]
                 let iconDict = row["icon"] as? [String: String]
                 let icon = iconDict?["thorId"] ?? ""
                 
