@@ -21,46 +21,36 @@ class API: NSObject {
     var base_cookie = "_ga=GA1.2.34567890.1234567890;csrftoken=0123456789abcdef;_gid=GA1.2.1234567890.1234567890; _uetsid=_uetff68c25a;"
     var cookies = ""
     
+    // Used for parnerAuth and userAuth login
     func requestTuner(_ url:String, params:[String: Any], encrypted:Bool, callbackHandler: @escaping(_ Dictionary:[String:AnyObject]) -> ()) {
-        
+        var jsonData: Data;
+        do {
+            jsonData = try JSONSerialization.data(withJSONObject: params)
+        } catch {
+            print(error.localizedDescription)
+            //XXX Call error
+            return
+        }
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = HTTPMethod.post.rawValue
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         if encrypted {
-            var jsonData2: Data;
-            do {
-                jsonData2 = try JSONSerialization.data(withJSONObject: params)
-            } catch {
-                print(error.localizedDescription)
-                //XXX Call error
-                return
-            }
-            var request = URLRequest(url: URL(string: url)!)
-            request.httpMethod = HTTPMethod.post.rawValue
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            let encryptedBody = PandoraEncryptData(jsonData2, "6#26FRL$ZWD")
+            let encryptedBody = PandoraEncryptData(jsonData, Constants.encryptPassword)
             request.httpBody = encryptedBody
-
-            Alamofire.request(request).responseJSON { (response) in
-                callbackHandler((response.result.value as? [String: AnyObject])!)
-            }
-        } else {
-            Alamofire.request(
-                url,
-                method: .post,
-                parameters: params,
-                encoding: JSONEncoding.default
-    //            headers: headers
-            )
-            .responseJSON { response in
-                if let responseValue = response.result.value {
-                    print(responseValue)
-                    let rv = responseValue as! [String: AnyObject]
-                    if (rv["stat"] as? String) == "ok" {
-                        callbackHandler((response.result.value as? [String: AnyObject])!)
-                    }
+        }
+        else {
+            request.httpBody = jsonData
+        }
+        Alamofire.request(request).responseJSON { response in
+            if let responseValue = response.result.value {
+                let rv = responseValue as! [String: AnyObject]
+                if (rv["stat"] as? String) == "ok" {
+                    callbackHandler((response.result.value as? [String: AnyObject])!)
                 }
             }
         }
     }
+    
     // Base network request function called by all API methods
     // footnote (fn1) If the X_Auth token is expired, repeat the request once.
     // footnote (fn2) If a request fails, repeat the request once
@@ -86,7 +76,6 @@ class API: NSObject {
             headers: headers
         )
         .responseJSON { response in
-            
             if let responseValue = response.result.value {
                 if let responseCookie = HTTPCookieStorage.shared.cookies {
                     self.parseCookie(cookies: responseCookie)
@@ -160,7 +149,7 @@ class API: NSObject {
             "password": pass,
             "keepLoggedIn": NSNumber(value: true)
         ]
-        let url: String = "https://www.pandora.com/api/v1/auth/login"
+        let url: String = "\(Constants.pandoraApiUrlV1)/auth/login"
         self.request(url, params: parameters, callbackHandler: callbackHandler)
     }
     
@@ -171,19 +160,19 @@ class API: NSObject {
             "password": "",
             "keepLoggedIn": true
         ]
-        let url: String = "https://www.pandora.com/api/v1/auth/login"
+        let url: String = "\(Constants.pandoraApiUrlV1)/auth/login"
         self.request(url, params: params, callbackHandler: callbackHandler)
     }
     
     func partnerAuthPartnerLogin(callbackHandler:@escaping(_ Dictionary:[String:AnyObject]) ->()){
         let params: [String: String] = [
-            "username": "android",
-            "password": "AC7IBG09A3DTSYM4R41UJWL07VLN8JI7",
-            "deviceModel": "android-generic",
-            "version": "5",
+            "username": Constants.username,
+            "password": Constants.password,
+            "deviceModel": Constants.deviceModel,
+            "version": Constants.version,
         ]
         
-        let url: String = "https://tuner.pandora.com:443/services/json/?method=auth.partnerLogin"
+        let url: String = "\(Constants.tunerUrl)?method=auth.partnerLogin"
         self.requestTuner(url, params: params, encrypted: false, callbackHandler: callbackHandler)
     }
     
@@ -194,10 +183,8 @@ class API: NSObject {
             "password": password,
             "partnerAuthToken": partnerAuthToken,
             "syncTime": syncTime,
-//            "returnIsSubscriber": true,
         ]
-        var urlParams = URLComponents(string: "https://tuner.pandora.com/")!
-        urlParams.path = "/services/json/"
+        var urlParams = URLComponents(string: "\(Constants.tunerUrl)")!
         urlParams.queryItems = [
             URLQueryItem(name: "method", value: "auth.userLogin"),
             URLQueryItem(name: "auth_token", value: partnerAuthToken),
@@ -211,7 +198,7 @@ class API: NSObject {
         let params: [String: Any] = [
             "forceActive": true
         ]
-        let url: String = "https://www.pandora.com/api/v1/station/playbackResumed"
+        let url: String = "\(Constants.pandoraApiUrlV1)/station/playbackResumed"
         self.request(url, params: params, callbackHandler: callbackHandler)
     }
     
@@ -240,7 +227,7 @@ class API: NSObject {
 //            "pandoraId": pid,
 //            "sourcePandoraId": sid,
 //        ]
-//        self.request("https://www.pandora.com/api/v1/ondemand/getAudioPlaybackInfo", params: params, callbackHandler: callbackHandler)
+//        self.request("\(Constants.pandoraApiUrlV1)/ondemand/getAudioPlaybackInfo", params: params, callbackHandler: callbackHandler)
 //    }
     
     func getAudioPlaybackInfoPandoraId(item:MusicItem, callbackHandler: @escaping(_ Dictionary:[String:AnyObject]) -> ()) {
@@ -248,7 +235,7 @@ class API: NSObject {
             "pandoraId": item.pandoraId!,
             "sourcePandoraId": item.albumId!,
             ]
-        self.request("https://www.pandora.com/api/v1/ondemand/getAudioPlaybackInfo", params: params) { (response) in
+        self.request("\(Constants.pandoraApiUrlV1)/ondemand/getAudioPlaybackInfo", params: params) { (response) in
             let returnDict: [String: Any] = [
                 "musicItem": item,
                 "response": response
@@ -265,7 +252,7 @@ class API: NSObject {
         let params: [String: Any] = [
             "token": token
         ]
-        self.request("https://www.pandora.com/api/v1/music/album", params: params) { (response) in
+        self.request("\(Constants.pandoraApiUrlV1)/music/album", params: params) { (response) in
             self.callbackAlbum(results:response, callbackHandler: callbackHandler )
         }
     }
@@ -313,7 +300,7 @@ class API: NSObject {
         let params: [String: Any] = [
             "token": token
         ]
-        self.request("https://www.pandora.com/api/v1/music/artist", params: params) { (response) in
+        self.request("\(Constants.pandoraApiUrlV1)/music/artist", params: params) { (response) in
             self.callbackArtistToken(results:response, callbackHandler: callbackHandler )
         }
     }
@@ -376,7 +363,7 @@ class API: NSObject {
         let params: [String: Any] = [
             "pageSize": 250,
         ]
-        self.request("https://www.pandora.com/api/v1/station/getStations", params: params, callbackHandler: callbackHandler)
+        self.request("\(Constants.pandoraApiUrlV1)/station/getStations", params: params, callbackHandler: callbackHandler)
     }
     // Get music tracks of station
     func getPlaylistFragment(stationId:String, isStationStart:Bool, lastPlayedTrackToken:String?, callbackHandler: @escaping(_ Dictionary:[String: AnyObject]) -> ()) {
@@ -392,7 +379,7 @@ class API: NSObject {
         if lastPlayedTrackToken != nil {
             params["lastPlayedTrackToken"] = lastPlayedTrackToken
         }
-        self.request("https://www.pandora.com/api/v1/playlist/getFragment", params: params, callbackHandler: callbackHandler)
+        self.request("\(Constants.pandoraApiUrlV1)/playlist/getFragment", params: params, callbackHandler: callbackHandler)
     }
     
     func addFeedback(trackToken:String, isPositive:Bool, callbackHandler: @escaping(_ Dictionary:[String: AnyObject]) -> ()) {
@@ -400,7 +387,7 @@ class API: NSObject {
             "trackToken": trackToken,
             "isPositive": isPositive,
         ]
-        self.request("https://www.pandora.com/api/v1/station/addFeedback", params: params, callbackHandler: callbackHandler)
+        self.request("\(Constants.pandoraApiUrlV1)/station/addFeedback", params: params, callbackHandler: callbackHandler)
     }
     
     func deleteFeedback(trackToken:String, isPositive:Bool, callbackHandler: @escaping(_ Dictionary:[String: AnyObject]) -> ()) {
@@ -408,14 +395,14 @@ class API: NSObject {
             "trackToken": trackToken,
             "isPositive": isPositive,
             ]
-        self.request("https://www.pandora.com/api/v1/station/deleteFeedback", params: params, callbackHandler: callbackHandler)
+        self.request("\(Constants.pandoraApiUrlV1)/station/deleteFeedback", params: params, callbackHandler: callbackHandler)
     }
     
     func trackStarted(trackToken: String, callbackHandler: @escaping(_ Dictionary:[String: AnyObject]) -> ()) {
         let params: [String: Any] = [
             "trackToken": trackToken
         ]
-        self.request("https://www.pandora.com/api/v1/station/trackStarted", params: params, callbackHandler: callbackHandler)
+        self.request("\(Constants.pandoraApiUrlV1)/station/trackStarted", params: params, callbackHandler: callbackHandler)
     }
     
     func createStation(pandoraId:String, callbackHandler: @escaping(_ Dictionary:[String: AnyObject]) -> ()) {
@@ -425,7 +412,7 @@ class API: NSObject {
             "lineId": "",
             "creationSource": ""
         ]
-        self.request("https://www.pandora.com/api/v1/station/createStation", params: params, callbackHandler: callbackHandler);
+        self.request("\(Constants.pandoraApiUrlV1)/station/createStation", params: params, callbackHandler: callbackHandler);
     }
     
     /*
@@ -443,7 +430,7 @@ class API: NSObject {
                 "annotationLimit": 100
                 ]
             ]
-        self.request("https://www.pandora.com/api/v5/collections/getSortedPlaylists", params: params, callbackHandler: callbackHandler)
+        self.request("\(Constants.pandoraApiUrlV5)/collections/getSortedPlaylists", params: params, callbackHandler: callbackHandler)
     }
     
     func getTracks(pandoraId:String, callbackHandler: @escaping(_ Dictionary:[String: AnyObject]) -> ()) {
@@ -456,7 +443,7 @@ class API: NSObject {
                 "annotationLimit": 100
             ]
         ]
-        self.request("https://www.pandora.com/api/v6/playlists/getTracks", params: params, callbackHandler: callbackHandler)
+        self.request("\(Constants.pandoraApiUrlV6)/playlists/getTracks", params: params, callbackHandler: callbackHandler)
     }
     
 }

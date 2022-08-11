@@ -41,7 +41,6 @@ class LoginViewController: NSViewController {
             usernameField.stringValue = username
             passwordField.stringValue = password
 //            self.loginAction(self) // auto login
-            
         }
         self.usernameField.delegate = self
         self.passwordField.delegate = self
@@ -49,27 +48,14 @@ class LoginViewController: NSViewController {
         self.passwordField.nextKeyView = self.rememberButton
         self.rememberButton.nextKeyView = self.loginButton
         self.loginButton.nextKeyView = self.usernameField
-    }
-    
-    func callbackLogin(results: [String: AnyObject]) {
-        if let errorCode = results["errorCode"] as? Int {
-            if errorCode >= 0 {
-                let errorMessage = results["message"] as! String
-                errorTextField.stringValue = errorMessage
-            }
-        } else {
-            self.delegate?.handleSuccessLogin(results: results)
-        }
-    }
-    
+    }    
     func callbackPartnerAuth(results: [String: AnyObject]) {
         let token = results["result"]!["partnerAuthToken"] as! String
         let partnerId = results["result"]!["partnerId"] as! String
         let syncTimeEnc = results["result"]!["syncTime"] as! String
         
         
-        let syncTime = PandoraDecryptTime(syncTimeEnc,"R=U!LH$O2B#")
-        
+        let syncTime = PandoraDecryptTime(syncTimeEnc, Constants.decryptPassword)
         self.appDelegate.api.partnerAuthUserLogin(username: self.usernameField.stringValue, password: self.passwordField.stringValue, partnerAuthToken: token, partnerId: partnerId, syncTime: syncTime, callbackHandler: callbackPartnerAuthUserLogin);
     }
     
@@ -94,7 +80,5 @@ class LoginViewController: NSViewController {
         }
         
         self.appDelegate.api.partnerAuthPartnerLogin(callbackHandler: callbackPartnerAuth);
-        
-//        self.appDelegate.api.auth(username: self.usernameField.stringValue, pass: self.passwordField.stringValue, callbackHandler: callbackLogin);
     }
 }
