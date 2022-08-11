@@ -293,24 +293,6 @@ class API: NSObject {
         self.request("https://www.pandora.com/api/v4/catalog/annotateObjectsSimple", params: params, callbackHandler: callbackHandler)
     }
     
-    // Deprecated?  we should just be calling catalogDetails now for fetching artist details.  Remove below comment block in future:
-    //1
-    /*
-    func artistToken(token:String, callbackHandler: @escaping(_ Dictionary:[String: AnyObject]) -> ()) {
-        let params: [String: Any] = [
-            "token": token
-        ]
-        self.request("\(Constants.pandoraApiUrlV1)/music/artist", params: params) { (response) in
-            self.callbackArtistToken(results:response, callbackHandler: callbackHandler )
-        }
-    }
-    //2
-    func callbackArtistToken(results:[String: Any], callbackHandler: @escaping(_ Dictionary:[String:AnyObject]) -> ()) {
-        let pandoraId = results["pandoraId"] as! String
-        self.catalogDetails(pandoraId: pandoraId, callbackHandler: callbackHandler)
-    }
-    */
-    
     // Get artist details
     func catalogDetails(pandoraId:String, callbackHandler: @escaping(_ Dictionary:[String: AnyObject]) -> ()) {
         let params: [String: Any] = [
@@ -321,13 +303,6 @@ class API: NSObject {
         }
     }
  
-    //4  part of deprecation, just call catalogDetails now
-    /*
-    func callbackCatalogDetails(catalogResults:[String: AnyObject], artistResults:[String: Any], callbackHandler: @escaping(_ Dictionary:[String: AnyObject]) -> ()) {
-        callbackHandler(catalogResults);
-    }
-     */
-    
     // Token is needed to perform API requests to fetch details of an artist or album
     //  The token is nested in the ShareableUrlPath, this function extracts it
     //xxx refactor to use willSet and didSet
