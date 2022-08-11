@@ -21,7 +21,6 @@ class ResultsViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.searchTableView.selectionHighlightStyle = .none
         let nib = NSNib(nibNamed: NSNib.Name(rawValue: "SearchTableCellView"), bundle: Bundle.main)
         self.searchTableView.register(nib!, forIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SearchTableCellView"))
@@ -121,12 +120,11 @@ extension ResultsViewController: NSTableViewDelegate, NSTableViewDataSource{
     
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
         let cellId = "rowview"
-        
         if let rowView = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: cellId), owner: self) as? SearchTableRowView {
             return rowView
         } else {
             let rowView = SearchTableRowView.init(frame: NSMakeRect(0, 0, self.view.frame.size.width, 50))
-            rowView.identifier = NSUserInterfaceItemIdentifier(rawValue: "rowview")
+            rowView.identifier = NSUserInterfaceItemIdentifier(rawValue: cellId)
             return rowView
         }
     }
