@@ -47,16 +47,16 @@ class Util: NSObject {
     // Parse API search results
     class func parseSearchIntoItems(results: [String: AnyObject]) -> [MusicItem] {
         var items: [MusicItem] = []
-//        print(results)
+        // print(results)
         if let resultsOrder = results["results"] as? [String] {
             for key in resultsOrder {
                 let row = results["annotations"]![key]! as! [String: AnyObject]
                 let iconDict = row["icon"] as? [String: String]
-                let icon = iconDict?["thorId"] ?? ""
+                let icon = iconDict?["thorId"] ?? "" //iconDict?["artUrl"] ?? ""
                 
                 let musicItem = MusicItem()
                 if icon != "" {
-                    musicItem.albumArt = "https://content-images.p-cdn.com/"+(icon)
+                    musicItem.albumArt = "https://content-images.p-cdn.com/\(icon)/_250W_250H.jpg"
                 }
                 
                 musicItem.name = row["name"] as? String
@@ -71,9 +71,7 @@ class Util: NSObject {
                 musicItem.albumId = row["albumId"] as? String
                 musicItem.shareableUrlPath = row["shareableUrlPath"] as? String
                 musicItem.cellType = CellType.SEARCH
-                
-//                print(row)
-                
+                // print(row)
                 if let rightsDict = row["rightsInfo"] as? [String: AnyObject] {
                     musicItem.hasInteractive = rightsDict["hasInteractive"] as? Bool ?? false
                 }
