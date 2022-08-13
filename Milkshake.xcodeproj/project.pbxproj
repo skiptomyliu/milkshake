@@ -59,6 +59,7 @@
 		05D3421028A34D620039D620 /* Crypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D3420F28A34D620039D620 /* Crypt.m */; };
 		05D4F5EE217CEC4A00283085 /* milkshake.icns in Resources */ = {isa = PBXBuildFile; fileRef = 05D4F5ED217CEC4900283085 /* milkshake.icns */; };
 		05D4F5F0217CEE5100283085 /* milkshake_512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 05D4F5EF217CEE5100283085 /* milkshake_512x512.png */; };
+		05E1929928A71DCE00E81970 /* VolumeSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E1929828A71DCE00E81970 /* VolumeSliderCell.swift */; };
 		05ED20D51FCCFA4F00123317 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05ED20D41FCCFA4F00123317 /* API.swift */; };
 		05ED20DF1FCD10B000123317 /* playing.gif in Resources */ = {isa = PBXBuildFile; fileRef = 05ED20DC1FCD10B000123317 /* playing.gif */; };
 		05ED20E21FCD125C00123317 /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05ED20E01FCD125C00123317 /* ResultsViewController.swift */; };
@@ -145,6 +146,7 @@
 		05D3421128A34D840039D620 /* Crypt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Crypt.h; sourceTree = "<group>"; };
 		05D4F5ED217CEC4900283085 /* milkshake.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = milkshake.icns; sourceTree = "<group>"; };
 		05D4F5EF217CEE5100283085 /* milkshake_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkshake_512x512.png; sourceTree = "<group>"; };
+		05E1929828A71DCE00E81970 /* VolumeSliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeSliderCell.swift; sourceTree = "<group>"; };
 		05ED20D41FCCFA4F00123317 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		05ED20DC1FCD10B000123317 /* playing.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = playing.gif; sourceTree = "<group>"; };
 		05ED20E01FCD125C00123317 /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 				05ED20E61FCD2FBD00123317 /* SearchTableCellView.swift */,
 				05ED20E81FCD2FE200123317 /* SearchTableCellView.xib */,
 				059A061F200DC7ED003C81F1 /* SpectrumAnalyzerView.swift */,
+				05E1929828A71DCE00E81970 /* VolumeSliderCell.swift */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -545,6 +548,7 @@
 				054A31171FF5D5B10022D06E /* HeaderTableCellView.swift in Sources */,
 				05ED21131FD6ED8F00123317 /* MusicItem.swift in Sources */,
 				05A57E692010E90F00B8FBCB /* NSBezierPath+CGPath.swift in Sources */,
+				05E1929928A71DCE00E81970 /* VolumeSliderCell.swift in Sources */,
 				48F749491FCCEBD000F0A853 /* MainViewController.swift in Sources */,
 				054130351FE01EBA0067DCFE /* PlayerButton.swift in Sources */,
 				48F749581FCCECBD00F0A853 /* RoundView.swift in Sources */,
@@ -715,7 +719,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = S9FKV88H43;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Milkshake/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -739,7 +743,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = S9FKV88H43;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Milkshake/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";

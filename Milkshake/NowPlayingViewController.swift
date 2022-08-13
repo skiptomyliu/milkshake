@@ -45,6 +45,7 @@ class NowPlayingViewController: NSViewController {
     @IBOutlet weak var artistLink: FlatButton!
     @IBOutlet weak var albumLink: FlatButton!
     @IBOutlet weak var volumeSlider: NSSlider!
+    @IBOutlet weak var volumeSliderCell: VolumeSliderCell!
     @IBOutlet weak var spectrumView: SpectrumAnalyzerView!
     
     let appDelegate = NSApplication.shared.delegate as! AppDelegate
@@ -187,9 +188,12 @@ class NowPlayingViewController: NSViewController {
             }
         }
         
-        // spectrum
+        // spectrum + volume
         if let color = item.dominantColor {
-            self.spectrumView.barFillColor = NSColor(hex: color)
+            let color = NSColor(hex: color)
+            self.spectrumView.barFillColor = color
+            self.volumeSliderCell.backgroundColor = color.complementary()
+            self.volumeSlider.setNeedsDisplay()
         } else {
             self.spectrumView.barFillColor = NSColor(calibratedRed: 250/255.0, green: 148/255.0, blue: 55/255.0, alpha: 0.55)
         }
