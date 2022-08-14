@@ -48,26 +48,6 @@ class LoginViewController: NSViewController {
         self.passwordField.nextKeyView = self.rememberButton
         self.rememberButton.nextKeyView = self.loginButton
         self.loginButton.nextKeyView = self.usernameField
-    }    
-    func callbackPartnerAuth(results: [String: AnyObject]) {
-        let token = results["result"]!["partnerAuthToken"] as! String
-        let partnerId = results["result"]!["partnerId"] as! String
-        let syncTimeEnc = results["result"]!["syncTime"] as! String
-        
-        
-        let syncTime = PandoraDecryptTime(syncTimeEnc, Constants.decryptPassword)
-        self.appDelegate.api.partnerAuthUserLogin(username: self.usernameField.stringValue, password: self.passwordField.stringValue, partnerAuthToken: token, partnerId: partnerId, syncTime: syncTime, callbackHandler: callbackPartnerAuthUserLogin);
-    }
-    
-    func callbackPartnerAuthUserLogin(results: [String: AnyObject]) {
-        if (results["stat"] as? String) != "ok"{
-            if (results["code"] as? Int ?? 0) >= 0 {
-                errorTextField.stringValue = "Invalid username or credentials"
-            }
-        } else {
-            let result = results["result"] as! Dictionary<String, AnyObject>
-            self.delegate?.handleSuccessLogin(results: result)
-        }
     }
     
     @IBAction func loginAction(_ sender: Any) {
@@ -78,7 +58,15 @@ class LoginViewController: NSViewController {
         if rememberButton.state == NSControl.StateValue.on {
             try? Locksmith.updateData(data: userData, forUserAccount: "Milkshake")
         }
-        
-        self.appDelegate.api.partnerAuthPartnerLogin(callbackHandler: callbackPartnerAuth);
+        self.appDelegate.api.authPartnerAndUser(username: self.usernameField.stringValue, password: self.passwordField.stringValue) { results in 
+            if (results["stat"] as? String) != "ok"{
+                if (results["code"] as? Int ?? 0) >= 0 {
+                    self.errorTextField.stringValue = "Invalid username or credentials"
+                }
+            } else {
+                let result = results["result"] as! Dictionary<String, AnyObject>
+                self.delegate?.handleSuccessLogin(results: result)
+            }
+        }
     }
 }

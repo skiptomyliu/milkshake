@@ -244,20 +244,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, LoginProtocol {
     func handleSuccessLogin(results: Dictionary<String, AnyObject>) {
         let authToken = results["userAuthToken"] as! String
         self.listenerId = results["userId"] as! String
-//        self.isPremium = (config["branding"] as! String).lowercased() == "pandorapremium"
-//        self.listenerId = results["listenerId"] as! String
-        
-        if self.isPremium == false {
-            self.menuArtists.isHidden = true
-            self.menuPlaylist.isHidden = true
-        }
-        // Setting
+
         let defaults = UserDefaults.standard
         defaults.set(authToken, forKey: "authToken")
         self.api.X_AuthToken = authToken
-        print ("x auth token....")
-        print(self.api.X_AuthToken!)
-        self.launchMain()
+        
+        self.api.billingInfo() { results in
+            self.isPremium = ((results["activeProduct"]?["productTier"] as? String) ?? "").lowercased() == "pandora_premium"
+            if self.isPremium == false {
+                self.menuArtists.isHidden = true
+                self.menuPlaylist.isHidden = true
+                self.menuShuffle.isHidden = true
+            }
+            self.launchMain()
+        }
     }
 
     func isRadio() -> Bool {

@@ -391,7 +391,8 @@ class Util: NSObject {
         var items: [MusicItem] = []
         
         // Limit 50 stations only for time being
-        let stations = (stationResult["stations"] as! [[String: Any]]).prefix(50)
+        let stations = ((stationResult["stations"] as? [[String: Any]]) ?? []).prefix(50)
+        
         
         for station in stations {
             var albumArt = ""
@@ -437,9 +438,8 @@ class Util: NSObject {
     class func parsePlaylistSearchIntoItems(playlistSearchResult:[String: AnyObject]) -> [MusicItem] {
         
         var items: [MusicItem] = []
-        let annotationsDict = playlistSearchResult["annotations"] as! [String: AnyObject]
-        
-        let playlistsArray = playlistSearchResult["items"] as! [[String: Any]]
+        let annotationsDict = playlistSearchResult["annotations"] as? [String: AnyObject] ?? [:]
+        let playlistsArray = playlistSearchResult["items"] as? [[String: Any]] ?? []
         
         for playlist in playlistsArray{
             let musicItem = MusicItem()
@@ -556,8 +556,8 @@ class Util: NSObject {
                 musicItem.shareableUrlPath = row["shareableUrlPath"] as? String
                 musicItem.cellType = CellType.ARTIST
                 
-                if let icon = row["icon"]!["thorId"] as? String {
-                    let albumArt = "https://content-images.p-cdn.com/"+(icon)
+                if let icon = row["icon"]?["thorId"] as? String {
+                    let albumArt = "https://content-images.p-cdn.com/\(icon)_250W_250H.jpg"
                     musicItem.albumArt = albumArt
                 }
                 items.append(musicItem)

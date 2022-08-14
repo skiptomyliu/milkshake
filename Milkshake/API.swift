@@ -88,15 +88,17 @@ class API: NSObject {
                 }
                 let rv = responseValue as! [String: AnyObject]
 
-                if (rv["errorCode"] as? Int) == 1001 {
+                if (rv["errorCode"] as? Int ?? 0) == 1001 {
                     print("Token needs to be refreshed!!")
                     self.X_AuthToken = ""
 
                     if let dictionary = Locksmith.loadDataForUserAccount(userAccount: "Milkshake") {
                         let username = dictionary["username"] as! String
                         let password = dictionary["password"] as! String
-                        self.auth(username: username, pass: password) { responseDict in
-                            self.X_AuthToken = responseDict["authToken"] as? String;
+                        
+                        self.authPartnerAndUser(username: username, password: password) { responseDict in
+                            self.X_AuthToken = responseDict["result"]!["userAuthToken"] as? String;
+                            
                             // Clear the station queues because they're all expired
                             if url.hasSuffix("annotateObjectsSimple") {
                                 print("Clearing out... trying again")
@@ -141,30 +143,19 @@ class API: NSObject {
         print(self.cookies)
     }
         
-    
-    func auth(username:String, pass:String, callbackHandler:@escaping(_ Dictionary:[String:AnyObject]) -> ()) {
-        let parameters: [String: Any] = [
-            "existingAuthToken": "",
-            "username": username,
-            "password": pass,
-            "keepLoggedIn": NSNumber(value: true)
-        ]
-        let url: String = "\(Constants.pandoraApiUrlV1)/auth/login"
-        self.request(url, params: parameters, callbackHandler: callbackHandler)
+    func authPartnerAndUser(username:String, password:String, callbackHandler:@escaping(_ Dictionary:[String:AnyObject]) ->()){
+        
+        self._partnerAuthPartnerLogin() { responseDict in
+            let partnerAuthToken = responseDict["result"]!["partnerAuthToken"] as! String
+            let partnerId = responseDict["result"]!["partnerId"] as! String
+            let syncTimeEnc = responseDict["result"]!["syncTime"] as! String
+            let syncTime = PandoraDecryptTime(syncTimeEnc, Constants.decryptPassword)
+            
+            self._partnerAuthUserLogin(username: username, password: password, partnerAuthToken: partnerAuthToken, partnerId: partnerId, syncTime: syncTime, callbackHandler: callbackHandler)
+        }
     }
     
-    func auth(username:String, token:String, callbackHandler:@escaping(_ Dictionary:[String:AnyObject]) -> ()) {
-        let params: [String: Any] = [
-            "existingAuthToken": token,
-            "username": username,
-            "password": "",
-            "keepLoggedIn": true
-        ]
-        let url: String = "\(Constants.pandoraApiUrlV1)/auth/login"
-        self.request(url, params: params, callbackHandler: callbackHandler)
-    }
-    
-    func partnerAuthPartnerLogin(callbackHandler:@escaping(_ Dictionary:[String:AnyObject]) ->()){
+    func _partnerAuthPartnerLogin(callbackHandler:@escaping(_ Dictionary:[String:AnyObject]) ->()){
         let params: [String: String] = [
             "username": Constants.username,
             "password": Constants.password,
@@ -176,7 +167,7 @@ class API: NSObject {
         self.requestTuner(url, params: params, encrypted: false, callbackHandler: callbackHandler)
     }
     
-    func partnerAuthUserLogin(username:String, password:String, partnerAuthToken:String, partnerId:String, syncTime:Int, callbackHandler:@escaping(_ Dictionary:[String:AnyObject]) ->()){
+    func _partnerAuthUserLogin(username:String, password:String, partnerAuthToken:String, partnerId:String, syncTime:Int, callbackHandler:@escaping(_ Dictionary:[String:AnyObject]) ->()){
         let params: [String: Any] = [
             "loginType": "user",
             "username": username,
@@ -192,6 +183,12 @@ class API: NSObject {
         ]
         print("url: ", urlParams.url!.absoluteString)
         self.requestTuner(urlParams.url!.absoluteString, params: params, encrypted: true, callbackHandler: callbackHandler)
+    }
+    
+    func billingInfo(callbackHandler:@escaping(_ Dictionary:[String:AnyObject]) -> ()) {
+        let url: String = "\(Constants.pandoraApiUrlV1)/billing/infoV2"
+        let params: [String: Any] = [:]
+        self.request(url, params: params, callbackHandler: callbackHandler)
     }
     
     func playbackResumed(forceActive:Bool, callbackHandler:@escaping(_ Dictionary:[String:AnyObject]) -> ()) {
