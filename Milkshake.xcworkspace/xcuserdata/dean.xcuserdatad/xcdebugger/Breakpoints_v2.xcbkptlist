@@ -51,16 +51,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "099C3A25-BB3F-40FD-B7E7-D736CF23352E"
-            shouldBeEnabled = "Yes"
+            uuid = "124704E2-BEF9-4CED-A107-4FD1C49AEF66"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Milkshake/API.swift"
+            filePath = "Milkshake/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
-            landmarkName = "request(_:params:callbackHandler:)"
+            startingLineNumber = "253"
+            endingLineNumber = "253"
+            landmarkName = "handleSuccessLogin(results:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7ACBECDD-E24A-4F93-A99A-6BDB9B4CDC32"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Milkshake/Util.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "558"
+            endingLineNumber = "558"
+            landmarkName = "parseArtistIntoItems(artistResults:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

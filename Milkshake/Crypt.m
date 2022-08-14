@@ -2,6 +2,9 @@
 #include "blowfish.h"
 #import "Crypt.h"
 
+// Source:
+// https://github.com/HermesApp/Hermes/blob/78f8bf498e09411299b31a994f3c9fbb3bb4d3b4/Sources/Pandora/Crypt.m
+
 /* Conversion from hex to int and int to hex */
 static char i2h[16] = "0123456789abcdef";
 static char h2i[256] = {

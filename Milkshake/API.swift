@@ -88,7 +88,7 @@ class API: NSObject {
                 }
                 let rv = responseValue as! [String: AnyObject]
 
-                if (rv["errorCode"] as? Int) == 1001 {
+                if (rv["errorCode"] as? Int ?? 0) == 1001 {
                     print("Token needs to be refreshed!!")
                     self.X_AuthToken = ""
 
@@ -183,6 +183,12 @@ class API: NSObject {
         ]
         print("url: ", urlParams.url!.absoluteString)
         self.requestTuner(urlParams.url!.absoluteString, params: params, encrypted: true, callbackHandler: callbackHandler)
+    }
+    
+    func billingInfo(callbackHandler:@escaping(_ Dictionary:[String:AnyObject]) -> ()) {
+        let url: String = "\(Constants.pandoraApiUrlV1)/billing/infoV2"
+        let params: [String: Any] = [:]
+        self.request(url, params: params, callbackHandler: callbackHandler)
     }
     
     func playbackResumed(forceActive:Bool, callbackHandler:@escaping(_ Dictionary:[String:AnyObject]) -> ()) {
