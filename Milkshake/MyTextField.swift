@@ -12,13 +12,6 @@ import Cocoa
 
 class MyTextField: NSTextField {
 
-    
-    override class func awakeFromNib() {
-
-//        self.cell.bezelStyle
-//        self.BezelStyle.roundedBezel = 1
-    }
-//
     override func becomeFirstResponder() -> Bool {
         self.layer?.cornerRadius = 10
         self.layer?.borderColor = NSColor(red:204.0/255.0, green:204.0/255.0, blue:204.0/255.0, alpha:1.0).cgColor
@@ -34,14 +27,4 @@ class MyTextField: NSTextField {
 
         return responderStatus
     }
-//
-//    override func mouseDown(with event: NSEvent) {
-//        print ("TextField MOUSE DOWN")
-//    }
-//
-//    override var wantsDefaultClipping: Bool {
-//        return false
-//    }
-
-    
 }
