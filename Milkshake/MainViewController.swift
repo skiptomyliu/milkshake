@@ -85,6 +85,7 @@ class MainViewController: NSViewController {
         self.nowPlayingViewController.view.frame = CGRect(x: 0, y: 0, width: self.resultsView.frame.size.width, height: self.resultsView.frame.size.height)
         // Auto play on launch
         // self.playFirstStation()
+        self.appDelegate.api.shuffleStations(stationsIds: [], callbackHandler: callbackShuffle)                 
     }
     
     func playFirstStation() {
@@ -137,6 +138,12 @@ class MainViewController: NSViewController {
     }
     
     func createStationCallback(results: [String: AnyObject]) {
+        let musicItem = Util.parseCreateStation(result: results)
+        self.stationResultsViewController.search_results = [] // hack to force refresh
+        self.playStation(musicItem: musicItem)
+    }
+    
+    func callbackShuffle(results: [String: AnyObject]) {
         let musicItem = Util.parseCreateStation(result: results)
         self.stationResultsViewController.search_results = [] // hack to force refresh
         self.playStation(musicItem: musicItem)
@@ -355,9 +362,11 @@ class MainViewController: NSViewController {
         self.sweepNowPlaying()
     }
     
+
+    
     @IBAction func loadSearchResults(_ sender: Any) {
         // Only make firstResponder if button tapped
-        // self.view.window?.makeFirstResponder(self._curSearchController?.searchTableView)
+//         self.view.window?.makeFirstResponder(self._curSearchController?.searchTableView)
     }
     
     @IBAction func showMenu(_ sender: Any) {
