@@ -42,8 +42,8 @@
             filePath = "Milkshake/SearchTableCellView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
             landmarkName = "setCellWithSearchResult(result:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -67,32 +67,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CF412278-5A0E-4058-AC60-582D2205D73A"
+            uuid = "5A0DE460-B413-4E53-B672-4BD5AD84DB18"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Milkshake/API.swift"
+            filePath = "Milkshake/ResultsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "397"
-            endingLineNumber = "397"
-            landmarkName = "shuffleStations(stationsIds:callbackHandler:)"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "actionSelectedCell(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "DFB1B193-D104-42F1-AFE3-34DE3F0F18FF"
-            shouldBeEnabled = "Yes"
+            uuid = "A5555C54-4DFD-4928-A604-A8C24D11BC39"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Milkshake/MainViewController.swift"
+            filePath = "Milkshake/ResultsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
-            landmarkName = "callbackShuffle(results:)"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "actionSelectedCell(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

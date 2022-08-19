@@ -28,6 +28,9 @@ class ResultsViewController: NSViewController {
         let headerNib = NSNib(nibNamed: NSNib.Name(rawValue: "HeaderTableCellView"), bundle: Bundle.main)
         self.searchTableView.register(headerNib!, forIdentifier: NSUserInterfaceItemIdentifier(rawValue: "HeaderTableCellView"))
         
+        let headerActionNib = NSNib(nibNamed: NSNib.Name(rawValue: "HeaderActionTableCellView"), bundle: Bundle.main)
+        self.searchTableView.register(headerActionNib!, forIdentifier: NSUserInterfaceItemIdentifier(rawValue: "HeaderActionTableCellView"))
+        
         let artNib = NSNib(nibNamed: NSNib.Name(rawValue: "ArtTableCellView"), bundle: Bundle.main)
         self.searchTableView.register(artNib!, forIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ArtTableCellView"))
         
@@ -43,8 +46,10 @@ class ResultsViewController: NSViewController {
     
     @objc func actionSelectedCell(sender: AnyObject) {
         let idx = self.searchTableView.selectedRow
+        
         if let cellView = self.searchTableView.view(atColumn: 0, row: idx, makeIfNecessary: true) as? SearchTableCellView {
-            if cellView.can_click() {
+            
+            if cellView.canClick() {
                 self.mainVCDelegate?.cellSelectedProtocol(cell: cellView)
             }
         }
@@ -114,6 +119,8 @@ extension ResultsViewController: NSTableViewDelegate, NSTableViewDataSource{
             height = 100
         } else if musicItem.isHeader && musicItem.heroImage == nil {
             height = 30
+        } else if musicItem.isHeaderAction {
+            height = 30
         }
         return height
     }
@@ -145,6 +152,12 @@ extension ResultsViewController: NSTableViewDelegate, NSTableViewDataSource{
             cellView.mainVCDelegate = self.mainVCDelegate
             cellView.identifier = NSUserInterfaceItemIdentifier(rawValue: "ArtTableCellView");
             cellView.setCellWithItem(item: musicItem)
+            return cellView
+        } else if musicItem.isHeaderAction {
+            let cellView = (tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SearchTableCellView"), owner: self) as? SearchTableCellView)!
+            cellView.identifier = NSUserInterfaceItemIdentifier(rawValue: "SearchTableCellView");
+            cellView.setCellWithSearchResult(result: self.search_results[row])
+            cellView.cellImageView.image = NSImage(named: NSImage.Name("shuffle"))
             return cellView
         } else {
             let cellView = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SearchTableCellView"), owner: self) as! SearchTableCellView

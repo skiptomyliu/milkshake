@@ -85,7 +85,6 @@ class MainViewController: NSViewController {
         self.nowPlayingViewController.view.frame = CGRect(x: 0, y: 0, width: self.resultsView.frame.size.width, height: self.resultsView.frame.size.height)
         // Auto play on launch
         // self.playFirstStation()
-        self.appDelegate.api.shuffleStations(stationsIds: [], callbackHandler: callbackShuffle)                 
     }
     
     func playFirstStation() {
@@ -144,6 +143,18 @@ class MainViewController: NSViewController {
     }
     
     func callbackShuffle(results: [String: AnyObject]) {
+        let stationId = results["stationId"] as! String
+        let shuffleStationIds = results["shuffleStationIds"] as! [String]
+
+        self.appDelegate.radio.shuffleStations = shuffleStationIds
+        self.appDelegate.radio.isShuffle = true
+        self.stationResultsViewController.searchTableView.reloadData()
+        self.appDelegate.api.createShuffleStation(stationId: stationId, callbackHandler: callbackCreateShuffleStation)
+        
+        
+    }
+    
+    func callbackCreateShuffleStation(results: [String: AnyObject]) {
         let musicItem = Util.parseCreateStation(result: results)
         self.stationResultsViewController.search_results = [] // hack to force refresh
         self.playStation(musicItem: musicItem)
@@ -463,7 +474,6 @@ extension MainViewController: CellSelectedProtocol {
         let item = cell.item
         let type = item.type
         
-        //XXX
         // When played, get current view controller tracks and set album
         if type == MusicType.TRACK && item.hasInteractive {
             // if playing already, pause
@@ -513,13 +523,20 @@ extension MainViewController: CellSelectedProtocol {
             appDelegate.api.createStation(pandoraId:item.pandoraId!, callbackHandler: createStationCallback)
         }
         else if type == MusicType.STATION {
-            // if playing already, pause
-            if item.stationId != nil && item.stationId == self.appDelegate.music?.nowPlaying() {
-                self.nowPlayingViewController.playPause(self)
-            } else {
-                cell.setPlaying(isPlaying: true, isFocus: true)
-                self.playStation(musicItem: item)
+            if item.isShuffle! {
+                self.appDelegate.api.shuffleStation(stationsIds: [], callbackHandler: callbackShuffle)
             }
+            else {
+                // if playing already, pause
+                if item.stationId != nil && item.stationId == self.appDelegate.music?.nowPlaying() {
+                    self.nowPlayingViewController.playPause(self)
+                } else {
+                    cell.setPlaying(isPlaying: true, isFocus: true)
+                    self.playStation(musicItem: item)
+                }
+            }
+            
+            
         }
         else if type == MusicType.PLAYLIST {
             appDelegate.api.getTracks(pandoraId: item.pandoraId!, callbackHandler: callbackPlaylist)

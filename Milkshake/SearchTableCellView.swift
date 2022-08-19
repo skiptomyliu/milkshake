@@ -7,7 +7,7 @@
 //
 //  
 //
-import Cocoa
+
 import Kingfisher
 
 class SearchTableCellView: NSTableCellView {
@@ -29,6 +29,8 @@ class SearchTableCellView: NSTableCellView {
     @IBOutlet weak var thumbsUpButton: PlayerButton!
     @IBOutlet weak var thumbsDownButton: PlayerButton!
     
+    @IBOutlet weak var shuffleButton: PlayerButton!
+    
     var playingImageView = NSImageView()
     var transparentBlackBox = NSBox()
     
@@ -47,6 +49,14 @@ class SearchTableCellView: NSTableCellView {
         self.addTrackingArea(thumbTrackingArea)
     }
     
+    override func viewWillDraw() {
+        if self.appDelegate.radio.isShuffle {
+            self.shuffleButton.isHidden = !self.appDelegate.radio.isShuffle
+            let stationId = self.item.stationId ?? ""
+            self.shuffleButton.isToggle = self.appDelegate.radio.shuffleStations.contains(stationId)
+        }
+    }
+    
     func show_play() -> Bool {
         if self.appDelegate.isPremium {
             return (
@@ -62,13 +72,11 @@ class SearchTableCellView: NSTableCellView {
         }
     }
     
-    func can_click() -> Bool {
+    func canClick() -> Bool {
         if self.appDelegate.isPremium {
             return (
                 self.item.hasInteractive == true &&
-                    (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION || self.item.type == MusicType.SF) ||
-                self.item.type == MusicType.ARTIST
-            )
+                    (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION || self.item.type == MusicType.SF) || self.item.type == MusicType.ARTIST)
         } else {
             return (
                 self.item.hasInteractive == true &&
@@ -136,7 +144,12 @@ class SearchTableCellView: NSTableCellView {
             }
         }
     }
-
+    
+    func setCellWithItem(result: MusicItem) {
+        let title = result.name ?? ""
+        self.artistTextField.stringValue = title;
+    }
+    
     func setCellWithSearchResult(result:MusicItem) {
         self.item = result
         
@@ -391,4 +404,15 @@ class SearchTableCellView: NSTableCellView {
         self.thumbsDownButton.isToggle = false
         self.thumbsUpButton.isToggle = !self.thumbsUpButton.isToggle
     }
+    
+    @IBAction func shuffle(_ sender: Any) {
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        if self.shuffleButton.isToggle {
+            
+        } else {
+            
+        }
+        self.shuffleButton.isToggle = !self.shuffleButton.isToggle
+    }
+    
 }
