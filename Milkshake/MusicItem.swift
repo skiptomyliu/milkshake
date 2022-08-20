@@ -18,6 +18,7 @@ enum MusicType: Int {
     case ALBUM
     case COMPOSER
     case SF
+    case SHUFFLESTATION
     case UNDEFINED
 }
 

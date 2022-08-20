@@ -72,7 +72,7 @@ class Callback: NSObject {
         stationShuffleRow.name = "Shuffle Stations"
         stationShuffleRow.isHeaderAction = true
         stationShuffleRow.hasInteractive = true
-        stationShuffleRow.type = MusicType.STATION
+        stationShuffleRow.type = MusicType.SHUFFLESTATION
         stationShuffleRow.isShuffle = true
         stationResults.insert(stationShuffleRow, at: 0)
         return stationResults

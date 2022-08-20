@@ -179,7 +179,7 @@
                         <action selector="playAction:" target="IdS-gb-l7q" id="tNS-X5-86Z"/>
                     </connections>
                 </button>
-                <button id="Crs-Yx-O7I" userLabel="Shuffle" customClass="PlayerButton" customModule="Milkshake" customModuleProvider="target">
+                <button hidden="YES" id="Crs-Yx-O7I" userLabel="Shuffle" customClass="PlayerButton" customModule="Milkshake" customModuleProvider="target">
                     <rect key="frame" x="250" y="15" width="20" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shuffle_off" imagePosition="only" alignment="center" alternateImage="shuffle_on" imageScaling="proportionallyUpOrDown" inset="2" id="E53-WV-TzE">

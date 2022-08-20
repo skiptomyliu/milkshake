@@ -389,10 +389,8 @@ class API: NSObject {
     }
     
     func shuffleStation(stationsIds:[String], callbackHandler: @escaping(_ Dictionary: [String: AnyObject]) -> ()) {
-//        let params: [String: Any] = [
-//            "shuffleStationIds": stationsIds,
-//        ]
-        let params: [String: Any] = [:]
+        let params = stationsIds.isEmpty ? [:] : ["stationIds": stationsIds, "shuffleType": "my"]
+        
         self.request("\(Constants.pandoraApiUrlV1)/station/shuffle", params: params,  callbackHandler: callbackHandler)
     }
     

@@ -48,26 +48,18 @@ class SearchTableCellView: NSTableCellView {
         let thumbTrackingArea = NSTrackingArea.init(rect:CGRect(x: self.frame.size.width-50, y: 0, width: self.frame.width, height: self.frame.size.height), options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways], owner: self, userInfo: nil)
         self.addTrackingArea(thumbTrackingArea)
     }
-    
-    override func viewWillDraw() {
-        if self.appDelegate.radio.isShuffle {
-            self.shuffleButton.isHidden = !self.appDelegate.radio.isShuffle
-            let stationId = self.item.stationId ?? ""
-            self.shuffleButton.isToggle = self.appDelegate.radio.shuffleStations.contains(stationId)
-        }
-    }
-    
+
     func show_play() -> Bool {
         if self.appDelegate.isPremium {
             return (
                 self.item.hasInteractive == true &&
-                (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION || self.item.type == MusicType.SF)
+                (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION || self.item.type == MusicType.SF || self.item.type == MusicType.SHUFFLESTATION)
             )
         } else {
             return (
                 self.item.hasInteractive == true &&
                     (self.item.cellType == CellType.SEARCH) &&
-                    (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION || self.item.type == MusicType.ARTIST || self.item.type == MusicType.SF)
+                    (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION || self.item.type == MusicType.ARTIST || self.item.type == MusicType.SF || self.item.type == MusicType.SHUFFLESTATION)
             )
         }
     }
@@ -76,12 +68,12 @@ class SearchTableCellView: NSTableCellView {
         if self.appDelegate.isPremium {
             return (
                 self.item.hasInteractive == true &&
-                    (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION || self.item.type == MusicType.SF) || self.item.type == MusicType.ARTIST)
+                    (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION || self.item.type == MusicType.SF) || self.item.type == MusicType.ARTIST || self.item.type == MusicType.SHUFFLESTATION)
         } else {
             return (
                 self.item.hasInteractive == true &&
                     (self.item.cellType == CellType.SEARCH) &&
-                    (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION || self.item.type == MusicType.ARTIST || self.item.type == MusicType.SF)
+                    (self.item.type == MusicType.TRACK || self.item.type == MusicType.PLAYLIST || self.item.type == MusicType.ALBUM || self.item.type == MusicType.STATION || self.item.type == MusicType.ARTIST || self.item.type == MusicType.SF || self.item.type == MusicType.SHUFFLESTATION)
             )
         }
     }
@@ -156,6 +148,7 @@ class SearchTableCellView: NSTableCellView {
         self.darkView.isHidden = true
         self.darkView.wantsLayer = true
         self.darkView.layer?.backgroundColor = CGColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        self.shuffleButton.isHidden = true
         
         let title = result.name ?? ""
         self.artistTextField.stringValue = title;
@@ -221,9 +214,16 @@ class SearchTableCellView: NSTableCellView {
 //            result.token = API.getTokenFromItem(item: result)
         }
         else if type == MusicType.STATION || type == MusicType.SF {
+            // show shuffle button is shuffle is enabled
+            if self.appDelegate.radio.isShuffle {
+                let stationId = self.item.stationId ?? ""
+                self.shuffleButton.isHidden = stationId == ""
+                self.shuffleButton.isToggle = self.appDelegate.radio.shuffleStations.contains(stationId)
+            }
+            
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-            if let lastPlayedDateStr = result.lastPlayed {
+            if let lastPlayedDateStr = self.item.lastPlayed {
                 if let dateFromString = dateFormatter.date(from: lastPlayedDateStr) {
                     let lastListened = Util.convertDateToLastListened(dateFromString)
                     self.typeTextField.stringValue = String(format: "Listened: %@", lastListened)
@@ -390,14 +390,10 @@ class SearchTableCellView: NSTableCellView {
         let trackToken = self.item.trackToken!
         if self.thumbsUpButton.isToggle {
             appDelegate.api.deleteFeedback(trackToken: trackToken, isPositive: false) { responseDict in
-                print("UNTHUMB Feedback response: ")
-                print(responseDict)
                 appDelegate.history.storeThumbForId(pandoraId: self.item.pandoraId!, rating: 0)
             }
         } else {
             appDelegate.api.addFeedback(trackToken: trackToken, isPositive: true) { responseDict in
-                print("Thumbsup Feedback response: ")
-                print(responseDict)
                 appDelegate.history.storeThumbForId(pandoraId: self.item.pandoraId!, rating: 1)
             }
         }
@@ -408,11 +404,27 @@ class SearchTableCellView: NSTableCellView {
     @IBAction func shuffle(_ sender: Any) {
         let appDelegate = NSApplication.shared.delegate as! AppDelegate
         if self.shuffleButton.isToggle {
-            
+            // minimum 1 station must always be enabled for shuffle
+            if appDelegate.radio.shuffleStations.count > 1 {
+                // Get station to remove from shuffle list
+                if let index = appDelegate.radio.shuffleStations.firstIndex(of: self.item.stationId!) {
+                    appDelegate.radio.shuffleStations.remove(at: index)
+                }
+            }
         } else {
-            
+            // add station to shuffle
+            appDelegate.radio.shuffleStations.append(self.item.stationId!)
         }
-        self.shuffleButton.isToggle = !self.shuffleButton.isToggle
+        
+        appDelegate.api.shuffleStation(stationsIds: appDelegate.radio.shuffleStations) {  responseDict in
+            if let stationIds = responseDict["shuffleStationIds"] {
+                appDelegate.radio.shuffleStations = stationIds as! [String]
+                if appDelegate.radio.shuffleStations.contains(self.item.stationId!) {
+                    self.shuffleButton.isToggle = true
+                } else {
+                    self.shuffleButton.isToggle = false
+                }
+            }
+        }
     }
-    
 }
