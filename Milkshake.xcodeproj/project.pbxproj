@@ -35,7 +35,6 @@
 		05412FED1FDF73720067DCFE /* PlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05412FEB1FDF73720067DCFE /* PlayerViewController.xib */; };
 		054130271FDF89A00067DCFE /* UtilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054130261FDF89A00067DCFE /* UtilView.swift */; };
 		054130351FE01EBA0067DCFE /* PlayerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054130341FE01EBA0067DCFE /* PlayerButton.swift */; };
-		054A31171FF5D5B10022D06E /* HeaderTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054A31161FF5D5B10022D06E /* HeaderTableCellView.swift */; };
 		054A31191FF5D5C20022D06E /* HeaderTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 054A31181FF5D5C20022D06E /* HeaderTableCellView.xib */; };
 		054A311D1FF5E3190022D06E /* ArtTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054A311C1FF5E3190022D06E /* ArtTableCellView.swift */; };
 		054A311F1FF5E32A0022D06E /* ArtTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 054A311E1FF5E32A0022D06E /* ArtTableCellView.xib */; };
@@ -54,12 +53,18 @@
 		05B1E8431FF6C21200253BA4 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 05B1E8421FF6C21100253BA4 /* search.png */; };
 		05B314B51FE57C5900A29055 /* MySlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B314B41FE57C5900A29055 /* MySlider.swift */; };
 		05B314B71FE59A3600A29055 /* MySliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B314B61FE59A3600A29055 /* MySliderCell.swift */; };
+		05BDCFCA28AF351D00C749F6 /* shuffle.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BDCFC928AF351D00C749F6 /* shuffle.png */; };
+		05BDCFCC28AF44CF00C749F6 /* InteractiveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BDCFCB28AF44CF00C749F6 /* InteractiveCell.swift */; };
+		05BDCFCE28AFE58E00C749F6 /* HeaderTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BDCFCD28AFE58E00C749F6 /* HeaderTableCellView.swift */; };
+		05BDCFD028AFE72B00C749F6 /* HeaderActionTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05BDCFCF28AFE72B00C749F6 /* HeaderActionTableCellView.xib */; };
 		05D3420A28A34A6A0039D620 /* blowfish.c in Sources */ = {isa = PBXBuildFile; fileRef = 05D3420928A34A6A0039D620 /* blowfish.c */; };
 		05D3420E28A34C6E0039D620 /* Crypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D3420D28A34C6E0039D620 /* Crypt.swift */; };
 		05D3421028A34D620039D620 /* Crypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D3420F28A34D620039D620 /* Crypt.m */; };
 		05D4F5EE217CEC4A00283085 /* milkshake.icns in Resources */ = {isa = PBXBuildFile; fileRef = 05D4F5ED217CEC4900283085 /* milkshake.icns */; };
 		05D4F5F0217CEE5100283085 /* milkshake_512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 05D4F5EF217CEE5100283085 /* milkshake_512x512.png */; };
 		05E1929928A71DCE00E81970 /* VolumeSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E1929828A71DCE00E81970 /* VolumeSliderCell.swift */; };
+		05E1929C28ADEBF100E81970 /* shuffle_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 05E1929A28ADEBF100E81970 /* shuffle_off.png */; };
+		05E1929D28ADEBF100E81970 /* shuffle_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 05E1929B28ADEBF100E81970 /* shuffle_on.png */; };
 		05ED20D51FCCFA4F00123317 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05ED20D41FCCFA4F00123317 /* API.swift */; };
 		05ED20DF1FCD10B000123317 /* playing.gif in Resources */ = {isa = PBXBuildFile; fileRef = 05ED20DC1FCD10B000123317 /* playing.gif */; };
 		05ED20E21FCD125C00123317 /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05ED20E01FCD125C00123317 /* ResultsViewController.swift */; };
@@ -118,7 +123,6 @@
 		05412FEB1FDF73720067DCFE /* PlayerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerViewController.xib; sourceTree = "<group>"; };
 		054130261FDF89A00067DCFE /* UtilView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilView.swift; sourceTree = "<group>"; };
 		054130341FE01EBA0067DCFE /* PlayerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerButton.swift; sourceTree = "<group>"; };
-		054A31161FF5D5B10022D06E /* HeaderTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableCellView.swift; sourceTree = "<group>"; };
 		054A31181FF5D5C20022D06E /* HeaderTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderTableCellView.xib; sourceTree = "<group>"; };
 		054A311C1FF5E3190022D06E /* ArtTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtTableCellView.swift; sourceTree = "<group>"; };
 		054A311E1FF5E32A0022D06E /* ArtTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArtTableCellView.xib; sourceTree = "<group>"; };
@@ -138,6 +142,10 @@
 		05B314B41FE57C5900A29055 /* MySlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySlider.swift; sourceTree = "<group>"; };
 		05B314B61FE59A3600A29055 /* MySliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySliderCell.swift; sourceTree = "<group>"; };
 		05B86E091FE388B9009EEC4F /* Milkshake.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Milkshake.entitlements; sourceTree = "<group>"; };
+		05BDCFC928AF351D00C749F6 /* shuffle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shuffle.png; sourceTree = "<group>"; };
+		05BDCFCB28AF44CF00C749F6 /* InteractiveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveCell.swift; sourceTree = "<group>"; };
+		05BDCFCD28AFE58E00C749F6 /* HeaderTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderTableCellView.swift; sourceTree = "<group>"; };
+		05BDCFCF28AFE72B00C749F6 /* HeaderActionTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderActionTableCellView.xib; sourceTree = "<group>"; };
 		05D3420728A34A690039D620 /* Milkshake-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Milkshake-Bridging-Header.h"; sourceTree = "<group>"; };
 		05D3420828A34A6A0039D620 /* blowfish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blowfish.h; sourceTree = "<group>"; };
 		05D3420928A34A6A0039D620 /* blowfish.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = blowfish.c; sourceTree = "<group>"; };
@@ -147,6 +155,8 @@
 		05D4F5ED217CEC4900283085 /* milkshake.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = milkshake.icns; sourceTree = "<group>"; };
 		05D4F5EF217CEE5100283085 /* milkshake_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkshake_512x512.png; sourceTree = "<group>"; };
 		05E1929828A71DCE00E81970 /* VolumeSliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeSliderCell.swift; sourceTree = "<group>"; };
+		05E1929A28ADEBF100E81970 /* shuffle_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shuffle_off.png; sourceTree = "<group>"; };
+		05E1929B28ADEBF100E81970 /* shuffle_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shuffle_on.png; sourceTree = "<group>"; };
 		05ED20D41FCCFA4F00123317 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		05ED20DC1FCD10B000123317 /* playing.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = playing.gif; sourceTree = "<group>"; };
 		05ED20E01FCD125C00123317 /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
@@ -312,7 +322,7 @@
 				054A311C1FF5E3190022D06E /* ArtTableCellView.swift */,
 				054A311E1FF5E32A0022D06E /* ArtTableCellView.xib */,
 				05ED21181FDC423A00123317 /* FlatButton.swift */,
-				054A31161FF5D5B10022D06E /* HeaderTableCellView.swift */,
+				05BDCFCD28AFE58E00C749F6 /* HeaderTableCellView.swift */,
 				054A31181FF5D5C20022D06E /* HeaderTableCellView.xib */,
 				0506879B1FF6FCCA007B9F39 /* MenuTableCellView.swift */,
 				0506879D1FF6FCD5007B9F39 /* MenuTableCellView.xib */,
@@ -324,8 +334,10 @@
 				48F749571FCCECBD00F0A853 /* RoundView.swift */,
 				05ED20E61FCD2FBD00123317 /* SearchTableCellView.swift */,
 				05ED20E81FCD2FE200123317 /* SearchTableCellView.xib */,
+				05BDCFCF28AFE72B00C749F6 /* HeaderActionTableCellView.xib */,
 				059A061F200DC7ED003C81F1 /* SpectrumAnalyzerView.swift */,
 				05E1929828A71DCE00E81970 /* VolumeSliderCell.swift */,
+				05BDCFCB28AF44CF00C749F6 /* InteractiveCell.swift */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -355,6 +367,9 @@
 				050687931FF6CD34007B9F39 /* thumbs-down.png */,
 				050EE4B22195CAAB00B6E5A8 /* thumbs-down-on.png */,
 				05D4F5EF217CEE5100283085 /* milkshake_512x512.png */,
+				05BDCFC928AF351D00C749F6 /* shuffle.png */,
+				05E1929A28ADEBF100E81970 /* shuffle_off.png */,
+				05E1929B28ADEBF100E81970 /* shuffle_on.png */,
 			);
 			name = resources;
 			sourceTree = "<group>";
@@ -443,8 +458,11 @@
 			files = (
 				05ED20E31FCD125C00123317 /* ResultsViewController.xib in Resources */,
 				050687AA1FF80950007B9F39 /* playlisticon.png in Resources */,
+				05E1929D28ADEBF100E81970 /* shuffle_on.png in Resources */,
 				05ED20E91FCD2FE200123317 /* SearchTableCellView.xib in Resources */,
 				050687921FF6CD2F007B9F39 /* thumbs-up.png in Resources */,
+				05BDCFCA28AF351D00C749F6 /* shuffle.png in Resources */,
+				05BDCFD028AFE72B00C749F6 /* HeaderActionTableCellView.xib in Resources */,
 				050687941FF6CD34007B9F39 /* thumbs-down.png in Resources */,
 				05AAD9E62002F6DF00CE8A18 /* guitar.png in Resources */,
 				0557E0782205557200EE9563 /* milkshake_20x20.png in Resources */,
@@ -468,6 +486,7 @@
 				48F7494B1FCCEBD000F0A853 /* Assets.xcassets in Resources */,
 				05ED20DF1FCD10B000123317 /* playing.gif in Resources */,
 				48F7494E1FCCEBD000F0A853 /* Main.storyboard in Resources */,
+				05E1929C28ADEBF100E81970 /* shuffle_off.png in Resources */,
 				050687AC1FF81B28007B9F39 /* thumbs-up-on.png in Resources */,
 				054A31191FF5D5C20022D06E /* HeaderTableCellView.xib in Resources */,
 				05412FED1FDF73720067DCFE /* PlayerViewController.xib in Resources */,
@@ -544,12 +563,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05BDCFCC28AF44CF00C749F6 /* InteractiveCell.swift in Sources */,
 				050687A01FF704CF007B9F39 /* MyPopoverView.swift in Sources */,
-				054A31171FF5D5B10022D06E /* HeaderTableCellView.swift in Sources */,
 				05ED21131FD6ED8F00123317 /* MusicItem.swift in Sources */,
 				05A57E692010E90F00B8FBCB /* NSBezierPath+CGPath.swift in Sources */,
 				05E1929928A71DCE00E81970 /* VolumeSliderCell.swift in Sources */,
 				48F749491FCCEBD000F0A853 /* MainViewController.swift in Sources */,
+				05BDCFCE28AFE58E00C749F6 /* HeaderTableCellView.swift in Sources */,
 				054130351FE01EBA0067DCFE /* PlayerButton.swift in Sources */,
 				48F749581FCCECBD00F0A853 /* RoundView.swift in Sources */,
 				05B314B71FE59A3600A29055 /* MySliderCell.swift in Sources */,

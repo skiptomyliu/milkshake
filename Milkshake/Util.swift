@@ -409,7 +409,7 @@ class Util: NSObject {
             musicItem.lastPlayed = station["lastPlayed"] as? String
             musicItem.albumArt = albumArt
             musicItem.dateCreated = station["dateCreated"] as? String ?? ""
-            musicItem.isShuffle = station["isShuffle"] as? String
+            musicItem.isShuffle = station["isShuffle"] as? Bool
             musicItem.isThumbprint = station["isThumbprint"] as? String
             musicItem.artId = station["artId"] as? String
             musicItem.genre = station["genre"] as? String

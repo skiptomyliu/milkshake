@@ -15,6 +15,8 @@ class Radio: Music {
     var stationIdx: Int = 0
     var isRadio = false
     var stationId = ""
+    var shuffleStations: [String] = []
+    var isShuffle = false
     
     func playStation(stationId:String, isStationStart:Bool, lastPlayedTrackToken:String?) {
         let appDelegate = NSApplication.shared.delegate as! AppDelegate

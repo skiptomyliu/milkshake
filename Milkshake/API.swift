@@ -337,6 +337,7 @@ class API: NSObject {
         ]
         self.request("\(Constants.pandoraApiUrlV1)/station/getStations", params: params, callbackHandler: callbackHandler)
     }
+    
     // Get music tracks of station
     func getPlaylistFragment(stationId:String, isStationStart:Bool, lastPlayedTrackToken:String?, callbackHandler: @escaping(_ Dictionary:[String: AnyObject]) -> ()) {
         var params: [String: Any] = [
@@ -385,6 +386,27 @@ class API: NSObject {
             "creationSource": ""
         ]
         self.request("\(Constants.pandoraApiUrlV1)/station/createStation", params: params, callbackHandler: callbackHandler);
+    }
+    
+    func shuffleStation(stationsIds:[String], callbackHandler: @escaping(_ Dictionary: [String: AnyObject]) -> ()) {
+        let params = stationsIds.isEmpty ? [:] : ["stationIds": stationsIds, "shuffleType": "my"]
+        
+        self.request("\(Constants.pandoraApiUrlV1)/station/shuffle", params: params,  callbackHandler: callbackHandler)
+    }
+    
+    func createShuffleStation(stationId: String, callbackHandler: @escaping(_ Dictionary: [String: AnyObject]) -> ()) {
+                let params: [String: Any] = [
+                    "stationCode": "sh\(stationId)",
+                    "stationName": "",
+                    "searchQuery": "",
+                    "pandoraId": NSNull(),
+                    "creativeId": NSNull(),
+                    "lineId": NSNull(),
+                    "creationSource": NSNull(),
+                    "modeId": NSNull()
+                ]
+                self.request("\(Constants.pandoraApiUrlV1)/station/createStation", params: params, callbackHandler: callbackHandler);
+//                    self.getPlaylistFragment(stationId: stationId, isStationStart: true, lastPlayedTrackToken: nil, callbackHandler: callbackHandler)
     }
     
     /*

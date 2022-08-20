@@ -138,7 +138,22 @@ class MainViewController: NSViewController {
     
     func createStationCallback(results: [String: AnyObject]) {
         let musicItem = Util.parseCreateStation(result: results)
-        self.stationResultsViewController.search_results = [] // hack to force refresh
+        self.playStation(musicItem: musicItem)
+    }
+    
+    func callbackShuffle(results: [String: AnyObject]) {
+        let stationId = results["stationId"] as! String
+        let shuffleStationIds = results["shuffleStationIds"] as! [String]
+
+        self.appDelegate.radio.shuffleStations = shuffleStationIds
+        self.appDelegate.radio.isShuffle = true
+//        self.stationResultsViewController.searchTableView.reloadData()
+        self.appDelegate.api.createShuffleStation(stationId: stationId, callbackHandler: callbackCreateShuffleStation)
+    }
+    
+    func callbackCreateShuffleStation(results: [String: AnyObject]) {
+        let musicItem = Util.parseCreateStation(result: results)
+        self.stationResultsViewController.searchTableView.reloadData()
         self.playStation(musicItem: musicItem)
     }
     
@@ -215,7 +230,9 @@ class MainViewController: NSViewController {
         appDelegate.radio.playerPause()
         appDelegate.dj.playerPause()
         appDelegate.windowController?.window?.title = musicItem.name ?? ""
-//        appDelegate.radio.curPlayingItem = musicItem
+//        appDelegate.radio.curPlayingItem = music
+        self.stationResultsViewController.searchTableView.reloadData()
+        
         appDelegate.radio.playStation(stationId: musicItem.stationId!, isStationStart: true, lastPlayedTrackToken: "")
     }
     
@@ -256,15 +273,17 @@ class MainViewController: NSViewController {
                     if rvc.searchTableView.view(atColumn: 0, row: i, makeIfNecessary: true) is SearchTableCellView {
                         let cell = rvc.searchTableView.view(atColumn: 0, row: i, makeIfNecessary: false) as! SearchTableCellView
                         if (
+                            // skip shuffle banner
+                            !cell.item.isShuffle! && (
                             // check song
-                            cell.item.pandoraId == music.curPlayingItem.pandoraId) ||
+                            cell.item.pandoraId == music.curPlayingItem.pandoraId ||
                             // check station
-                            (cell.item.stationId == music.curPlayingItem.stationId && cell.item.stationId != nil)  ||
+                            cell.item.stationId == music.curPlayingItem.stationId && cell.item.stationId != nil ||
                             // check playlist
-                            (cell.item.pandoraId == music.curPlayingItem.playlistId) ||
+                            cell.item.pandoraId == music.curPlayingItem.playlistId ||
                             // check album
-                            (cell.item.pandoraId == music.curPlayingItem.albumId)
-                            {
+                            cell.item.pandoraId == music.curPlayingItem.albumId)
+                        ) {
                             cell.setPlaying(isPlaying: music.isPlaying(), isFocus: true)
                             self.nowPlayingSearchCell = cell
                         } else {
@@ -355,9 +374,11 @@ class MainViewController: NSViewController {
         self.sweepNowPlaying()
     }
     
+
+    
     @IBAction func loadSearchResults(_ sender: Any) {
         // Only make firstResponder if button tapped
-        // self.view.window?.makeFirstResponder(self._curSearchController?.searchTableView)
+//         self.view.window?.makeFirstResponder(self._curSearchController?.searchTableView)
     }
     
     @IBAction func showMenu(_ sender: Any) {
@@ -454,7 +475,10 @@ extension MainViewController: CellSelectedProtocol {
         let item = cell.item
         let type = item.type
         
-        //XXX
+        if type == MusicType.STATION || type == MusicType.SF || type == MusicType.TRACK {
+            self.appDelegate.radio.isShuffle = false
+        }
+        
         // When played, get current view controller tracks and set album
         if type == MusicType.TRACK && item.hasInteractive {
             // if playing already, pause
@@ -512,16 +536,26 @@ extension MainViewController: CellSelectedProtocol {
                 self.playStation(musicItem: item)
             }
         }
+        else if type == MusicType.SHUFFLESTATION {
+            if item.isShuffle! {
+                if !self.appDelegate.radio.isShuffle {
+                    self.appDelegate.api.shuffleStation(stationsIds: [], callbackHandler: callbackShuffle)
+                }
+                else {
+                    self.nowPlayingViewController.playPause(self)
+                }
+            }
+        }
         else if type == MusicType.PLAYLIST {
             appDelegate.api.getTracks(pandoraId: item.pandoraId!, callbackHandler: callbackPlaylist)
         }
         self.searchField.stringValue = ""
+        
     }
     
     func cellHighlightedProtocol(item: MusicItem) { }
     
     func cellCreateStationSelectedProtocol(pandoraId: String) {
-        print("start station" , pandoraId)
         appDelegate.api.createStation(pandoraId:pandoraId, callbackHandler: createStationCallback)
     }
     
@@ -615,7 +649,7 @@ extension MainViewController: MenuSelectedProtocol {
     func menuSelectedProtocol(index: Int) {
         self.popover.performClose(self)
         var idx = index
-        var freeMapping: [Int: Int] = [0: 0, 1:1, 2:4]
+        let freeMapping: [Int: Int] = [0: 0, 1:1, 2:4]
         if appDelegate.isPremium == false {
             idx = freeMapping[index] ?? 0
         }

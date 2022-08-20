@@ -18,6 +18,7 @@ enum MusicType: Int {
     case ALBUM
     case COMPOSER
     case SF
+    case SHUFFLESTATION
     case UNDEFINED
 }
 
@@ -35,6 +36,7 @@ class MusicItem: NSObject, NSCoding {
     var isHeader: Bool = false
     var isArtist: Bool = false
     var isAlbum: Bool = false
+    var isHeaderAction: Bool = false
     var cellType: CellType = CellType.SEARCH
     
     var name: String?
@@ -65,7 +67,7 @@ class MusicItem: NSObject, NSCoding {
     var musicId: String?
     var dateCreated: String?
     var releaseDate: String?
-    var isShuffle: String?
+    var isShuffle: Bool?
     var isThumbprint: String?
     var artId: String?
     var genre: String?

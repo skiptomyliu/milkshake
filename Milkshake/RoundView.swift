@@ -92,5 +92,8 @@ class RoundView: NSView {
         }
     }
     
+    override func mouseDown(with event: NSEvent) {
+        self.window?.makeFirstResponder(nil)
+    }
 }
 

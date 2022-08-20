@@ -66,7 +66,15 @@ class Callback: NSObject {
         let stationsHeader = MusicItem()
         stationsHeader.name = "STATIONS"
         stationsHeader.isHeader = true
-        stationResults.insert(stationsHeader, at: 0)
+//        stationResults.insert(stationsHeader, at: 0)
+        
+        let stationShuffleRow = MusicItem()
+        stationShuffleRow.name = "Shuffle Stations"
+        stationShuffleRow.isHeaderAction = true
+        stationShuffleRow.hasInteractive = true
+        stationShuffleRow.type = MusicType.SHUFFLESTATION
+        stationShuffleRow.isShuffle = true
+        stationResults.insert(stationShuffleRow, at: 0)
         return stationResults
     }
         

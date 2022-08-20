@@ -24,7 +24,7 @@
                 </textField>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Lm-84-hXx">
                     <rect key="frame" x="7" y="0.0" width="50" height="50"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="album-500" id="sLI-bt-hPK"/>
                 </imageView>
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XwA-rr-BLR">
@@ -100,9 +100,9 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Db6-wU-SyC">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Db6-wU-SyC" userLabel="Title Field">
                     <rect key="frame" x="65" y="22" width="202" height="21"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="charWrapping" sendsActionOnEndEditing="YES" alignment="left" title="Song title" id="93S-sN-EmJ">
                         <font key="font" size="14" name="LucidaGrande"/>
                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
@@ -170,13 +170,24 @@
                 </button>
                 <button hidden="YES" fixedFrame="YES" alphaValue="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="FSF-Zp-FeO" customClass="MyButtonCursor" customModule="Milkshake" customModuleProvider="target">
                     <rect key="frame" x="21" y="15" width="20" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="playcell" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="pe2-EF-aui">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
                         <action selector="playAction:" target="IdS-gb-l7q" id="tNS-X5-86Z"/>
+                    </connections>
+                </button>
+                <button hidden="YES" id="Crs-Yx-O7I" userLabel="Shuffle" customClass="PlayerButton" customModule="Milkshake" customModuleProvider="target">
+                    <rect key="frame" x="250" y="15" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="shuffle_off" imagePosition="only" alignment="center" alternateImage="shuffle_on" imageScaling="proportionallyUpOrDown" inset="2" id="E53-WV-TzE">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="shuffle:" target="IdS-gb-l7q" id="sdM-Ph-oRq"/>
                     </connections>
                 </button>
             </subviews>
@@ -193,16 +204,45 @@
                 <outlet property="pBox" destination="byu-N2-ALa" id="NE5-sp-INP"/>
                 <outlet property="playButton" destination="FSF-Zp-FeO" id="9bY-1S-cha"/>
                 <outlet property="rBox" destination="3uV-cJ-jfO" id="MAL-IG-vVp"/>
+                <outlet property="shuffleButton" destination="Crs-Yx-O7I" id="FEE-q8-YIa"/>
                 <outlet property="thumbsDownButton" destination="S1P-3v-WbH" id="vho-Ah-vWm"/>
                 <outlet property="thumbsUpButton" destination="T3i-4A-PGz" id="Bkc-9B-B3X"/>
                 <outlet property="typeTextField" destination="LSH-c0-bsc" id="d6C-LD-uf0"/>
             </connections>
             <point key="canvasLocation" x="64" y="112"/>
         </customView>
+        <customView identifier="HeaderActionTableCellView" id="ixM-sc-MD0" customClass="SearchTableCellView" customModule="Milkshake" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="317" height="29"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8ZZ-WJ-b8e">
+                    <rect key="frame" x="0.0" y="0.0" width="40" height="30"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="shuffle" id="sQL-aW-FSl"/>
+                </imageView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cDG-UQ-6XQ">
+                    <rect key="frame" x="46" y="0.0" width="229" height="23"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Shuffle Stations" id="VN7-2m-FYL">
+                        <font key="font" metaFont="system" size="14"/>
+                        <color key="textColor" white="1" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <accessibility identifier="HeaderActionTableCellView"/>
+            <connections>
+                <outlet property="artistTextField" destination="cDG-UQ-6XQ" id="tve-nF-ZzE"/>
+            </connections>
+            <point key="canvasLocation" x="73" y="216"/>
+        </customView>
     </objects>
     <resources>
         <image name="album-500" width="500" height="500"/>
         <image name="playcell" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="shuffle" width="64" height="64"/>
+        <image name="shuffle_off" width="64" height="64"/>
+        <image name="shuffle_on" width="64" height="64"/>
         <image name="thumbs-down" width="51.200000762939453" height="51.200000762939453"/>
         <image name="thumbs-down-on" width="51.200000762939453" height="51.200000762939453"/>
         <image name="thumbs-up" width="51.200000762939453" height="51.200000762939453"/>
