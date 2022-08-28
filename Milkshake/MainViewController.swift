@@ -274,7 +274,7 @@ class MainViewController: NSViewController {
                         let cell = rvc.searchTableView.view(atColumn: 0, row: i, makeIfNecessary: false) as! SearchTableCellView
                         if (
                             // skip shuffle banner
-                            !cell.item.isShuffle! && (
+                            !(cell.item.isShuffle ?? false) && (
                             // check song
                             cell.item.pandoraId == music.curPlayingItem.pandoraId ||
                             // check station
@@ -537,7 +537,7 @@ extension MainViewController: CellSelectedProtocol {
             }
         }
         else if type == MusicType.SHUFFLESTATION {
-            if item.isShuffle! {
+            if item.isShuffle ?? false {
                 if !self.appDelegate.radio.isShuffle {
                     self.appDelegate.api.shuffleStation(stationsIds: [], callbackHandler: callbackShuffle)
                 }
